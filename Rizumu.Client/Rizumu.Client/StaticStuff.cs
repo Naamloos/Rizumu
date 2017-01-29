@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,12 +16,22 @@ namespace Rizumu.Client
         Results
     }
 
+    public enum GameOverlay
+    {
+        Login,
+        Chat,
+        Loading
+    }
+
     public class StaticStuff
     {
         /*
          * All static stuff here heh
          */
         public static Gameview View;
+        public static GameOverlay Overlay;
+        public static bool OverlayEnable;
         public static View Main;
+        public static Texture2D Background;
     }
 }
