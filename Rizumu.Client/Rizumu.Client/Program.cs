@@ -2,14 +2,11 @@
 
 namespace Rizumu.Client
 {
-    /// <summary>
-    /// The main class.
-    /// </summary>
     public static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+        /*
+         * Here we start the Gamu thanks
+         */
         [STAThread]
         static void Main()
         {

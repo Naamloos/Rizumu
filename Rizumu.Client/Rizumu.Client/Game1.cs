@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Rizumu.Client
 {
+
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -11,17 +12,43 @@ namespace Rizumu.Client
 
         public Game1()
         {
+            // Set new GraphicsDeviceManager
             graphics = new GraphicsDeviceManager(this);
+            // Set Content root, Donut change
             Content.RootDirectory = "Content";
         }
 
         protected override void Initialize()
         {
             base.Initialize();
+            // Initialize Static Stuff
+            // Set current View to Main
+            StaticStuff.View = Gameview.Main;
+
+            #region Main view
+            // This initializes the Main View.
+            // Create new View for Main
+            StaticStuff.Main = new View();
+
+            // Set UpdateEvent
+            StaticStuff.Main.UpdateEvent += (sender, e) =>
+            {
+            };
+
+            // Set DrawEvent
+            StaticStuff.Main.DrawEvent += (sender, e) =>
+            {
+                e.spriteBatch.Begin();
+                Texture2D naam = Content.Load<Texture2D>("naamloos");
+                e.spriteBatch.Draw(naam, new Rectangle(0, 0, 100, 100), Color.White);
+                e.spriteBatch.End();
+            };
+            #endregion
         }
 
         protected override void LoadContent()
         {
+            // Load SpriteBatch
             spriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
@@ -31,22 +58,75 @@ namespace Rizumu.Client
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            // Run Update for current View
+            #region Update switch
+            UpdateEventArgs eventArgs = new UpdateEventArgs()
+            {
+                gameTime = gameTime
+            };
+
+            switch (StaticStuff.View)
+            {
+                case Gameview.Main:
+                    StaticStuff.Main.Update(eventArgs);
+                    break;
+                case Gameview.Songselect:
+                    break;
+                case Gameview.Options:
+                    break;
+                case Gameview.Ingame:
+                    break;
+                case Gameview.Results:
+                    break;
+                default:
+                    break;
+            }
+            #endregion
+
+            // Run a new Update
             base.Update(gameTime);
         }
 
+        /*
+         * I'm planning to Draw the game into 3 layers:
+         * Layer 0: Background Layer (Continuously draws the Background Texture2D, to be changed by views)
+         * Layer 1: View Layer (All main view controls and textures should be drawn here)
+         * Layer 2: Overlay Layer (Has a black transparent background. If active, Layer 1 will not respond to input)
+         */
+
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            // Clear the GraphicsDevice for a new draw
+            GraphicsDevice.Clear(Color.WhiteSmoke);
+
+            // Run Draw for current view
+            #region Draw switch
+            DrawEventArgs eventArgs = new DrawEventArgs()
+            {
+                gameTime = gameTime,
+                spriteBatch = spriteBatch
+            };
+
+            switch (StaticStuff.View)
+            {
+                case Gameview.Main:
+                    StaticStuff.Main.Draw(eventArgs);
+                    break;
+                case Gameview.Songselect:
+                    break;
+                case Gameview.Options:
+                    break;
+                case Gameview.Ingame:
+                    break;
+                case Gameview.Results:
+                    break;
+                default:
+                    break;
+            }
+            #endregion
+
+            // Run a new Draw
             base.Draw(gameTime);
-            spriteBatch.Begin();
-
-            // I SHOULDN'T do this, though this is for testing purposed. many thank
-            Texture2D test = Content.Load<Texture2D>("naamloos");
-            spriteBatch.Draw(test, new Rectangle(new Point(0,0), new Point(250, 250)), Color.White);
-
-            spriteBatch.End();
         }
     }
 }
