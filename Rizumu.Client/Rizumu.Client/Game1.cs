@@ -21,7 +21,6 @@ namespace Rizumu.Client
         protected override void Initialize()
         {
             base.Initialize();
-            
             // Initialize Static Stuff
             // Set current View to Main
             StaticStuff.View = Gameview.Main;
