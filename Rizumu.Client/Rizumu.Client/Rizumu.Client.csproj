@@ -41,6 +41,8 @@
     <Compile Include="EventArgs\DrawEventArgs.cs" />
     <Compile Include="EventArgs\UpdateEventArgs.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Objects\Button.cs" />
+    <Compile Include="Objects\TextureColorCombo.cs" />
     <Compile Include="Objects\View.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -83,6 +83,10 @@ namespace Rizumu.Client
             }
             #endregion
 
+            // Update mouse state
+            StaticStuff.oldMouseState = StaticStuff.mouseState;
+            StaticStuff.mouseState = Mouse.GetState();
+
             // Run a new Update
             base.Update(gameTime);
         }
