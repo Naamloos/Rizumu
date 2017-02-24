@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Rizumu.Client")]
-[assembly: AssemblyProduct("Rizumu.Client")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyTitle("Rizumu.Shared")]
 [assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyCopyright("Copyright © Naamloos 2017")]
+[assembly: AssemblyProduct("Rizumu.Shared")]
+[assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("22045d43-cd52-46e8-b69e-c44f2a783901")]
+[assembly: Guid("34a4d43c-4430-46bd-9ce4-b7494af90674")]
 
 // Version information for an assembly consists of the following four values:
 //

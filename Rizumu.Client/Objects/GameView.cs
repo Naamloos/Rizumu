@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rizumu.Client.Assets
+namespace Rizumu.Client
 {
-    public class Textures
+    public class GameView
     {
-        public static Texture2D Button;
-        public static Texture2D ButtonSelected;
+        public Texture2D Background;
+        public event EventHandler Update;
+        public event EventHandler Draw;
     }
 }
