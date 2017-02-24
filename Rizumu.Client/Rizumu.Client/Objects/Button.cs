@@ -12,9 +12,9 @@ namespace Rizumu.Client
 {
     public class Button
     {
-        public event EventHandler ClickEvent;
-        public event EventHandler MouseOverEvent;
-        public event EventHandler MouseOffEvent;
+        public event EventHandler<string> ClickEvent;
+        public event EventHandler<string> MouseOverEvent;
+        public event EventHandler<string> MouseOffEvent;
 
         public float x;
         public float y;
@@ -24,8 +24,9 @@ namespace Rizumu.Client
         public TextureColorCombo MouseOver;
         public SoundEffect Click;
         TextureColorCombo Current;
-        public bool Visible;
+        public bool Visible = false;
         bool mouseOver = false;
+        bool click = false;
 
         public Button(float x, float y, TextureColorCombo Idle, TextureColorCombo MouseOver, bool Visible = true, SoundEffect Click = null, float width = 0, float height = 0)
         {
@@ -56,11 +57,13 @@ namespace Rizumu.Client
             MouseOverEvent += (sender, e) =>
             {
                 Current = this.MouseOver;
+                return;
             };
 
             MouseOffEvent += (sender, e) =>
             {
                 Current = this.Idle;
+                return;
             };
         }
 
@@ -71,10 +74,15 @@ namespace Rizumu.Client
             Rectangle mouse = new Rectangle(ms.X, ms.Y, 1, 1);
             if (mouse.Intersects(location))
             {
-                if(!mouseOver)
+                if (!mouseOver)
                     MouseOverEvent(this, null);
-                if (StaticStuff.oldMouseState.LeftButton != ButtonState.Pressed && StaticStuff.mouseState.LeftButton == ButtonState.Pressed)
+                if (StaticStuff.oldMouseState.LeftButton != ButtonState.Pressed && StaticStuff.mouseState.LeftButton == ButtonState.Pressed && click == false)
+                {
                     ClickEvent(this, null);
+                    StaticStuff.mouseState = new MouseState(0, 0, 0, ButtonState.Released, ButtonState.Released, ButtonState.Released, ButtonState.Released, ButtonState.Released);
+                }
+                else
+                    click = false;
             }
             else if (mouseOver == true)
                 MouseOffEvent(this, null);

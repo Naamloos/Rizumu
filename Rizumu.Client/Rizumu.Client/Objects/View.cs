@@ -17,12 +17,12 @@ namespace Rizumu.Client
 
         public void Draw(DrawEventArgs e)
         {
-            DrawEvent(null, e);
+            DrawEvent(this, e);
         }
 
         public void Update(UpdateEventArgs e)
         {
-            UpdateEvent(null, e);
+            UpdateEvent(this, e);
         }
     }
 }

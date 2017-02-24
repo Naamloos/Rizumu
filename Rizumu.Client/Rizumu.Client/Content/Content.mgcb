@@ -337,3 +337,9 @@
 /processorParam:TextureFormat=Color
 /build:userbar.png
 
+#begin debug.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:debug.spritefont
+

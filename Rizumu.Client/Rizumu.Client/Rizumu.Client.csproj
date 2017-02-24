@@ -38,6 +38,8 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\Textures.cs" />
+    <Compile Include="Assets\Views.cs" />
     <Compile Include="EventArgs\DrawEventArgs.cs" />
     <Compile Include="EventArgs\UpdateEventArgs.cs" />
     <Compile Include="Game1.cs" />
@@ -59,6 +61,7 @@
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\DesktopGL\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>

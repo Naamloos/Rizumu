@@ -22,26 +22,16 @@ namespace Rizumu.Client
         {
             base.Initialize();
             // Initialize Static Stuff
+            IsMouseVisible = true;
             // Set current View to Main
-            StaticStuff.View = Gameview.Main;
+            Assets.Views.Current = Assets.Gameview.Main;
             StaticStuff.Background = Content.Load<Texture2D>("naamloos");
-
+            Assets.Textures.Button = Content.Load<Texture2D>("button");
+            Assets.Textures.ButtonSelected = Content.Load<Texture2D>("button_selected");
             #region Main view
             // This initializes the Main View.
             // Create new View for Main
-            StaticStuff.Main = new View();
-
-            // Set UpdateEvent
-            StaticStuff.Main.UpdateEvent += (sender, e) =>
-            {
-            };
-
-            // Set DrawEvent
-            StaticStuff.Main.DrawEvent += (sender, e) =>
-            {
-                Texture2D naam = Content.Load<Texture2D>("naamloos");
-                e.spriteBatch.Draw(naam, new Rectangle(0, 0, 100, 100), Color.White);
-            };
+            Assets.Views.Initialize();
             #endregion
         }
 
@@ -58,33 +48,34 @@ namespace Rizumu.Client
         protected override void Update(GameTime gameTime)
         {
             // Run Update for current View
+
+            // Update mouse state
+            StaticStuff.oldMouseState = StaticStuff.mouseState;
+            StaticStuff.mouseState = Mouse.GetState();
+
             #region Update switch
             UpdateEventArgs eventArgs = new UpdateEventArgs()
             {
                 gameTime = gameTime
             };
 
-            switch (StaticStuff.View)
+            switch (Assets.Views.Current)
             {
-                case Gameview.Main:
-                    StaticStuff.Main.Update(eventArgs);
+                case Assets.Gameview.Main:
+                    Assets.Views.Main.Update(eventArgs);
                     break;
-                case Gameview.Songselect:
+                case Assets.Gameview.Songselect:
                     break;
-                case Gameview.Options:
+                case Assets.Gameview.Options:
                     break;
-                case Gameview.Ingame:
+                case Assets.Gameview.Ingame:
                     break;
-                case Gameview.Results:
+                case Assets.Gameview.Results:
                     break;
                 default:
                     break;
             }
             #endregion
-
-            // Update mouse state
-            StaticStuff.oldMouseState = StaticStuff.mouseState;
-            StaticStuff.mouseState = Mouse.GetState();
 
             // Run a new Update
             base.Update(gameTime);
@@ -115,21 +106,21 @@ namespace Rizumu.Client
                 spriteBatch = spriteBatch
             };
 
-            switch (StaticStuff.View)
+            switch (Assets.Views.Current)
             {
-                case Gameview.Main:
-                    StaticStuff.Main.Draw(eventArgs);
+                case Assets.Gameview.Main:
+                    Assets.Views.Main.Draw(eventArgs);
                     break;
-                case Gameview.Songselect:
+                case Assets.Gameview.Songselect:
                     break;
-                case Gameview.Options:
+                case Assets.Gameview.Options:
                     break;
-                case Gameview.Ingame:
+                case Assets.Gameview.Ingame:
                     break;
-                case Gameview.Results:
+                case Assets.Gameview.Results:
                     break;
                 default:
-                    StaticStuff.Main.Draw(eventArgs);
+                    Assets.Views.Main.Draw(eventArgs);
                     break;
             }
             #endregion
@@ -154,6 +145,7 @@ namespace Rizumu.Client
 
             // Layer 3: 
 
+            spriteBatch.DrawString(Content.Load<SpriteFont>("debug"), $"{StaticStuff.mouseState.X}, {StaticStuff.mouseState.Y}", new Vector2(0, 0), Color.Gray);
             spriteBatch.End();
             // Run a new Draw
             base.Draw(gameTime);
