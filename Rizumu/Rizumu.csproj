@@ -98,12 +98,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="websocket-sharp">
-      <HintPath>..\..\..\..\GitHub\SharpCord\DSharpPlus\bin\Debug\websocket-sharp.dll</HintPath>
-    </Reference>
-    <Reference Include="WebSocket4Net">
-      <HintPath>..\..\..\..\GitHub\SharpCord\DSharpPlus\bin\Debug\WebSocket4Net.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Finallogo.ico" />
