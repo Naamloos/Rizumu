@@ -1,0 +1,341 @@
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using System;
+using System.IO;
+
+namespace Rizumu.GameScreens
+{
+    class MapScreen
+    {
+        public static int[][] fnotes;
+        public static int[][] gnotes;
+        public static int[][] hnotes;
+        public static int[][] jnotes;
+        public static int timer = 0;
+        public static bool loaded = false;
+        public static bool paused = false;
+        public static Sprite note;
+        public static KeyboardState oldState;
+        public static int lastnote = 0;
+        public static bool vidplaying = false;
+
+        public static void draw(SpriteBatch spriteBatch)
+        {
+            if (!loaded)
+            {
+                timer = 0;
+                Music.play(Resources.selected, 0);
+                int l = 0;
+                string[] lf = File.ReadAllLines(Resources.selected + "\\fnotes.rizum");
+                fnotes = new int[lf.Length][];
+                while (l < lf.Length)
+                {
+                    try
+                    {
+                        fnotes[l] = new int[3] { Int32.Parse(lf[l]), 0, 0 };
+                    }catch(Exception){
+                        fnotes[l] = new int[3] { 0, 0, 0 };
+                    }
+                    l = l + 1;
+                }
+
+                l = 0;
+                lf = File.ReadAllLines(Resources.selected + "\\gnotes.rizum");
+                gnotes = new int[lf.Length][];
+                while (l < lf.Length)
+                {
+                    try
+                    {
+                        gnotes[l] = new int[3] { Int32.Parse(lf[l]), 0, 0 };
+                    }
+                    catch (Exception)
+                    {
+                        gnotes[l] = new int[3] { 0, 0, 0 };
+                    }
+                    l = l + 1;
+                }
+
+                l = 0;
+                lf = File.ReadAllLines(Resources.selected + "\\hnotes.rizum");
+                hnotes = new int[lf.Length][];
+                while (l < lf.Length)
+                {
+                    try
+                    {
+                        hnotes[l] = new int[3] { Int32.Parse(lf[l]), 0, 0 };
+                    }
+                    catch (Exception)
+                    {
+                        hnotes[l] = new int[3] { 0, 0, 0 };
+                    }
+                    l = l + 1;
+                }
+
+                l = 0;
+                lf = File.ReadAllLines(Resources.selected + "\\jnotes.rizum");
+                jnotes = new int[lf.Length][];
+                while (l < lf.Length)
+                {
+                    try
+                    {
+                        jnotes[l] = new int[3] { Int32.Parse(lf[l]), 0, 0 };
+                    }
+                    catch (Exception)
+                    {
+                        jnotes[l] = new int[3] { 0, 0, 0 };
+                    }
+                    l = l + 1;
+                }
+
+                if (File.Exists(Resources.selected + "/back.png"))
+                {
+                    System.IO.Stream stream4 = TitleContainer.OpenStream(Resources.selected + "/back.png");
+                    Resources.songbg = Texture2D.FromStream(Game1.graphics.GraphicsDevice, stream4);
+                }
+                else
+                {
+                    Resources.songbg = Resources.background_menu;
+                }
+                int lastf = 0;
+                int lastg = 0;
+                int lasth = 0;
+                int lastj = 0;
+                foreach (int[] note in fnotes)
+                {
+                    lastf = note[0];
+                }
+                foreach (int[] note in gnotes)
+                {
+                    lastg = note[0];
+                }
+                foreach (int[] note in hnotes)
+                {
+                    lasth = note[0];
+                }
+                foreach (int[] note in jnotes)
+                {
+                    lastj = note[0];
+                }
+
+                lastnote = Math.Max(lastf, Math.Max(lastg, Math.Max(lasth, lastj)));
+                Resources.showcursor = false;
+                loaded = true;
+            }
+
+            KeyboardState newState = Keyboard.GetState();
+
+            if (paused)
+            {
+                if (newState.IsKeyDown(Keys.Escape) && !oldState.IsKeyDown(Keys.Escape))
+                {
+                    Music.resume();
+                    paused = false;
+                }
+            }else
+            {
+                if (newState.IsKeyDown(Keys.Escape) && !oldState.IsKeyDown(Keys.Escape))
+                {
+                    Music.pause();
+                    paused = true;
+                }
+            }
+
+            bool fpress = false;
+            bool gpress = false;
+            bool hpress = false;
+            bool jpress = false;
+
+            if (newState.IsKeyDown(Keys.NumPad4))
+            {
+                if (!oldState.IsKeyDown(Keys.NumPad4))
+                {
+                    fpress = true;
+                }
+            }
+            else if (oldState.IsKeyDown(Keys.NumPad4))
+            {
+                fpress = false;
+            }
+
+            if (newState.IsKeyDown(Keys.NumPad8))
+            {
+                if (!oldState.IsKeyDown(Keys.NumPad8))
+                {
+                    gpress = true;
+                }
+            }
+            else if (oldState.IsKeyDown(Keys.NumPad8))
+            {
+                gpress = false;
+            }
+
+            if (newState.IsKeyDown(Keys.NumPad6))
+            {
+                if (!oldState.IsKeyDown(Keys.NumPad6))
+                {
+                    hpress = true;
+                }
+            }
+            else if (oldState.IsKeyDown(Keys.NumPad6))
+            {
+                hpress = false;
+            }
+
+            if (newState.IsKeyDown(Keys.NumPad2))
+            {
+                if (!oldState.IsKeyDown(Keys.NumPad2))
+                {
+                    jpress = true;
+                }
+            }
+            else if (oldState.IsKeyDown(Keys.NumPad2))
+            {
+                jpress = false;
+            }
+
+            oldState = newState;
+
+            Background bg = new Background(spriteBatch, Resources.songbg);
+
+            bg.draw();
+
+            Text.draw(Resources.debug, timer.ToString(), 0,25,spriteBatch);
+            int fi = 0;
+            int notew = Resources.NoteL.Width;
+            int noteh = Resources.NoteL.Height;
+            int centerx = Game1.graphics.PreferredBackBufferWidth / 2 - Resources.NoteL.Width / 2;
+            int centery = Game1.graphics.PreferredBackBufferHeight / 2 - Resources.NoteL.Height / 2;
+            note = new Sprite(spriteBatch, centerx - notew, centery, Resources.NoteL, Color.White);
+            note.draw();
+            note = new Sprite(spriteBatch, centerx, centery - noteh, Resources.NoteU, Color.White);
+            note.draw();
+            note = new Sprite(spriteBatch, centerx + notew, centery, Resources.NoteR, Color.White);
+            note.draw();
+            note = new Sprite(spriteBatch, centerx, centery + noteh, Resources.NoteD, Color.White);
+            note.draw();
+
+            if (!paused)
+            {
+                while (fi < fnotes.Length)
+                {
+                    if (fnotes[fi][0] < timer - ((centerx + notew) / 10) * 2 && fnotes[fi][1] < centerx + notew && fnotes[fi][2] == 0)
+                    {
+                        note = new Sprite(spriteBatch, fnotes[fi][1] - notew, centery, Resources.NoteL, Color.White);
+                        fnotes[fi][1] = fnotes[fi][1] + 10;
+                        note.draw();
+                        if (fpress && fnotes[fi][1] > centerx - notew)
+                        {
+                            fnotes[fi][2] = 1;
+                            Resources.hit.Play();
+                            Resources.fscore++;
+                        }
+                    }
+                    fi++;
+                }
+                fi = 0;
+
+
+                while (fi < gnotes.Length)
+                {
+                    if (gnotes[fi][0] < timer - ((centery + noteh) / 10) * 2 && gnotes[fi][1] < centery + noteh + 30 && gnotes[fi][2] == 0)
+                    {
+                        note = new Sprite(spriteBatch, centerx, gnotes[fi][1] - noteh, Resources.NoteU, Color.White);
+                        gnotes[fi][1] = gnotes[fi][1] + 10;
+                        note.draw();
+                        if (gpress && gnotes[fi][1] > centery - noteh)
+                        {
+                            gnotes[fi][2] = 1;
+                            Resources.hit.Play();
+                            Resources.gscore++;
+                        }
+                    }
+                    fi++;
+                }
+                fi = 0;
+
+                while (fi < hnotes.Length)
+                {
+                    if (hnotes[fi][0] < timer - ((centerx + notew) / 10) * 2 && hnotes[fi][1] < centerx + notew + 30 && hnotes[fi][2] == 0)
+                    {
+                        note = new Sprite(spriteBatch, Game1.graphics.PreferredBackBufferWidth - (hnotes[fi][1] + notew), centery, Resources.NoteR, Color.White);
+                        hnotes[fi][1] = hnotes[fi][1] + 10;
+                        note.draw();
+                        if (hpress && hnotes[fi][1] > centerx - notew)
+                        {
+                            hnotes[fi][2] = 1;
+                            Resources.hit.Play();
+                            Resources.hscore++;
+                        }
+                    }
+                    fi++;
+                }
+                fi = 0;
+
+                while (fi < jnotes.Length)
+                {
+                    if (jnotes[fi][0] < timer - ((centery + noteh) / 10) * 2 && jnotes[fi][1] < centery + noteh + 30 && jnotes[fi][2] == 0)
+                    {
+                        note = new Sprite(spriteBatch, centerx, Game1.graphics.PreferredBackBufferHeight - (jnotes[fi][1] + noteh), Resources.NoteD, Color.White);
+                        jnotes[fi][1] = jnotes[fi][1] + 10;
+                        note.draw();
+
+                        if (jpress && jnotes[fi][1] > centery - noteh)
+                        {
+                            jnotes[fi][2] = 1;
+                            Resources.hit.Play();
+                            Resources.jscore++;
+                        }
+                    }
+                    fi++;
+                }
+                fi = 0;
+                if (timer > lastnote + 500)
+                {
+                    loaded = false;
+                    timer = 0;
+                    System.Windows.Forms.MessageBox.Show("Left: " + Resources.fscore + "\nUp: " + Resources.gscore + "\nRight: " + Resources.hscore + "\nDown: " + Resources.jscore);
+                    Resources.GameScreen = 1;
+                    Resources.showcursor = true;
+                }
+            }
+            if (paused)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                {
+                    loaded = false;
+                    timer = 0;
+                    paused = false;
+                    Resources.GameScreen = 1;
+                    Resources.showcursor = true;
+                }
+                int pausex = Game1.graphics.PreferredBackBufferWidth / 2 - Resources.Paused.Width / 2;
+                int pausey = Game1.graphics.PreferredBackBufferHeight / 2 - Resources.Paused.Height / 2;
+                Sprite pause = new Sprite(spriteBatch, pausex, pausey, Resources.Paused, Color.White);
+                pause.draw();
+                Text.draw(Resources.font, "Press Space to exit map\nPress Escape to return\nPress ` to retry.\nButtons will be added soon.", pausex,
+                    pausey + pause.hitbox.Height, spriteBatch);
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.OemTilde))
+            {
+                loaded = false;
+                timer = 0;
+                paused = false;
+            }
+        }
+
+        public static void update(Microsoft.Xna.Framework.Content.ContentManager Content , GraphicsDevice graph)
+        {
+            if (loaded)
+            {
+                if (!paused)
+                {
+                    timer++;
+                }
+            }
+            // nah fam
+        }
+    }
+}
