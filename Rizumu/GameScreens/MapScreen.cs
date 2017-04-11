@@ -48,12 +48,7 @@ namespace Rizumu.GameScreens
                 { }
                 vp = new VideoPlayer();
                 vp.IsMuted = true;
-                try
-                {
-                    GameResources.mapvid = null;
-                }
-                catch (Exception)
-                { }
+                GameResources.mapvid = null;
                 try
                 {
                     GameResources.mapvid = GameResources.globalcontent.Load<Video>(GameResources.selected.Substring(8) + "\\video");
@@ -170,7 +165,14 @@ namespace Rizumu.GameScreens
                 Music.play(GameResources.selected, 0);
                 if (usingvideo)
                 {
-                    vp.Play(GameResources.mapvid);
+                    try
+                    {
+                        vp.Play(GameResources.mapvid);
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                 }
             }
             if (usingvideo)
@@ -267,7 +269,7 @@ namespace Rizumu.GameScreens
             int noteh = GameResources.NoteL.Height;
             int centerx = Game1.graphics.PreferredBackBufferWidth / 2 - GameResources.NoteL.Width / 2;
             int centery = Game1.graphics.PreferredBackBufferHeight / 2 - GameResources.NoteL.Height / 2;
-            if(Keyboard.GetState().IsKeyDown(Keys.NumPad4))
+            if (Keyboard.GetState().IsKeyDown(Keys.NumPad4))
                 note = new Sprite(spriteBatch, centerx - notew, centery, GameResources.NoteL, GameResources.basecolor);
             else
                 note = new Sprite(spriteBatch, centerx - notew, centery, GameResources.NoteL, new Color(GameResources.basecolor, 0.5f));
@@ -460,7 +462,16 @@ namespace Rizumu.GameScreens
 
                 if (timer > lastnote + 500)
                 {
-                    vp.Stop();
+                    try
+                    {
+                        vp.Stop();
+                        vp.Dispose();
+                        vp = null;
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                     if (File.Exists(GameResources.selected + "/back.png"))
                     {
                         System.IO.Stream stream4 = TitleContainer.OpenStream(GameResources.selected + "/back.png");
@@ -485,9 +496,19 @@ namespace Rizumu.GameScreens
             }
             if (paused)
             {
+                vp.Pause();
                 if (Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
-                    vp.Stop();
+                    try
+                    {
+                        vp.Stop();
+                        vp.Dispose();
+                        vp = null;
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                     if (File.Exists(GameResources.selected + "/back.png"))
                     {
                         System.IO.Stream stream4 = TitleContainer.OpenStream(GameResources.selected + "/back.png");

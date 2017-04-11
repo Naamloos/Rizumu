@@ -21,10 +21,6 @@ namespace Rizumu
         public static Keys down;
         public static Keys left;
         public static Keys right;
-        public static string DiscordBotToken = "";
-        public static string DiscordChannelID = "";
-        public static string TwitchUser = "";
-        public static string TwitchOAuth = "";
         public static List<string[]> comments = new List<string[]>();
 
 
