@@ -113,7 +113,39 @@ namespace Rizumu.GameScreens
 
         public static void update()
         {
+            konami();
+        }
 
+        public static int konamii = 0;
+        public static KeyboardState oks;
+
+        public static void konami()
+        {
+            KeyboardState ks = Keyboard.GetState();
+            if (ks.IsKeyDown(Keys.Up) && konamii == 0)
+                konamii = 1;
+            else if (ks.IsKeyDown(Keys.Up) && konamii == 1)
+                konamii = 2;
+            else if (ks.IsKeyDown(Keys.Down) && konamii == 2)
+                konamii = 3;
+            else if (ks.IsKeyDown(Keys.Down) && konamii == 3)
+                konamii = 4;
+            else if (ks.IsKeyDown(Keys.Left) && konamii == 4)
+                konamii = 5;
+            else if (ks.IsKeyDown(Keys.Right) && konamii == 5)
+                konamii = 6;
+            else if (ks.IsKeyDown(Keys.Left) && konamii == 6)
+                konamii = 7;
+            else if (ks.IsKeyDown(Keys.Right) && konamii == 7)
+                konamii = 8;
+            else if (ks.IsKeyDown(Keys.B) && konamii == 8)
+                konamii = 9;
+            else if (ks.IsKeyDown(Keys.A) && konamii == 9)
+            {
+                System.Windows.Forms.MessageBox.Show("You entered the konami code.\nAutoplay has been activated!");
+                GameResources.autoplay = true;
+            }
+            oks = ks;
         }
     }
 }
