@@ -26,37 +26,21 @@ namespace Rizumu.GameScreens
         public static Sprite note;
         public static KeyboardState oldState;
         public static int lastnote = 0;
-        public static bool vidplaying = false;
+        //public static bool vidplaying = false;
         public static int currentcombo = 0;
         public static float notespeed = 1f;
         public static float noterot = 0.0f;
         public static List<Animation> sparkles = new List<Animation>();
-        public static VideoPlayer vp;
+        //public static VideoPlayer vp;
         public static bool usingvideo = true;
 
         public static void draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             if (!loaded)
             {
-                try
-                {
-                    vp.Stop();
-                    vp.Dispose();
-                    vp = null;
-                }
-                catch (Exception)
-                { }
-                vp = new VideoPlayer();
-                vp.IsMuted = true;
-                GameResources.mapvid = null;
-                try
-                {
-                    GameResources.mapvid = GameResources.globalcontent.Load<Video>(GameResources.selected.Substring(8) + "\\video");
-                }
-                catch
-                {
-                    usingvideo = false;
-                }
+
+                usingvideo = false;
+
                 timer = 0 + GameResources.offset;
                 int l = 0;
                 string[] lf = File.ReadAllLines(GameResources.selected + "\\fnotes.rizum");
@@ -163,22 +147,7 @@ namespace Rizumu.GameScreens
                 GameResources.totalnotes = fnotes.Length + gnotes.Length + hnotes.Length + jnotes.Length;
                 loaded = true;
                 Music.play(GameResources.selected, 0);
-                if (usingvideo)
-                {
-                    try
-                    {
-                        vp.Play(GameResources.mapvid);
-                    }
-                    catch (Exception)
-                    {
-
-                    }
-                }
-            }
-            if (usingvideo)
-            {
-                if (vp.State != MediaState.Stopped)
-                    GameResources.songbg = vp.GetTexture();
+                
             }
             KeyboardState newState = Keyboard.GetState();
 
@@ -462,16 +431,7 @@ namespace Rizumu.GameScreens
 
                 if (timer > lastnote + 500)
                 {
-                    try
-                    {
-                        vp.Stop();
-                        vp.Dispose();
-                        vp = null;
-                    }
-                    catch (Exception)
-                    {
-
-                    }
+                   
                     if (File.Exists(GameResources.selected + "/back.png"))
                     {
                         System.IO.Stream stream4 = TitleContainer.OpenStream(GameResources.selected + "/back.png");
@@ -496,19 +456,8 @@ namespace Rizumu.GameScreens
             }
             if (paused)
             {
-                vp.Pause();
                 if (Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
-                    try
-                    {
-                        vp.Stop();
-                        vp.Dispose();
-                        vp = null;
-                    }
-                    catch (Exception)
-                    {
-
-                    }
                     if (File.Exists(GameResources.selected + "/back.png"))
                     {
                         System.IO.Stream stream4 = TitleContainer.OpenStream(GameResources.selected + "/back.png");
@@ -535,7 +484,6 @@ namespace Rizumu.GameScreens
 
             if (Keyboard.GetState().IsKeyDown(Keys.OemTilde))
             {
-                vp.Stop();
                 loaded = false;
                 timer = 0;
                 paused = false;
