@@ -100,9 +100,6 @@ namespace Rizumu
         public static SoundEffect hit;
         public static SoundEffect combobreak;
 
-        // Video's
-        public static Video mapvid;
-
         //Making var for content
         public static Microsoft.Xna.Framework.Content.ContentManager globalcontent;
         // Keybinds
