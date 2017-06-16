@@ -65,28 +65,40 @@ namespace Rizumu.GameScreens
                 i++;
             }
 
-            Sprite scoreleft = new Sprite(spriteBatch, drawloc + 15, (GameResources.ScoreMiss.Height * 2) * 0, GameResources.ScoreLeft, GameResources.basecolor);
-            scoreleft.scale = 1.6f;
+            Sprite scoreleft = new Sprite(spriteBatch, drawloc + 15, (GameResources.ScoreMiss.Height * 2) * 0, GameResources.ScoreLeft, GameResources.basecolor)
+            {
+                scale = 1.6f
+            };
             scoreleft.draw();
 
-            Sprite scoreright = new Sprite(spriteBatch, drawloc + 15, (GameResources.ScoreMiss.Height * 2) * 1, GameResources.ScoreRight, GameResources.basecolor);
-            scoreright.scale = 1.6f;
+            Sprite scoreright = new Sprite(spriteBatch, drawloc + 15, (GameResources.ScoreMiss.Height * 2) * 1, GameResources.ScoreRight, GameResources.basecolor)
+            {
+                scale = 1.6f
+            };
             scoreright.draw();
 
-            Sprite scoreup = new Sprite(spriteBatch, drawloc + 15, (GameResources.ScoreMiss.Height * 2) * 2, GameResources.ScoreUp, GameResources.basecolor);
-            scoreup.scale = 1.6f;
+            Sprite scoreup = new Sprite(spriteBatch, drawloc + 15, (GameResources.ScoreMiss.Height * 2) * 2, GameResources.ScoreUp, GameResources.basecolor)
+            {
+                scale = 1.6f
+            };
             scoreup.draw();
 
-            Sprite scoredown = new Sprite(spriteBatch, drawloc + 15, (GameResources.ScoreMiss.Height * 2) * 3, GameResources.ScoreDown, GameResources.basecolor);
-            scoredown.scale = 1.6f;
+            Sprite scoredown = new Sprite(spriteBatch, drawloc + 15, (GameResources.ScoreMiss.Height * 2) * 3, GameResources.ScoreDown, GameResources.basecolor)
+            {
+                scale = 1.6f
+            };
             scoredown.draw();
 
-            Sprite scoremiss = new Sprite(spriteBatch, drawloc + 15, (GameResources.ScoreMiss.Height * 2) * 4, GameResources.ScoreMiss, GameResources.basecolor);
-            scoremiss.scale = 1.6f;
+            Sprite scoremiss = new Sprite(spriteBatch, drawloc + 15, (GameResources.ScoreMiss.Height * 2) * 4, GameResources.ScoreMiss, GameResources.basecolor)
+            {
+                scale = 1.6f
+            };
             scoremiss.draw();
 
-            Sprite scorecombo = new Sprite(spriteBatch, drawloc + 15, (GameResources.ScoreMiss.Height * 2) * 5, GameResources.ScoreCombo, GameResources.basecolor);
-            scorecombo.scale = 1.6f;
+            Sprite scorecombo = new Sprite(spriteBatch, drawloc + 15, (GameResources.ScoreMiss.Height * 2) * 5, GameResources.ScoreCombo, GameResources.basecolor)
+            {
+                scale = 1.6f
+            };
             scorecombo.draw();
 
             int totalmiss = GameResources.fmiss + GameResources.gmiss + GameResources.hmiss + GameResources.jmiss;

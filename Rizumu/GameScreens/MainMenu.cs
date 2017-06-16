@@ -27,8 +27,10 @@ namespace Rizumu.GameScreens
             background = new Background(spriteBatch, GameResources.background_menu);
             background.draw();
 
-            logo = new Sprite(spriteBatch, Game1.graphics.PreferredBackBufferWidth - (530 * (Game1.graphics.PreferredBackBufferHeight / 720)), 100, GameResources.Logo, GameResources.basecolor);
-            logo.scale = 1f * (Game1.graphics.PreferredBackBufferHeight / 720);
+            logo = new Sprite(spriteBatch, Game1.graphics.PreferredBackBufferWidth - (530 * (Game1.graphics.PreferredBackBufferHeight / 720)), 100, GameResources.Logo, GameResources.basecolor)
+            {
+                scale = 1f * (Game1.graphics.PreferredBackBufferHeight / 720)
+            };
             //logo.draw();
             MouseState omstate = mstate;
             mstate = Mouse.GetState();
