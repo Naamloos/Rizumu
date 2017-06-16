@@ -79,7 +79,7 @@ namespace Rizumu
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            GameResources.load(Content);
+            GameResources.Load(Content);
         }
 
         protected override void UnloadContent()
@@ -100,7 +100,7 @@ namespace Rizumu
             base.Update(gameTime);
             if (GameResources.GameScreen == 0)
             {
-                GameScreens.MainMenu.update();
+                GameScreens.MainMenu.Update();
             }
             if (GameResources.GameScreen == 1)
             {
@@ -108,7 +108,7 @@ namespace Rizumu
             }
             if (GameResources.GameScreen == 2)
             {
-                GameScreens.MapScreen.update(Content, GraphicsDevice);
+                GameScreens.MapScreen.Update(Content, GraphicsDevice);
             }
             if (GameResources.GameScreen == 6)
             {
@@ -129,7 +129,7 @@ namespace Rizumu
             }
             if (cycling)
             {
-                GameResources.loopcolor();
+                GameResources.LoopColor();
             }
             Window.Title = "Rizumu: " + GameResources.selected.Substring(14);
             KeyboardState oldstate = kstate;
@@ -146,23 +146,23 @@ namespace Rizumu
 
             if (GameResources.GameScreen == 0)
             {
-                GameScreens.MainMenu.draw(spriteBatch);
+                GameScreens.MainMenu.Draw(spriteBatch);
             }
             if (GameResources.GameScreen == 1)
             {
-                GameScreens.SongList.draw(spriteBatch);
+                GameScreens.SongList.Draw(spriteBatch);
             }
             if (GameResources.GameScreen == 2)
             {
-                GameScreens.MapScreen.draw(spriteBatch, gameTime);
+                GameScreens.MapScreen.Draw(spriteBatch, gameTime);
             }
             if (GameResources.GameScreen == 3)
             {
-                GameScreens.Score.draw(spriteBatch);
+                GameScreens.Score.Draw(spriteBatch);
             }
             if (GameResources.GameScreen == 4)
             {
-                GameScreens.Options.draw(spriteBatch);
+                GameScreens.Options.Draw(spriteBatch);
             }
             if (GameResources.GameScreen == 5)
             {

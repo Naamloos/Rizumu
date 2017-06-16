@@ -23,7 +23,7 @@ namespace Rizumu.GameScreens
         public static string oldsong = "";
         public static bool firstsong = true;
 
-        public static void draw(SpriteBatch spriteBatch)
+        public static void Draw(SpriteBatch spriteBatch)
         {
             MouseState omstate = mstate;
             if (Keyboard.GetState().IsKeyDown(Keys.F2))
@@ -65,8 +65,8 @@ namespace Rizumu.GameScreens
 
             foreach (string song in GameResources.songs)
             {
-                int myx = Game1.graphics.PreferredBackBufferWidth - 430;
-                if (txty + (100 * scrolled) == 100)
+                int myx = Game1.graphics.PreferredBackBufferWidth - 450;
+                if (txty + (110 * scrolled) == 110)
                 {
                     myx = Game1.graphics.PreferredBackBufferWidth - 500;
                     GameResources.selected = song;
@@ -99,10 +99,10 @@ namespace Rizumu.GameScreens
                     }
                     firstsong = false;
                 }
-                songbar = new Sprite(spriteBatch, myx, txty + (100 * scrolled), GameResources.Songbar, GameResources.basecolor);
+                songbar = new Sprite(spriteBatch, myx, txty + (110 * scrolled), GameResources.Songbar, GameResources.basecolor);
                 songbar.draw();
-                Text.draw(GameResources.font, song.Substring(14), myx + 20, txty + (100 * scrolled), spriteBatch);
-                txty = txty + 100;
+                Text.draw(GameResources.font, song.Substring(14), myx + 40, txty + (110 * scrolled) + 10, spriteBatch);
+                txty = txty + 110;
             }
 
             if (playbtn.hitbox.Intersects(Game1.cursorbox))
@@ -111,14 +111,14 @@ namespace Rizumu.GameScreens
                 {
                     GameResources.GameScreen = 2;
                 }
-                playbtn = new Sprite(spriteBatch, 0, Game1.graphics.PreferredBackBufferHeight - 200, GameResources.ButtonSelected, GameResources.basecolor);
+                playbtn = new Sprite(spriteBatch, 20, Game1.graphics.PreferredBackBufferHeight - 240, GameResources.ButtonSelected, GameResources.basecolor);
             }
             else
             {
-                playbtn = new Sprite(spriteBatch, 0, Game1.graphics.PreferredBackBufferHeight - 200, GameResources.Button, GameResources.basecolor);
+                playbtn = new Sprite(spriteBatch, 20, Game1.graphics.PreferredBackBufferHeight - 240, GameResources.Button, GameResources.basecolor);
             }
             playbtn.draw();
-            Text.draw(GameResources.font, "Play map", 10, Game1.graphics.PreferredBackBufferHeight - 170, spriteBatch);
+            Text.draw(GameResources.font, "Play map", 50, Game1.graphics.PreferredBackBufferHeight - 210, spriteBatch);
 
             if (backbtn.hitbox.Intersects(Game1.cursorbox))
             {
@@ -126,14 +126,14 @@ namespace Rizumu.GameScreens
                 {
                     GameResources.GameScreen = 0;
                 }
-                backbtn = new Sprite(spriteBatch, 0, Game1.graphics.PreferredBackBufferHeight - 100, GameResources.ButtonSelected, GameResources.basecolor);
+                backbtn = new Sprite(spriteBatch, 20, Game1.graphics.PreferredBackBufferHeight - 120, GameResources.ButtonSelected, GameResources.basecolor);
             }
             else
             {
-                backbtn = new Sprite(spriteBatch, 0, Game1.graphics.PreferredBackBufferHeight - 100, GameResources.Button, GameResources.basecolor);
+                backbtn = new Sprite(spriteBatch, 20, Game1.graphics.PreferredBackBufferHeight - 120, GameResources.Button, GameResources.basecolor);
             }
             backbtn.draw();
-            Text.draw(GameResources.font, "Back", 10, Game1.graphics.PreferredBackBufferHeight - 70, spriteBatch);
+            Text.draw(GameResources.font, "Back", 50, Game1.graphics.PreferredBackBufferHeight - 90, spriteBatch);
             string info = GameResources.selected.Substring(14) + "\n";
             if (File.Exists(GameResources.selected + "/info.rizum"))
             {
@@ -147,7 +147,7 @@ namespace Rizumu.GameScreens
             }
         }
 
-        public static void update(SpriteBatch spriteBatch)
+        public static void Update(SpriteBatch spriteBatch)
         {
 
         }

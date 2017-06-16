@@ -15,7 +15,7 @@ namespace Rizumu.GameScreens
     class Score
     {
         static string rank = "";
-        public static void draw(SpriteBatch spriteBatch)
+        public static void Draw(SpriteBatch spriteBatch)
         {
             GameResources.scorebackmouse = Mouse.GetState();
             rank = RankGen.generate((GameResources.fscore + GameResources.gscore + GameResources.hscore + GameResources.jscore), GameResources.totalnotes);
@@ -106,14 +106,14 @@ namespace Rizumu.GameScreens
                     MapScreen.loaded = false;
                     MapScreen.timer = 0;
                 }
-                backbtn = new Sprite(spriteBatch, 0, Game1.graphics.PreferredBackBufferHeight - 100, GameResources.ButtonSelected, GameResources.basecolor);
+                backbtn = new Sprite(spriteBatch, 20, Game1.graphics.PreferredBackBufferHeight - 120, GameResources.ButtonSelected, GameResources.basecolor);
             }
             else
             {
-                backbtn = new Sprite(spriteBatch, 0, Game1.graphics.PreferredBackBufferHeight - 100, GameResources.Button, GameResources.basecolor);
+                backbtn = new Sprite(spriteBatch, 20, Game1.graphics.PreferredBackBufferHeight - 120, GameResources.Button, GameResources.basecolor);
             }
             backbtn.draw();
-            Text.draw(GameResources.font, "Back", 10, Game1.graphics.PreferredBackBufferHeight - 70, spriteBatch);
+            Text.draw(GameResources.font, "Back", 50, Game1.graphics.PreferredBackBufferHeight - 90, spriteBatch);
         }
     }
 }

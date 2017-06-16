@@ -34,7 +34,7 @@ namespace Rizumu.GameScreens
         //public static VideoPlayer vp;
         public static bool usingvideo = true;
 
-        public static void draw(SpriteBatch spriteBatch, GameTime gameTime)
+        public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             if (!loaded)
             {
@@ -453,6 +453,8 @@ namespace Rizumu.GameScreens
                     health.draw();
                     i++;
                 }
+                Sprite healthoverlay = new Sprite(spriteBatch, 0, 0, GameResources.healthoverlay, GameResources.basecolor);
+                healthoverlay.draw();
             }
             if (paused)
             {
@@ -490,7 +492,7 @@ namespace Rizumu.GameScreens
             }
         }
 
-        public static void update(Microsoft.Xna.Framework.Content.ContentManager Content, GraphicsDevice graph)
+        public static void Update(Microsoft.Xna.Framework.Content.ContentManager Content, GraphicsDevice graph)
         {
             // nah fam
             if (!paused)

@@ -84,6 +84,7 @@ namespace Rizumu
         public static Texture2D sparkle2;
         public static Texture2D sparkle3;
         public static Texture2D sparkle4;
+        public static Texture2D healthoverlay;
 
         // Animations
         public static Texture2D[] Animation_sparkle;
@@ -104,7 +105,7 @@ namespace Rizumu
         public static Microsoft.Xna.Framework.Content.ContentManager globalcontent;
         // Keybinds
 
-        public static void load(Microsoft.Xna.Framework.Content.ContentManager Content)
+        public static void Load(Microsoft.Xna.Framework.Content.ContentManager Content)
         {
             globalcontent = Content;
             // Textures
@@ -144,6 +145,7 @@ namespace Rizumu
             sparkle2 = Content.Load<Texture2D>("sparkle-2");
             sparkle3 = Content.Load<Texture2D>("sparkle-3");
             sparkle4 = Content.Load<Texture2D>("sparkle-4");
+            healthoverlay = Content.Load<Texture2D>("healthoverlay");
 
             // Animations
             Animation_sparkle = new Texture2D[5]
@@ -152,7 +154,7 @@ namespace Rizumu
             };
 
             // Backgrounds
-            background_menu = Content.Load<Texture2D>("main_background");
+            background_menu = Content.Load<Texture2D>("blossom");
 
             // Fonts
             font = Content.Load<SpriteFont>("font");
@@ -304,7 +306,7 @@ namespace Rizumu
             }
         }
 
-        public static void loopcolor()
+        public static void LoopColor()
         {
             Color newcolor = basecolor;
             if (newcolor.R > byte.MaxValue)

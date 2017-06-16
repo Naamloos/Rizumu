@@ -15,7 +15,7 @@ namespace Rizumu.GameScreens
     class Options
     {
         public static MouseState mstate;
-        public static void draw(SpriteBatch spriteBatch)
+        public static void Draw(SpriteBatch spriteBatch)
         {
             MouseState oldstate = mstate;
             mstate = Mouse.GetState();
@@ -44,14 +44,14 @@ namespace Rizumu.GameScreens
                     File.WriteAllLines("settings.ini", lines);
                     GameResources.GameScreen = 0;
                 }
-                backbtn = new Sprite(spriteBatch, 0, Game1.graphics.PreferredBackBufferHeight - 100, GameResources.ButtonSelected, GameResources.basecolor);
+                backbtn = new Sprite(spriteBatch, 20, Game1.graphics.PreferredBackBufferHeight - 120, GameResources.ButtonSelected, GameResources.basecolor);
             }
             else
             {
-                backbtn = new Sprite(spriteBatch, 0, Game1.graphics.PreferredBackBufferHeight - 100, GameResources.Button, GameResources.basecolor);
+                backbtn = new Sprite(spriteBatch, 20, Game1.graphics.PreferredBackBufferHeight - 120, GameResources.Button, GameResources.basecolor);
             }
             backbtn.draw();
-            Text.draw(GameResources.font, "Back", 10, Game1.graphics.PreferredBackBufferHeight - 70, spriteBatch);
+            Text.draw(GameResources.font, "Back", 50, Game1.graphics.PreferredBackBufferHeight - 90, spriteBatch);
 
             Sprite FullscreenCheck;
             if (GameResources.fullscreen == true)
@@ -81,7 +81,7 @@ namespace Rizumu.GameScreens
             Text.draw(GameResources.font, "Enable Fullscreen", 110, 55, spriteBatch);
         }
 
-        public static void update()
+        public static void Update()
         {
 
         }

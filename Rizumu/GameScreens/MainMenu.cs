@@ -22,7 +22,7 @@ namespace Rizumu.GameScreens
         public static MouseState mstate;
         public static int scrolltextx = 0;
 
-        public static void draw(SpriteBatch spriteBatch)
+        public static void Draw(SpriteBatch spriteBatch)
         {
             background = new Background(spriteBatch, GameResources.background_menu);
             background.draw();
@@ -38,14 +38,14 @@ namespace Rizumu.GameScreens
                 {
                     GameResources.GameScreen = 1;
                 }
-                playbtn = new Sprite(spriteBatch, 0, 50, GameResources.ButtonSelected, GameResources.basecolor);
+                playbtn = new Sprite(spriteBatch, 40, 70, GameResources.ButtonSelected, GameResources.basecolor);
             }
             else
             {
-                playbtn = new Sprite(spriteBatch, 0, 50, GameResources.Button, GameResources.basecolor);
+                playbtn = new Sprite(spriteBatch, 40, 70, GameResources.Button, GameResources.basecolor);
             }
             playbtn.draw();
-            Text.draw(GameResources.font, "Play", 10, 80, spriteBatch);
+            Text.draw(GameResources.font, "Play", 70, 100, spriteBatch);
 
             if (optionsbtn.hitbox.Intersects(Game1.cursorbox))
             {
@@ -53,29 +53,29 @@ namespace Rizumu.GameScreens
                 {
                     GameResources.GameScreen = 4;
                 }
-                optionsbtn = new Sprite(spriteBatch, 0, 160, GameResources.ButtonSelected, GameResources.basecolor);
+                optionsbtn = new Sprite(spriteBatch, 40, 180, GameResources.ButtonSelected, GameResources.basecolor);
             }
             else
             {
-                optionsbtn = new Sprite(spriteBatch, 0, 160, GameResources.Button, GameResources.basecolor);
+                optionsbtn = new Sprite(spriteBatch, 40, 180, GameResources.Button, GameResources.basecolor);
             }
             optionsbtn.draw();
-            Text.draw(GameResources.font, "Options", 10, 190, spriteBatch);
+            Text.draw(GameResources.font, "Options", 70, 210, spriteBatch);
 
             if (loginbtn.hitbox.Intersects(Game1.cursorbox))
             {
-                loginbtn = new Sprite(spriteBatch, 0, 270, GameResources.ButtonSelected, GameResources.basecolor);
+                loginbtn = new Sprite(spriteBatch, 40, 290, GameResources.ButtonSelected, GameResources.basecolor);
             }
             else
             {
-                loginbtn = new Sprite(spriteBatch, 0, 270, GameResources.Button, GameResources.basecolor);
+                loginbtn = new Sprite(spriteBatch, 40, 290, GameResources.Button, GameResources.basecolor);
             }
             loginbtn.draw();
-            Text.draw(GameResources.font, "Log in", 10, 300, spriteBatch);
+            Text.draw(GameResources.font, "Log in", 70, 320, spriteBatch);
 
             if (exitbtn.hitbox.Intersects(Game1.cursorbox))
             {
-                exitbtn = new Sprite(spriteBatch, 0, 380, GameResources.ButtonSelected, GameResources.basecolor);
+                exitbtn = new Sprite(spriteBatch, 40, 400, GameResources.ButtonSelected, GameResources.basecolor);
                 if (mstate.LeftButton == ButtonState.Released && omstate.LeftButton == ButtonState.Pressed)
                 {
                     Game1.exiting = true;
@@ -83,12 +83,12 @@ namespace Rizumu.GameScreens
             }
             else
             {
-                exitbtn = new Sprite(spriteBatch, 0, 380, GameResources.Button, GameResources.basecolor);
+                exitbtn = new Sprite(spriteBatch, 40, 400, GameResources.Button, GameResources.basecolor);
             }
             exitbtn.draw();
-            Text.draw(GameResources.font, "Exit", 10, 410, spriteBatch);
+            Text.draw(GameResources.font, "Exit", 70, 430, spriteBatch);
 
-            Text.draw(GameResources.font, "Currently playing: " + GameResources.selected.Substring(14), scrolltextx, 0, spriteBatch);
+            Text.draw(GameResources.font, GameResources.selected.Substring(14), scrolltextx, 0, spriteBatch);
             if (scrolltextx < (300 + (GameResources.selected.Substring(14).Length * 20)) * -1)
             {
                 scrolltextx = Game1.graphics.PreferredBackBufferWidth + (GameResources.selected.Substring(14).Length * 10);
@@ -97,29 +97,22 @@ namespace Rizumu.GameScreens
             {
                 scrolltextx = scrolltextx - 5;
             }
-            Sprite mascotte = new Sprite(spriteBatch, Game1.graphics.PreferredBackBufferWidth - GameResources.Mascotte.Width - 70, Game1.graphics.PreferredBackBufferHeight - GameResources.Mascotte.Height + 80, GameResources.Mascotte, GameResources.basecolor);
-            mascotte.scale = 1f;
-            if (Music.beat)
-            {
-                mascotte.scale = 2f;
-            }
-
-            mascotte.draw();
+            
             if (Keyboard.GetState().IsKeyDown(Keys.F11))
             {
                 GameResources.GameScreen = 6;
             }
         }
 
-        public static void update()
+        public static void Update()
         {
-            konami();
+            Konami();
         }
 
         public static int konamii = 0;
         public static KeyboardState oks;
 
-        public static void konami()
+        public static void Konami()
         {
             KeyboardState ks = Keyboard.GetState();
             if (ks.IsKeyDown(Keys.Up) && konamii == 0)
