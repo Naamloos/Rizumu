@@ -270,7 +270,7 @@ namespace Rizumu.GameScreens
 
                 while (fi < fnotes.Length)
                 {
-                    if (fnotes[fi][0] < timer - (notew * 2) + (centerx / notespeed) - notew * 2 && fnotes[fi][1] < centerx + notew && fnotes[fi][2] == 0)
+                    if (fnotes[fi][0] < timer - (notew * 2) + (centerx / notespeed) - notew * 2 && fnotes[fi][1] < centerx + notew + 5 && fnotes[fi][2] == 0)
                     {
                         note = new Sprite(spriteBatch, fnotes[fi][1], centery, GameResources.NoteL, GameResources.basecolor);
                         fnotes[fi][1] = fnotes[fi][1] + (int)(10 * notespeed);
@@ -307,7 +307,7 @@ namespace Rizumu.GameScreens
 
                 while (fi < gnotes.Length)
                 {
-                    if (gnotes[fi][0] < timer - (noteh * 2) + (centery / notespeed) - noteh && gnotes[fi][1] < centery + noteh && gnotes[fi][2] == 0)
+                    if (gnotes[fi][0] < timer - (noteh * 2) + (centery / notespeed) - noteh && gnotes[fi][1] < centery + noteh + 5 && gnotes[fi][2] == 0)
                     {
                         note = new Sprite(spriteBatch, centerx, gnotes[fi][1], GameResources.NoteU, GameResources.basecolor);
                         gnotes[fi][1] = gnotes[fi][1] + (int)(10 * notespeed);
@@ -345,7 +345,7 @@ namespace Rizumu.GameScreens
 
                 while (fi < hnotes.Length)
                 {
-                    if (hnotes[fi][0] < timer - (notew * 2) + (centerx / notespeed) - notew * 2 && hnotes[fi][1] < centerx + notew && hnotes[fi][2] == 0)
+                    if (hnotes[fi][0] < timer - (notew * 2) + (centerx / notespeed) - notew * 2 && hnotes[fi][1] < centerx + notew + 5 && hnotes[fi][2] == 0)
                     {
                         note = new Sprite(spriteBatch, Game1.graphics.PreferredBackBufferWidth - notew - hnotes[fi][1], centery, GameResources.NoteR, GameResources.basecolor);
                         hnotes[fi][1] = hnotes[fi][1] + (int)(10 * notespeed);
@@ -382,7 +382,7 @@ namespace Rizumu.GameScreens
 
                 while (fi < jnotes.Length)
                 {
-                    if (jnotes[fi][0] < timer - (noteh * 2) + (centery / notespeed) - noteh && jnotes[fi][1] < centery + noteh && jnotes[fi][2] == 0)
+                    if (jnotes[fi][0] < timer - (noteh * 2) + (centery / notespeed) - noteh && jnotes[fi][1] < centery + noteh + 5 && jnotes[fi][2] == 0)
                     {
                         note = new Sprite(spriteBatch, centerx, Game1.graphics.PreferredBackBufferHeight - jnotes[fi][1] - noteh, GameResources.NoteD, GameResources.basecolor);
                         jnotes[fi][1] = jnotes[fi][1] + (int)(10 * notespeed);

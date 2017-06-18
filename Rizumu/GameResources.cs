@@ -154,7 +154,7 @@ namespace Rizumu
             };
 
             // Backgrounds
-            background_menu = Content.Load<Texture2D>("blossom");
+            background_menu = Content.Load<Texture2D>("menubg");
 
             // Fonts
             font = Content.Load<SpriteFont>("font");
