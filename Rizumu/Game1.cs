@@ -6,6 +6,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.IO;
 using System.Threading;
@@ -72,6 +73,7 @@ namespace Rizumu
         {
             this.IsFixedTimeStep = true;
             this.TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 500.0f);
+            Window.Position = new Point(50, 50);
             graphics.SynchronizeWithVerticalRetrace = true;
             base.Initialize();
         }
@@ -94,7 +96,7 @@ namespace Rizumu
             {
                 Exit();
             }
-            if (Music.player.PlaybackState != NAudio.Wave.PlaybackState.Playing && GameResources.GameScreen != 2 && GameResources.GameScreen != 6)
+            if (MediaPlayer.State != MediaState.Playing && GameResources.GameScreen != 2 && GameResources.GameScreen != 6)
             {
                 Music.play(GameResources.selected, 0);
             }

@@ -7,7 +7,7 @@
  * NAudio breaks cross-platform compatibility (mono, wine, etc)
  */
 
-using NAudio.Wave;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Threading;
 
@@ -15,44 +15,32 @@ namespace Rizumu
 {
     class Music
     {
-        public static string oldsong;
-        public static WaveOutEvent player;
-        public static WaveStream mainOutputStream;
-        public static long oldpos = 0;
-        public static Thread beatthread;
-        public static bool beat = false;
+        public static Song song = null;
 
         public static void play(string mp3, long position)
         {
-            oldsong = mp3;
-            mainOutputStream = new Mp3FileReader(mp3 + "/song.mp3");
-            WaveChannel32 volumeStream = new WaveChannel32(mainOutputStream);
-            mainOutputStream.Position = position;
-            volumeStream.Volume = 0.20f;
-
-            try
+            if (MediaPlayer.State == MediaState.Playing)
             {
-                player.Stop();
-                player.Dispose();
+                MediaPlayer.Stop();
             }
-            catch (Exception)
+            if (song != null && !song.IsDisposed)
             {
+                song.Dispose();
             }
 
-            player = new WaveOutEvent();
-
-            player.Init(volumeStream);
-
-            player.Play();
+            song = Song.FromUri(mp3, new Uri(mp3 + "/song.mp3", UriKind.Relative));
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.5f;
+            MediaPlayer.Play(song);
         }
 
         public static void pause()
         {
-            player.Pause();
+            MediaPlayer.Pause();
         }
         public static void resume()
         {
-            player.Play();
+            MediaPlayer.Resume();
         }
     }
 }
