@@ -85,6 +85,7 @@ namespace Rizumu
         public static Texture2D sparkle3;
         public static Texture2D sparkle4;
         public static Texture2D healthoverlay;
+        public static Texture2D popup;
 
         // Animations
         public static Texture2D[] Animation_sparkle;
@@ -146,6 +147,7 @@ namespace Rizumu
             sparkle3 = Content.Load<Texture2D>("sparkle-3");
             sparkle4 = Content.Load<Texture2D>("sparkle-4");
             healthoverlay = Content.Load<Texture2D>("healthoverlay");
+            popup = Content.Load<Texture2D>("popup");
 
             // Animations
             Animation_sparkle = new Texture2D[5]

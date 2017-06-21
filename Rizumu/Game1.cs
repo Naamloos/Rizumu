@@ -80,6 +80,7 @@ namespace Rizumu
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             GameResources.Load(Content);
+            IngamePopup.Preload(spriteBatch, GameResources.popup);
         }
 
         protected override void UnloadContent()
@@ -142,7 +143,7 @@ namespace Rizumu
                 pressed = true;
             }
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
 
             if (GameResources.GameScreen == 0)
             {
@@ -197,6 +198,8 @@ namespace Rizumu
                 ci++;
             }
 
+            IngamePopup.TryDraw();
+
             spriteBatch.End();
             if (pressed)
             {
@@ -212,6 +215,10 @@ namespace Rizumu
             if (Keyboard.GetState().IsKeyDown(Keys.F6) && GameResources.GameScreen == 5)
             {
                 GameResources.GameScreen = 0;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.F7))
+            {
+                IngamePopup.SetPopup("Test", "this is a test popup");
             }
 
             base.Draw(gameTime);

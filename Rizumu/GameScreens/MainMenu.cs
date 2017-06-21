@@ -66,6 +66,10 @@ namespace Rizumu.GameScreens
 
             if (loginbtn.hitbox.Intersects(Game1.cursorbox))
             {
+                if (mstate.LeftButton == ButtonState.Released && omstate.LeftButton == ButtonState.Pressed)
+                {
+                    IngamePopup.SetPopup("Oopsie!", "Online play and score uploading aren't\nimplemented yet.\n\nSorry!");
+                }
                 loginbtn = new Sprite(spriteBatch, 40, 290, GameResources.ButtonSelected, GameResources.basecolor);
             }
             else
@@ -137,8 +141,17 @@ namespace Rizumu.GameScreens
                 konamii = 9;
             else if (ks.IsKeyDown(Keys.A) && konamii == 9)
             {
-                System.Windows.Forms.MessageBox.Show("You entered the konami code.\nAutoplay has been activated!");
-                GameResources.autoplay = true;
+                if(GameResources.autoplay == true)
+                {
+                    IngamePopup.SetPopup("Konami code disabled", "You entered the konami code.\nAutoplay has been deactivated again!");
+                    GameResources.autoplay = false;
+                }
+                else
+                {
+                    IngamePopup.SetPopup("Konami code enabled", "You entered the konami code.\nAutoplay has been activated!");
+                    GameResources.autoplay = true;
+                }
+                konamii = 0;
             }
             oks = ks;
         }

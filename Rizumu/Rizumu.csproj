@@ -53,6 +53,7 @@
     <ApplicationIcon>Finallogo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="IngamePopup.cs" />
     <Compile Include="Objects\Animation.cs" />
     <Compile Include="Objects\Background.cs" />
     <Compile Include="Game1.cs" />

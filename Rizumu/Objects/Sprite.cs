@@ -9,7 +9,7 @@ using System;
 
 namespace Rizumu
 {
-    struct Sprite
+    public struct Sprite
     {
         public SpriteBatch spriteBatch;
         public int x;

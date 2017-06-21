@@ -10,13 +10,15 @@ namespace Rizumu
 {
     class Text
     {
-        public static void draw(SpriteFont font, string text, int x, int y, SpriteBatch spriteBatch)
+        public static void draw(SpriteFont font, string text, int x, int y, SpriteBatch spriteBatch, float Opacity = 1.0f)
         {
-            spriteBatch.DrawString(font, text, new Vector2(x + 1, y + 1), Color.Black);
-            spriteBatch.DrawString(font, text, new Vector2(x + 1, y - 1), Color.Black);
-            spriteBatch.DrawString(font, text, new Vector2(x - 1, y + 1), Color.Black);
-            spriteBatch.DrawString(font, text, new Vector2(x - 1, y - 1), Color.Black);
-            spriteBatch.DrawString(font, text, new Vector2(x, y), GameResources.basecolor);
+            Color Black = new Color(Color.Black, Opacity);
+            Color White = new Color(GameResources.basecolor, Opacity);
+            spriteBatch.DrawString(font, text, new Vector2(x + 1, y + 1), Black);
+            spriteBatch.DrawString(font, text, new Vector2(x + 1, y - 1), Black);
+            spriteBatch.DrawString(font, text, new Vector2(x - 1, y + 1), Black);
+            spriteBatch.DrawString(font, text, new Vector2(x - 1, y - 1), Black);
+            spriteBatch.DrawString(font, text, new Vector2(x, y), White);
         }
     }
 }
