@@ -30,7 +30,7 @@ namespace Rizumu
 
             song = Song.FromUri(mp3, new Uri(mp3 + "/song.mp3", UriKind.Relative));
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = 0.5f;
+            MediaPlayer.Volume = 0.3f;
             MediaPlayer.Play(song);
         }
 
