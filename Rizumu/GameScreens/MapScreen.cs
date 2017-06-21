@@ -147,7 +147,7 @@ namespace Rizumu.GameScreens
                 GameResources.totalnotes = fnotes.Length + gnotes.Length + hnotes.Length + jnotes.Length;
                 loaded = true;
                 Music.play(GameResources.selected, 0);
-                
+                timer = timer + 50;
             }
             KeyboardState newState = Keyboard.GetState();
 
