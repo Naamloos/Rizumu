@@ -94,10 +94,10 @@ namespace Rizumu.GameScreens
             exitbtn.draw();
             Text.draw(GameResources.font, "Exit", 70, 430, spriteBatch);
 
-            Text.draw(GameResources.font, GameResources.selected.Substring(14), scrolltextx, 0, spriteBatch);
-            if (scrolltextx < (300 + (GameResources.selected.Substring(14).Length * 20)) * -1)
+            Text.draw(GameResources.font, GameResources.Maps[GameResources.selected].Name, scrolltextx, 0, spriteBatch);
+            if (scrolltextx < (300 + (GameResources.Maps[GameResources.selected].Name.Length * 20)) * -1)
             {
-                scrolltextx = Game1.graphics.PreferredBackBufferWidth + (GameResources.selected.Substring(14).Length * 10);
+                scrolltextx = Game1.graphics.PreferredBackBufferWidth + (GameResources.Maps[GameResources.selected].Name.Length * 10);
             }
             else
             {

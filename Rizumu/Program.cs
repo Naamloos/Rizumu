@@ -4,6 +4,7 @@
 
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -61,7 +62,7 @@ namespace Rizumu
 
             //try
             //{
-                randomsong();
+            Randomsong();
             //}
             //catch (Exception ex)
             //{
@@ -75,7 +76,7 @@ namespace Rizumu
                 game.Run();
         }
 
-        public static void randomsong()
+        public static void Randomsong()
         {
             int songcount = GameResources.Maps.Count;
             System.Random rndsng = new System.Random();

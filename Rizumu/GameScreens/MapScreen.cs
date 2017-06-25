@@ -432,9 +432,9 @@ namespace Rizumu.GameScreens
                 if (timer > lastnote + 500)
                 {
 
-                    if (File.Exists(GameResources.selected + "/back.png"))
+                    if (File.Exists(Path.Combine(GameResources.selected, GameResources.Maps[GameResources.selected].BackgroundFile)))
                     {
-                        System.IO.Stream stream4 = TitleContainer.OpenStream(GameResources.selected + "/back.png");
+                        System.IO.Stream stream4 = TitleContainer.OpenStream(Path.Combine(GameResources.selected, GameResources.Maps[GameResources.selected].BackgroundFile));
                         GameResources.songbg = Texture2D.FromStream(Game1.graphics.GraphicsDevice, stream4);
                     }
                     else
@@ -460,9 +460,9 @@ namespace Rizumu.GameScreens
             {
                 if (Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
-                    if (File.Exists(GameResources.selected + "/back.png"))
+                    if (File.Exists(Path.Combine(GameResources.selected, GameResources.Maps[GameResources.selected].BackgroundFile)))
                     {
-                        System.IO.Stream stream4 = TitleContainer.OpenStream(GameResources.selected + "/back.png");
+                        System.IO.Stream stream4 = TitleContainer.OpenStream(Path.Combine(GameResources.selected, GameResources.Maps[GameResources.selected].BackgroundFile));
                         GameResources.songbg = Texture2D.FromStream(Game1.graphics.GraphicsDevice, stream4);
                     }
                     else
