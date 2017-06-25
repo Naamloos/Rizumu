@@ -232,25 +232,25 @@ namespace Rizumu.GameScreens
             int noteh = GameResources.NoteL.Height;
             int centerx = Game1.graphics.PreferredBackBufferWidth / 2 - GameResources.NoteL.Width / 2;
             int centery = Game1.graphics.PreferredBackBufferHeight / 2 - GameResources.NoteL.Height / 2;
-            if (Keyboard.GetState().IsKeyDown(Keys.NumPad4))
+            if (Keyboard.GetState().IsKeyDown(GameResources.left))
                 note = new Sprite(spriteBatch, centerx - notew, centery, GameResources.NoteL, GameResources.basecolor);
             else
                 note = new Sprite(spriteBatch, centerx - notew, centery, GameResources.NoteL, new Color(GameResources.basecolor, 0.5f));
             note.draw();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.NumPad8))
+            if (Keyboard.GetState().IsKeyDown(GameResources.up))
                 note = new Sprite(spriteBatch, centerx, centery - noteh, GameResources.NoteU, GameResources.basecolor);
             else
                 note = new Sprite(spriteBatch, centerx, centery - noteh, GameResources.NoteU, new Color(GameResources.basecolor, 0.5f));
             note.draw();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.NumPad6))
+            if (Keyboard.GetState().IsKeyDown(GameResources.right))
                 note = new Sprite(spriteBatch, centerx + notew, centery, GameResources.NoteR, GameResources.basecolor);
             else
                 note = new Sprite(spriteBatch, centerx + notew, centery, GameResources.NoteR, new Color(GameResources.basecolor, 0.5f));
             note.draw();
 
-            if (Keyboard.GetState().IsKeyDown(Keys.NumPad2))
+            if (Keyboard.GetState().IsKeyDown(GameResources.down))
                 note = new Sprite(spriteBatch, centerx, centery + noteh, GameResources.NoteD, GameResources.basecolor);
             else
                 note = new Sprite(spriteBatch, centerx, centery + noteh, GameResources.NoteD, new Color(GameResources.basecolor, 0.5f));
