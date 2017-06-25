@@ -33,10 +33,12 @@ namespace Rizumu.GameScreens
                     {
                         if (lines[i] == "fullscreen:true" && !GameResources.fullscreen)
                         {
+                            IngamePopup.SetPopup("Fullscreen disabled!", "Please restart the game for changes to take effect!");
                             lines[i] = "fullscreen:false";
                         }
                         if (lines[i] == "fullscreen:false" && GameResources.fullscreen)
                         {
+                            IngamePopup.SetPopup("Fullscreen enabled!", "Please restart the game for changes to take effect!");
                             lines[i] = "fullscreen:true";
                         }
                         i++;
