@@ -5,6 +5,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Rizumu.Objects;
 using System;
 using System.IO;
 
@@ -29,7 +30,7 @@ namespace Rizumu.GameScreens
             if (Keyboard.GetState().IsKeyDown(Keys.F2))
             {
                 Random r = new Random();
-                scrolled = r.Next(1, GameResources.songs.Length) * -1;
+                scrolled = r.Next(1, GameResources.Maps.Count) * -1;
             }
             mstate = Mouse.GetState();
             try
@@ -50,7 +51,7 @@ namespace Rizumu.GameScreens
             {
 
             }
-            int limit = (GameResources.songs.Length * -1) - 1;
+            int limit = (GameResources.Maps.Count * -1) - 1;
             int txty = 0;
 
             if (oldscrollval < Mouse.GetState().ScrollWheelValue && scrolled != 1)
@@ -63,8 +64,9 @@ namespace Rizumu.GameScreens
             }
             oldscrollval = Mouse.GetState().ScrollWheelValue;
 
-            foreach (string song in GameResources.songs)
+            foreach (var map in GameResources.Maps)
             {
+                string song = map.Key;
                 int myx = Game1.graphics.PreferredBackBufferWidth - 450;
                 if (txty + (110 * scrolled) == 110)
                 {
@@ -74,9 +76,9 @@ namespace Rizumu.GameScreens
                     {
                         try
                         {
-                            if (File.Exists(song + "/back.png"))
+                            if (File.Exists(Path.Combine(song, map.Value.BackgroundFile)))
                             {
-                                System.IO.Stream stream4 = TitleContainer.OpenStream(GameResources.selected + "/back.png");
+                                System.IO.Stream stream4 = TitleContainer.OpenStream(Path.Combine(song, map.Value.BackgroundFile));
                                 GameResources.songbg = Texture2D.FromStream(Game1.graphics.GraphicsDevice, stream4);
                             }
                             else
@@ -101,7 +103,7 @@ namespace Rizumu.GameScreens
                 }
                 songbar = new Sprite(spriteBatch, myx, txty + (110 * scrolled), GameResources.Songbar, GameResources.basecolor);
                 songbar.draw();
-                Text.draw(GameResources.font, song.Substring(14), myx + 40, txty + (110 * scrolled) + 10, spriteBatch);
+                Text.draw(GameResources.font, map.Value.Name, myx + 40, txty + (110 * scrolled) + 10, spriteBatch);
                 txty = txty + 110;
             }
 
@@ -134,12 +136,9 @@ namespace Rizumu.GameScreens
             }
             backbtn.draw();
             Text.draw(GameResources.font, "Back", 50, Game1.graphics.PreferredBackBufferHeight - 90, spriteBatch);
-            string info = GameResources.selected.Substring(14) + "\n";
-            if (File.Exists(GameResources.selected + "/info.rizum"))
-            {
-                string text = File.ReadAllText(GameResources.selected + "/info.rizum");
-                info += text;
-            }
+            string info = "Folder name: " + GameResources.selected.Substring(14) + "\n";
+            info += "Map creator: " + GameResources.Maps[GameResources.selected].Description + "\n\n";
+            info += GameResources.Maps[GameResources.selected].Description;
             Text.draw(GameResources.font, info, 10, 10, spriteBatch);
             if (Mouse.GetState().LeftButton == ButtonState.Released)
             {

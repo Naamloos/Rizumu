@@ -2,8 +2,10 @@
  * Main program logic. What i do here is check folders, load config, preload songs, etc
  */
 
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Rizumu
@@ -44,17 +46,28 @@ namespace Rizumu
             {
                 Directory.CreateDirectory("screenshots");
             }
-            try
-            {
-                randomsong();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Please add songs to your 'songs' folder!\n\n" + ex.ToString());
-                Environment.Exit(0);
-            }
             // Preload songs!
-            Rizumu.GameResources.songs = Directory.GetDirectories("content/songs");
+            GameResources.Maps = new System.Collections.Generic.Dictionary<string, Objects.RizumuMap>();
+            var songs = System.IO.Directory.GetDirectories("content/songs");
+            foreach (string path in songs)
+            {
+                if (File.Exists(Path.Combine(path, "map.json")))
+                {
+                    var j = JObject.Parse(File.ReadAllText(Path.Combine(path, "map.json")));
+                    var m = j.ToObject<Objects.RizumuMap>();
+                    GameResources.Maps.Add(path, m);
+                }
+            }
+
+            //try
+            //{
+                randomsong();
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("Please add songs to your 'songs' folder!\n\n" + ex.ToString());
+            //    Environment.Exit(0);
+            //}
 
             // Check settings
             Properties.Settings.Default.Save();
@@ -64,11 +77,10 @@ namespace Rizumu
 
         public static void randomsong()
         {
-            GameResources.songs = System.IO.Directory.GetDirectories("content/songs");
-            int songcount = GameResources.songs.Length;
+            int songcount = GameResources.Maps.Count;
             System.Random rndsng = new System.Random();
             int firstsong = rndsng.Next(0, songcount);
-            string name = GameResources.songs[firstsong];
+            string name = GameResources.Maps.Keys.ToList()[firstsong];
             GameResources.startint = firstsong;
             GameResources.selected = name;
             Music.play(name, 0);

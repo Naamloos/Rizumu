@@ -9,6 +9,7 @@
 
 using Microsoft.Xna.Framework.Media;
 using System;
+using System.IO;
 using System.Threading;
 
 namespace Rizumu
@@ -28,7 +29,7 @@ namespace Rizumu
                 song.Dispose();
             }
 
-            song = Song.FromUri(mp3, new Uri(mp3 + "/song.mp3", UriKind.Relative));
+            song = Song.FromUri(mp3, new Uri(Path.Combine(mp3, GameResources.Maps[mp3].FileName), UriKind.Relative));
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = 0.3f;
             MediaPlayer.Play(song);

@@ -43,13 +43,13 @@ namespace Rizumu.GameScreens
 
                 timer = 0 + GameResources.offset;
                 int l = 0;
-                string[] lf = File.ReadAllLines(GameResources.selected + "\\fnotes.rizum");
-                fnotes = new int[lf.Length][];
-                while (l < lf.Length)
+                int[] ints = GameResources.Maps[GameResources.selected].LeftNotes;
+                fnotes = new int[ints.Length][];
+                while (l < ints.Length)
                 {
                     try
                     {
-                        fnotes[l] = new int[4] { Int32.Parse(lf[l]), 0, 0, 0 };
+                        fnotes[l] = new int[4] { ints[l], 0, 0, 0 };
                     }
                     catch (Exception)
                     {
@@ -59,13 +59,13 @@ namespace Rizumu.GameScreens
                 }
 
                 l = 0;
-                lf = File.ReadAllLines(GameResources.selected + "\\gnotes.rizum");
-                gnotes = new int[lf.Length][];
-                while (l < lf.Length)
+                ints = GameResources.Maps[GameResources.selected].UpNotes;
+                gnotes = new int[ints.Length][];
+                while (l < ints.Length)
                 {
                     try
                     {
-                        gnotes[l] = new int[4] { Int32.Parse(lf[l]), 0, 0, 0 };
+                        gnotes[l] = new int[4] { ints[l], 0, 0, 0 };
                     }
                     catch (Exception)
                     {
@@ -75,13 +75,13 @@ namespace Rizumu.GameScreens
                 }
 
                 l = 0;
-                lf = File.ReadAllLines(GameResources.selected + "\\hnotes.rizum");
-                hnotes = new int[lf.Length][];
-                while (l < lf.Length)
+                ints = GameResources.Maps[GameResources.selected].RightNotes;
+                hnotes = new int[ints.Length][];
+                while (l < ints.Length)
                 {
                     try
                     {
-                        hnotes[l] = new int[4] { Int32.Parse(lf[l]), 0, 0, 0 };
+                        hnotes[l] = new int[4] { ints[l], 0, 0, 0 };
                     }
                     catch (Exception)
                     {
@@ -91,13 +91,13 @@ namespace Rizumu.GameScreens
                 }
 
                 l = 0;
-                lf = File.ReadAllLines(GameResources.selected + "\\jnotes.rizum");
-                jnotes = new int[lf.Length][];
-                while (l < lf.Length)
+                ints = GameResources.Maps[GameResources.selected].DownNotes;
+                jnotes = new int[ints.Length][];
+                while (l < ints.Length)
                 {
                     try
                     {
-                        jnotes[l] = new int[4] { Int32.Parse(lf[l]), 0, 0, 0 };
+                        jnotes[l] = new int[4] { ints[l], 0, 0, 0 };
                     }
                     catch (Exception)
                     {
@@ -106,9 +106,9 @@ namespace Rizumu.GameScreens
                     l = l + 1;
                 }
 
-                if (File.Exists(GameResources.selected + "/back.png"))
+                if (File.Exists(Path.Combine(GameResources.selected, GameResources.Maps[GameResources.selected].BackgroundFile)))
                 {
-                    System.IO.Stream stream4 = TitleContainer.OpenStream(GameResources.selected + "/back.png");
+                    System.IO.Stream stream4 = TitleContainer.OpenStream(Path.Combine(GameResources.selected, GameResources.Maps[GameResources.selected].BackgroundFile));
                     GameResources.songbg = Texture2D.FromStream(Game1.graphics.GraphicsDevice, stream4);
                 }
                 else
@@ -431,7 +431,7 @@ namespace Rizumu.GameScreens
 
                 if (timer > lastnote + 500)
                 {
-                   
+
                     if (File.Exists(GameResources.selected + "/back.png"))
                     {
                         System.IO.Stream stream4 = TitleContainer.OpenStream(GameResources.selected + "/back.png");

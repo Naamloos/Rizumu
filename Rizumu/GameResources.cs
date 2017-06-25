@@ -25,7 +25,7 @@ namespace Rizumu
 
 
         public static int GameScreen = 0;
-        public static string[] songs;
+        public static Dictionary<string, Objects.RizumuMap> Maps;
         public static string selected = "content/songs/";
         public static int startint = 0;
         public static int fscore = 0;
