@@ -122,7 +122,7 @@ namespace Rizumu
             {
                 GameResources.LoopColor();
             }
-            Window.Title = "Rizumu: " + GameResources.selected.Substring(14);
+            Window.Title = "Rizumu: " + GameResources.Maps[GameResources.selected].Name;
             KeyboardState oldstate = kstate;
             kstate = Keyboard.GetState();
             if (kstate.IsKeyDown(Keys.F12) && !oldstate.IsKeyDown(Keys.F12))
