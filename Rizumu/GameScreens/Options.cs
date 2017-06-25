@@ -21,7 +21,7 @@ namespace Rizumu.GameScreens
             mstate = Mouse.GetState();
             Background mainbg = new Background(spriteBatch, GameResources.background_menu);
             mainbg.draw();
-            Text.draw(GameResources.font, "Options menu idk idk", 0, 0, spriteBatch);
+            Text.draw(GameResources.font, "Options", 0, 0, spriteBatch);
             Sprite backbtn = new Sprite(spriteBatch, 0, Game1.graphics.PreferredBackBufferHeight - 100, GameResources.Button, GameResources.basecolor);
             if (backbtn.hitbox.Intersects(Game1.cursorbox))
             {
