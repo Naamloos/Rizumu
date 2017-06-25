@@ -29,7 +29,7 @@ namespace Rizumu
                 File.Create("settings.json").Close();
                 Options o = new Options()
                 {
-                    Fullscreen = true,
+                    Fullscreen = false,
                     Left = 100,
                     Down = 98,
                     Right = 102,
