@@ -27,12 +27,9 @@ namespace Rizumu.GameScreens
         public static Sprite note;
         public static KeyboardState oldState;
         public static int lastnote = 0;
-        //public static bool vidplaying = false;
         public static int currentcombo = 0;
         public static float notespeed = 1f;
         public static float noterot = 0.0f;
-        public static List<Animation> sparkles = new List<Animation>();
-        //public static VideoPlayer vp;
         public static bool usingvideo = true;
 
         public static void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -317,7 +314,6 @@ namespace Rizumu.GameScreens
                         {
                             UpNotes[fi] = new Note() { hit = true, position = UpNotes[fi].position, time = UpNotes[fi].time };
                             GameResources.hit.Play();
-                            sparkles.Add(new Animation(GameResources.Animation_sparkle, false, UpNotes[fi].time, centerx, centery - notew, 25));
                             currentcombo++;
                             GameResources.gscore++;
                             if (GameResources.health < 100)
@@ -355,7 +351,6 @@ namespace Rizumu.GameScreens
                         {
                             RightNotes[fi] = new Note() { hit = true, position = RightNotes[fi].position, time = RightNotes[fi].time };
                             GameResources.hit.Play();
-                            sparkles.Add(new Animation(GameResources.Animation_sparkle, false, RightNotes[fi].time, centerx + notew, centery, 25));
                             currentcombo++;
                             GameResources.hscore++;
                             if (GameResources.health < 100)
@@ -392,7 +387,6 @@ namespace Rizumu.GameScreens
                         {
                             DownNotes[fi] = new Note() { hit = true, position = DownNotes[fi].position, time = DownNotes[fi].time };
                             GameResources.hit.Play();
-                            sparkles.Add(new Animation(GameResources.Animation_sparkle, false, DownNotes[fi].time, centerx, centery + noteh, 25));
                             currentcombo++;
                             GameResources.jscore++;
                             if (GameResources.health < 100)
@@ -411,19 +405,6 @@ namespace Rizumu.GameScreens
                     fi++;
                 }
                 fi = 0;
-
-                // TODO: Maybe add back later, but the code sucks atm
-
-                /*int thefuckingnumber = 0;
-                while(thefuckingnumber < sparkles.Count - 1)
-                {
-                    if (!sparkles[thefuckingnumber].finished)
-                    {
-                        sparkles[thefuckingnumber] = sparkles[thefuckingnumber].draw(spriteBatch);
-                    }
-                    thefuckingnumber++;
-                }*/
-
 
                 if (timer > lastnote + 500)
                 {
