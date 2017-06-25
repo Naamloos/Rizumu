@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 
@@ -27,23 +28,17 @@ namespace Rizumu.GameScreens
             {
                 if (mstate.LeftButton == ButtonState.Pressed)
                 {
-                    string[] lines = File.ReadAllLines("settings.ini");
-                    int i = 0;
-                    while (i < lines.Length)
+                    if (GameResources.Optionss.Fullscreen == true && !GameResources.fullscreen)
                     {
-                        if (lines[i] == "fullscreen:true" && !GameResources.fullscreen)
-                        {
-                            IngamePopup.SetPopup("Fullscreen disabled!", "Please restart the game for changes to take effect!");
-                            lines[i] = "fullscreen:false";
-                        }
-                        if (lines[i] == "fullscreen:false" && GameResources.fullscreen)
-                        {
-                            IngamePopup.SetPopup("Fullscreen enabled!", "Please restart the game for changes to take effect!");
-                            lines[i] = "fullscreen:true";
-                        }
-                        i++;
+                        IngamePopup.SetPopup("Fullscreen disabled!", "Please restart the game for changes to take effect!");
+                        GameResources.Optionss.Fullscreen = false;
                     }
-                    File.WriteAllLines("settings.ini", lines);
+                    if (GameResources.Optionss.Fullscreen == false && GameResources.fullscreen)
+                    {
+                        IngamePopup.SetPopup("Fullscreen enabled!", "Please restart the game for changes to take effect!");
+                        GameResources.Optionss.Fullscreen = true;
+                    }
+                    File.WriteAllText("settings.json", JObject.FromObject(GameResources.Optionss).ToString());
                     GameResources.GameScreen = 0;
                 }
                 backbtn = new Sprite(spriteBatch, 20, Game1.graphics.PreferredBackBufferHeight - 120, GameResources.ButtonSelected, GameResources.basecolor);

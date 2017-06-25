@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Threading;
@@ -31,14 +32,9 @@ namespace Rizumu
         {
             graphics = new GraphicsDeviceManager(this);
             bool isfull = false;
-            string[] settingsfile = File.ReadAllLines("settings.ini");
-            foreach (string l in settingsfile)
-            {
-                if (l.StartsWith("fullscreen:true"))
-                {
-                    isfull = true;
-                }
-            }
+            Objects.Options o = JObject.Parse(File.ReadAllText("settings.json")).ToObject<Objects.Options>();
+            GameResources.Optionss = o;
+            isfull = o.Fullscreen;
             if (isfull)
             {
                 graphics.PreferredBackBufferHeight = System.Windows.Forms.SystemInformation.WorkingArea.Height;
@@ -49,22 +45,14 @@ namespace Rizumu
                 graphics.PreferredBackBufferHeight = System.Windows.Forms.SystemInformation.WorkingArea.Height - 200;
                 graphics.PreferredBackBufferWidth = System.Windows.Forms.SystemInformation.WorkingArea.Width - 400;
             }
-            graphics.IsFullScreen = false;
-            string[] keybinds = File.ReadAllLines("settings.ini");
-            foreach (string l in keybinds)
+            if (isfull)
             {
-                if (l.StartsWith("fullscreen:"))
-                {
-                    if (l.Substring(11) == "true")
-                    {
-                        Window.IsBorderless = true;
-                        graphics.IsFullScreen = true;
-                    }
-                    else
-                    {
-                        graphics.IsFullScreen = false;
-                    }
-                }
+                Window.IsBorderless = true;
+                graphics.IsFullScreen = true;
+            }
+            else
+            {
+                graphics.IsFullScreen = false;
             }
             Content.RootDirectory = "Content";
         }

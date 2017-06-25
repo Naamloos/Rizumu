@@ -3,6 +3,7 @@
  */
 
 using Newtonsoft.Json.Linq;
+using Rizumu.Objects;
 using System;
 using System.Collections.Specialized;
 using System.IO;
@@ -23,16 +24,18 @@ namespace Rizumu
         [STAThread]
         static void Main()
         {
-            if (!File.Exists("settings.ini"))
+            if (!File.Exists("settings.json"))
             {
-                File.Create("settings.ini").Close();
-                string keybinds =
-                    "fullscreen:true" +
-                    "\nleft:100" +
-                    "\nup:104" +
-                    "\nright:102" +
-                    "\ndown:98";
-                File.WriteAllText("settings.ini", keybinds);
+                File.Create("settings.json").Close();
+                Options o = new Options()
+                {
+                    Fullscreen = true,
+                    Left = 100,
+                    Down = 98,
+                    Right = 102,
+                    Up = 104
+                };
+                File.WriteAllText("settings.json", JObject.FromObject(o).ToString());
             }
 
             if (!Directory.Exists("content/songs"))

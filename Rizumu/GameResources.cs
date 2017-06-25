@@ -11,18 +11,19 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using Rizumu.Objects;
 
 namespace Rizumu
 {
     class GameResources
     {
         // Global Variables
+        public static Options Optionss;
         public static Keys up;
         public static Keys down;
         public static Keys left;
         public static Keys right;
         public static List<string[]> comments = new List<string[]>();
-
 
         public static int GameScreen = 0;
         public static Dictionary<string, Objects.RizumuMap> Maps;
@@ -174,168 +175,41 @@ namespace Rizumu
             down = Keys.NumPad2;
             left = Keys.NumPad4;
             right = Keys.NumPad6;
-            string[] keybinds = File.ReadAllLines("settings.ini");
-            foreach (string l in keybinds)
-            {
-                if (l.StartsWith("left:"))
-                {
-                    string bind = l.Substring(5);
-                    left = (Keys)Int32.Parse(bind);
-                }
-                if (l.StartsWith("up:"))
-                {
-                    string bind = l.Substring(3);
-                    up = (Keys)Int32.Parse(bind);
-                }
-                if (l.StartsWith("right:"))
-                {
-                    string bind = l.Substring(6);
-                    right = (Keys)Int32.Parse(bind);
-                }
-                if (l.StartsWith("down:"))
-                {
-                    string bind = l.Substring(5);
-                    down = (Keys)Int32.Parse(bind);
-                }
-                if (l.StartsWith("fullscreen:"))
-                {
-                    if (l.Substring(11) == "true")
-                    {
-                        fullscreen = true;
-                    }
-                    else
-                    {
-                        fullscreen = false;
-                    }
-                }
-                if (l.StartsWith("skin:"))
-                {
-                    skin = l.Substring(5);
-                }
-            }
 
-            if (skin != "none")
-            {
-                try
-                {
-                    background_menu = Content.Load<Texture2D>("..content/skins/" + skin + "/main_background.png");
-                }
-                catch { }
-
-                try
-                {
-                    hit = Content.Load<SoundEffect>("..content/skins/" + skin + "/hit.wav");
-                }
-                catch { }
-
-                try
-                {
-                    Button = Content.Load<Texture2D>("..content/skins/" + skin + "/button.png");
-                }
-                catch { }
-
-                try
-                {
-                    ButtonSelected = Content.Load<Texture2D>("..content/skins/" + skin + "/button_selected.png");
-                }
-                catch { }
-
-                try
-                {
-                    Cursor = Content.Load<Texture2D>("..content/skins/" + skin + "/cursor.png");
-                }
-                catch { }
-
-                try
-                {
-                    NoteL = Content.Load<Texture2D>("..content/skins/" + skin + "/notel.png");
-                }
-                catch { }
-                try
-                {
-                    NoteU = Content.Load<Texture2D>("..content/skins/" + skin + "/noteu.png");
-                }
-                catch { }
-                try
-                {
-                    NoteR = Content.Load<Texture2D>("..content/skins/" + skin + "/noter.png");
-                }
-                catch { }
-                try
-                {
-                    NoteD = Content.Load<Texture2D>("..content/skins/" + skin + "/noted.png");
-                }
-                catch { }
-
-                try
-                {
-                    NoteHitL = Content.Load<Texture2D>("..content/skins/" + skin + "/notehitl.png");
-                }
-                catch { }
-                try
-                {
-                    NoteHitU = Content.Load<Texture2D>("..content/skins/" + skin + "/notehitu.png");
-                }
-                catch { }
-                try
-                {
-                    NoteHitD = Content.Load<Texture2D>("..content/skins/" + skin + "/notehitd.png");
-                }
-                catch { }
-                try
-                {
-                    NoteHitR = Content.Load<Texture2D>("..content/skins/" + skin + "/notehitr.png");
-                }
-                catch { }
-
-                try
-                {
-                    Songbar = Content.Load<Texture2D>("..content/skins/" + skin + "/songbar.png");
-                }
-                catch { }
-
-                try
-                {
-                    Paused = Content.Load<Texture2D>("..content/skins/" + skin + "/paused.png");
-                }
-                catch { }
-
-                try
-                {
-                    HealthBar = Content.Load<Texture2D>("..content/skins/" + skin + "/healthbar.png");
-                }
-                catch { }
-            }
+            left = (Keys)Optionss.Left;
+            right = (Keys)Optionss.Right;
+            up = (Keys)Optionss.Up;
+            down = (Keys)Optionss.Down;
         }
 
-        public static void LoopColor()
+    public static void LoopColor()
+    {
+        Color newcolor = basecolor;
+        if (newcolor.R > byte.MaxValue)
         {
-            Color newcolor = basecolor;
-            if (newcolor.R > byte.MaxValue)
-            {
-                newcolor.R = 0;
-            }
-            else
-            {
-                newcolor.R += 2;
-            }
-            if (newcolor.G > byte.MaxValue)
-            {
-                newcolor.G = 0;
-            }
-            else
-            {
-                newcolor.G += 4;
-            }
-            if (newcolor.B > byte.MaxValue)
-            {
-                newcolor.B = 0;
-            }
-            else
-            {
-                newcolor.B += 8;
-            }
-            basecolor = newcolor;
+            newcolor.R = 0;
         }
+        else
+        {
+            newcolor.R += 2;
+        }
+        if (newcolor.G > byte.MaxValue)
+        {
+            newcolor.G = 0;
+        }
+        else
+        {
+            newcolor.G += 4;
+        }
+        if (newcolor.B > byte.MaxValue)
+        {
+            newcolor.B = 0;
+        }
+        else
+        {
+            newcolor.B += 8;
+        }
+        basecolor = newcolor;
     }
+}
 }
