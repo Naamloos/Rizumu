@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Rizumu.Objects;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,10 +17,10 @@ namespace Rizumu.GameScreens
 {
     class MapScreen
     {
-        public static int[][] fnotes;
-        public static int[][] gnotes;
-        public static int[][] hnotes;
-        public static int[][] jnotes;
+        public static List<Note> LeftNotes = new List<Note>();
+        public static List<Note> UpNotes = new List<Note>();
+        public static List<Note> RightNotes = new List<Note>();
+        public static List<Note> DownNotes = new List<Note>();
         public static int timer = 0;
         public static bool loaded = false;
         public static bool paused = false;
@@ -44,64 +45,60 @@ namespace Rizumu.GameScreens
                 timer = 0 + GameResources.offset;
                 int l = 0;
                 int[] ints = GameResources.Maps[GameResources.selected].LeftNotes;
-                fnotes = new int[ints.Length][];
+                LeftNotes = new List<Note>();
                 while (l < ints.Length)
                 {
                     try
                     {
-                        fnotes[l] = new int[4] { ints[l], 0, 0, 0 };
+                        LeftNotes.Add(new Note() { hit = false, position = 0, time = ints[l] });
                     }
                     catch (Exception)
                     {
-                        fnotes[l] = new int[4] { 0, 0, 0, 0 };
                     }
                     l = l + 1;
                 }
 
                 l = 0;
                 ints = GameResources.Maps[GameResources.selected].UpNotes;
-                gnotes = new int[ints.Length][];
+                UpNotes = new List<Note>();
                 while (l < ints.Length)
                 {
                     try
                     {
-                        gnotes[l] = new int[4] { ints[l], 0, 0, 0 };
+                        UpNotes.Add(new Note() { hit = false, position = 0, time = ints[l] });
                     }
                     catch (Exception)
                     {
-                        gnotes[l] = new int[4] { 0, 0, 0, 0 };
                     }
                     l = l + 1;
                 }
 
                 l = 0;
                 ints = GameResources.Maps[GameResources.selected].RightNotes;
-                hnotes = new int[ints.Length][];
+                RightNotes = new List<Note>();
                 while (l < ints.Length)
                 {
                     try
                     {
-                        hnotes[l] = new int[4] { ints[l], 0, 0, 0 };
+                        RightNotes.Add(new Note() { hit = false, position = 0, time = ints[l] });
                     }
                     catch (Exception)
                     {
-                        hnotes[l] = new int[4] { 0, 0, 0, 0 };
                     }
                     l = l + 1;
                 }
 
                 l = 0;
                 ints = GameResources.Maps[GameResources.selected].DownNotes;
-                jnotes = new int[ints.Length][];
+                DownNotes = new List<Note>();
                 while (l < ints.Length)
                 {
                     try
                     {
-                        jnotes[l] = new int[4] { ints[l], 0, 0, 0 };
+                        DownNotes.Add(new Note() { hit = false, position = 0, time = ints[l] });
                     }
                     catch (Exception)
                     {
-                        jnotes[l] = new int[4] { 0, 0, 0, 0 };
                     }
                     l = l + 1;
                 }
@@ -119,21 +116,21 @@ namespace Rizumu.GameScreens
                 int lastg = 0;
                 int lasth = 0;
                 int lastj = 0;
-                foreach (int[] note in fnotes)
+                foreach (Note note in LeftNotes)
                 {
-                    lastf = note[0];
+                    lastf = note.time;
                 }
-                foreach (int[] note in gnotes)
+                foreach (Note note in UpNotes)
                 {
-                    lastg = note[0];
+                    lastg = note.time;
                 }
-                foreach (int[] note in hnotes)
+                foreach (Note note in RightNotes)
                 {
-                    lasth = note[0];
+                    lasth = note.time;
                 }
-                foreach (int[] note in jnotes)
+                foreach (Note note in DownNotes)
                 {
-                    lastj = note[0];
+                    lastj = note.time;
                 }
 
                 lastnote = Math.Max(lastf, Math.Max(lastg, Math.Max(lasth, lastj)));
@@ -144,7 +141,7 @@ namespace Rizumu.GameScreens
                 GameResources.jmiss = 0;
                 GameResources.combo = 0;
                 GameResources.health = 100;
-                GameResources.totalnotes = fnotes.Length + gnotes.Length + hnotes.Length + jnotes.Length;
+                GameResources.totalnotes = LeftNotes.Count + UpNotes.Count + RightNotes.Count + DownNotes.Count;
                 loaded = true;
                 Music.play(GameResources.selected, 0);
                 timer = timer + 50;
@@ -268,23 +265,22 @@ namespace Rizumu.GameScreens
                 int framert = (int)(1.0 / gameTime.ElapsedGameTime.TotalSeconds);
                 int fr = 500 / framert;
 
-                while (fi < fnotes.Length)
+                while (fi < LeftNotes.Count)
                 {
-                    if (fnotes[fi][0] < timer - (notew * 2) + (centerx / notespeed) - notew * 2 && fnotes[fi][1] < centerx + notew + 5 && fnotes[fi][2] == 0)
+                    if (LeftNotes[fi].time < timer - (notew * 2) + (centerx / notespeed) - notew * 2 && LeftNotes[fi].position < centerx + notew + 5 && LeftNotes[fi].hit == false)
                     {
-                        note = new Sprite(spriteBatch, fnotes[fi][1], centery, GameResources.NoteL, GameResources.basecolor);
-                        fnotes[fi][1] = fnotes[fi][1] + (int)(10 * notespeed);
+                        note = new Sprite(spriteBatch, LeftNotes[fi].position, centery, GameResources.NoteL, GameResources.basecolor);
+                        LeftNotes[fi] = new Note() { hit = LeftNotes[fi].hit, position = LeftNotes[fi].position + (int)(10 * notespeed), time = LeftNotes[fi].time };
                         note.rotation = noterot;
                         note.draw();
                         if (GameResources.autoplay)
                         {
                             fpress = true;
                         }
-                        if (fpress && fnotes[fi][1] > centerx - notew * 1.5)
+                        if (fpress && LeftNotes[fi].position > centerx - notew * 1.5)
                         {
-                            fnotes[fi][2] = 1;
+                            LeftNotes[fi] = new Note() { hit = true, position = LeftNotes[fi].position, time = LeftNotes[fi].time };
                             GameResources.hit.Play();
-                            sparkles.Add(new Animation(GameResources.Animation_sparkle, false, fnotes[fi][0], centerx - notew, centery, 25));
                             currentcombo++;
                             GameResources.fscore++;
                             if (GameResources.health < 100)
@@ -292,7 +288,7 @@ namespace Rizumu.GameScreens
                                 GameResources.health++;
                             }
                         }
-                        if (fnotes[fi][1] > centerx + notew && fnotes[fi][2] == 0)
+                        if (LeftNotes[fi].position > centerx + notew && LeftNotes[fi].hit == false)
                         {
                             GameResources.health -= 5;
                             GameResources.fmiss++;
@@ -305,23 +301,23 @@ namespace Rizumu.GameScreens
                 fi = 0;
 
 
-                while (fi < gnotes.Length)
+                while (fi < UpNotes.Count)
                 {
-                    if (gnotes[fi][0] < timer - (noteh * 2) + (centery / notespeed) - noteh && gnotes[fi][1] < centery + noteh + 5 && gnotes[fi][2] == 0)
+                    if (UpNotes[fi].time < timer - (noteh * 2) + (centery / notespeed) - noteh && UpNotes[fi].position < centery + noteh + 5 && UpNotes[fi].hit == false)
                     {
-                        note = new Sprite(spriteBatch, centerx, gnotes[fi][1], GameResources.NoteU, GameResources.basecolor);
-                        gnotes[fi][1] = gnotes[fi][1] + (int)(10 * notespeed);
+                        note = new Sprite(spriteBatch, centerx, UpNotes[fi].position, GameResources.NoteU, GameResources.basecolor);
+                        UpNotes[fi] = new Note() { hit = UpNotes[fi].hit, position = UpNotes[fi].position + (int)(10 * notespeed), time = UpNotes[fi].time };
                         note.rotation = noterot;
                         note.draw();
                         if (GameResources.autoplay)
                         {
                             gpress = true;
                         }
-                        if (gpress && gnotes[fi][1] > centery - noteh * 1.5)
+                        if (gpress && UpNotes[fi].position > centery - noteh * 1.5)
                         {
-                            gnotes[fi][2] = 1;
+                            UpNotes[fi] = new Note() { hit = true, position = UpNotes[fi].position, time = UpNotes[fi].time };
                             GameResources.hit.Play();
-                            sparkles.Add(new Animation(GameResources.Animation_sparkle, false, gnotes[fi][0], centerx, centery - notew, 25));
+                            sparkles.Add(new Animation(GameResources.Animation_sparkle, false, UpNotes[fi].time, centerx, centery - notew, 25));
                             currentcombo++;
                             GameResources.gscore++;
                             if (GameResources.health < 100)
@@ -329,7 +325,7 @@ namespace Rizumu.GameScreens
                                 GameResources.health++;
                             }
                         }
-                        if (gnotes[fi][1] > centery + noteh && gnotes[fi][2] == 0)
+                        if (UpNotes[fi].position > centery + noteh && UpNotes[fi].hit == false)
                         {
                             GameResources.health -= 5;
                             GameResources.gmiss++;
@@ -343,23 +339,23 @@ namespace Rizumu.GameScreens
 
 
 
-                while (fi < hnotes.Length)
+                while (fi < RightNotes.Count)
                 {
-                    if (hnotes[fi][0] < timer - (notew * 2) + (centerx / notespeed) - notew * 2 && hnotes[fi][1] < centerx + notew + 5 && hnotes[fi][2] == 0)
+                    if (RightNotes[fi].time < timer - (notew * 2) + (centerx / notespeed) - notew * 2 && RightNotes[fi].position < centerx + notew + 5 && RightNotes[fi].hit == false)
                     {
-                        note = new Sprite(spriteBatch, Game1.graphics.PreferredBackBufferWidth - notew - hnotes[fi][1], centery, GameResources.NoteR, GameResources.basecolor);
-                        hnotes[fi][1] = hnotes[fi][1] + (int)(10 * notespeed);
+                        note = new Sprite(spriteBatch, Game1.graphics.PreferredBackBufferWidth - notew - RightNotes[fi].position, centery, GameResources.NoteR, GameResources.basecolor);
+                        RightNotes[fi] = new Note() { hit = RightNotes[fi].hit, position = RightNotes[fi].position + (int)(10 * notespeed), time = RightNotes[fi].time };
                         note.rotation = noterot;
                         note.draw();
                         if (GameResources.autoplay)
                         {
                             hpress = true;
                         }
-                        if (hpress && hnotes[fi][1] > centerx - notew * 1.5)
+                        if (hpress && RightNotes[fi].position > centerx - notew * 1.5)
                         {
-                            hnotes[fi][2] = 1;
+                            RightNotes[fi] = new Note() { hit = true, position = RightNotes[fi].position, time = RightNotes[fi].time };
                             GameResources.hit.Play();
-                            sparkles.Add(new Animation(GameResources.Animation_sparkle, false, hnotes[fi][0], centerx + notew, centery, 25));
+                            sparkles.Add(new Animation(GameResources.Animation_sparkle, false, RightNotes[fi].time, centerx + notew, centery, 25));
                             currentcombo++;
                             GameResources.hscore++;
                             if (GameResources.health < 100)
@@ -367,7 +363,7 @@ namespace Rizumu.GameScreens
                                 GameResources.health++;
                             }
                         }
-                        if (hnotes[fi][1] > centerx + notew && hnotes[fi][2] == 0)
+                        if (RightNotes[fi].position > centerx + notew && RightNotes[fi].hit == false)
                         {
                             GameResources.health -= 5;
                             GameResources.hmiss++;
@@ -380,23 +376,23 @@ namespace Rizumu.GameScreens
                 fi = 0;
 
 
-                while (fi < jnotes.Length)
+                while (fi < DownNotes.Count)
                 {
-                    if (jnotes[fi][0] < timer - (noteh * 2) + (centery / notespeed) - noteh && jnotes[fi][1] < centery + noteh + 5 && jnotes[fi][2] == 0)
+                    if (DownNotes[fi].time < timer - (noteh * 2) + (centery / notespeed) - noteh && DownNotes[fi].position < centery + noteh + 5 && DownNotes[fi].hit == false)
                     {
-                        note = new Sprite(spriteBatch, centerx, Game1.graphics.PreferredBackBufferHeight - jnotes[fi][1] - noteh, GameResources.NoteD, GameResources.basecolor);
-                        jnotes[fi][1] = jnotes[fi][1] + (int)(10 * notespeed);
+                        note = new Sprite(spriteBatch, centerx, Game1.graphics.PreferredBackBufferHeight - DownNotes[fi].position - noteh, GameResources.NoteD, GameResources.basecolor);
+                        DownNotes[fi] = new Note() { hit = DownNotes[fi].hit, position = DownNotes[fi].position + (int)(10 * notespeed), time = DownNotes[fi].time };
                         note.rotation = noterot;
                         note.draw();
                         if (GameResources.autoplay)
                         {
                             jpress = true;
                         }
-                        if (jpress && jnotes[fi][1] > centery - noteh * 1.5)
+                        if (jpress && DownNotes[fi].position > centery - noteh * 1.5)
                         {
-                            jnotes[fi][2] = 1;
+                            DownNotes[fi] = new Note() { hit = true, position = DownNotes[fi].position, time = DownNotes[fi].time };
                             GameResources.hit.Play();
-                            sparkles.Add(new Animation(GameResources.Animation_sparkle, false, jnotes[fi][0], centerx, centery + noteh, 25));
+                            sparkles.Add(new Animation(GameResources.Animation_sparkle, false, DownNotes[fi].time, centerx, centery + noteh, 25));
                             currentcombo++;
                             GameResources.jscore++;
                             if (GameResources.health < 100)
@@ -404,7 +400,7 @@ namespace Rizumu.GameScreens
                                 GameResources.health++;
                             }
                         }
-                        if (jnotes[fi][1] > centery + noteh && jnotes[fi][2] == 0)
+                        if (DownNotes[fi].position > centery + noteh && DownNotes[fi].hit == false)
                         {
                             GameResources.health -= 5;
                             GameResources.jmiss++;

@@ -65,6 +65,7 @@
     <Compile Include="GameScreens\Score.cs" />
     <Compile Include="GameScreens\SongList.cs" />
     <Compile Include="Helpers\Music.cs" />
+    <Compile Include="Objects\Note.cs" />
     <Compile Include="Objects\RizumuMap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
