@@ -137,7 +137,7 @@ namespace Rizumu.GameScreens
             backbtn.draw();
             Text.draw(GameResources.font, "Back", 50, Game1.graphics.PreferredBackBufferHeight - 90, spriteBatch);
             string info = "Folder name: " + GameResources.selected.Substring(14) + "\n";
-            info += "Map creator: " + GameResources.Maps[GameResources.selected].Description + "\n\n";
+            info += "Map creator: " + GameResources.Maps[GameResources.selected].Creator + "\n\n";
             info += GameResources.Maps[GameResources.selected].Description;
             Text.draw(GameResources.font, info, 10, 10, spriteBatch);
             if (Mouse.GetState().LeftButton == ButtonState.Released)
