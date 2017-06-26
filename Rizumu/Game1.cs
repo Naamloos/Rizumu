@@ -7,11 +7,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Threading;
-using System.Windows;
 
 namespace Rizumu
 {

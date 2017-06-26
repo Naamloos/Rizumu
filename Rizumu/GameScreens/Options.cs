@@ -3,12 +3,9 @@
  * Needs a lot of improval
  */
 
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 using Newtonsoft.Json.Linq;
-using System;
 using System.IO;
 
 namespace Rizumu.GameScreens

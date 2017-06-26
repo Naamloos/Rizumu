@@ -1,16 +1,12 @@
 ﻿/*
  * Just the music player logic.
  * The reason i dont use Monogame itself for music playback is mainly loading mp3's
- * 
- * Though I think this should be possible with MonoGame.
- * If you feel like you found a way w/o NAudio, feel free to PR.
- * NAudio breaks cross-platform compatibility (mono, wine, etc)
+ * ye it compat now
  */
 
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.IO;
-using System.Threading;
 
 namespace Rizumu
 {
