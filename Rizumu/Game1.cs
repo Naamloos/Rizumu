@@ -131,6 +131,7 @@ namespace Rizumu
                 GraphicsDevice.SetRenderTarget(rt);
                 stream = new FileStream("screenshots/screenshot" + DateTime.Now.Ticks + ".png", FileMode.Create, FileAccess.Write, FileShare.None);
                 pressed = true;
+                IngamePopup.SetPopup("Screenshot made", "screenshot is saved in /screenshots");
             }
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied);
