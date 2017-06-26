@@ -58,10 +58,23 @@ namespace Rizumu
             {
                 if (File.Exists(Path.Combine(path, "map.json")))
                 {
-                    var j = JObject.Parse(File.ReadAllText(Path.Combine(path, "map.json")));
-                    var m = j.ToObject<Objects.RizumuMap>();
-                    GameResources.Maps.Add(path, m);
+                    try
+                    {
+                        var j = JObject.Parse(File.ReadAllText(Path.Combine(path, "map.json")));
+                        var m = j.ToObject<Objects.RizumuMap>();
+                        GameResources.Maps.Add(path, m);
+                    }
+                    catch (Exception)
+                    {
+
+                    }
                 }
+            }
+
+            if (!GameResources.Maps.Any())
+            {
+                MessageBox.Show("No maps have been found!\nPlease add them to 'Content/Songs'");
+                Environment.Exit(-1);
             }
 
             Objects.Options op = JObject.Parse(File.ReadAllText("settings.json")).ToObject<Objects.Options>();
