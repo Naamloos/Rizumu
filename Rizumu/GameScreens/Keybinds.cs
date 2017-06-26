@@ -93,6 +93,7 @@ namespace Rizumu.GameScreens
             {
                 File.WriteAllText("settings.json", JObject.FromObject(GameResources.Optionss).ToString());
                 keyshad = 0;
+                IngamePopup.SetPopup("Keybinds set!", "Your keybinds have been updated.\nNo need to restart.");
                 GameResources.GameScreen = 0;
             }
 

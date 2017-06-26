@@ -51,11 +51,11 @@ namespace Rizumu.GameScreens
             Sprite FullscreenCheck;
             if (GameResources.Optionss.Fullscreen == true)
             {
-                FullscreenCheck = new Sprite(spriteBatch, 50, 50, GameResources.Checked, GameResources.basecolor);
+                FullscreenCheck = new Sprite(spriteBatch, 50, 75, GameResources.Checked, GameResources.basecolor);
             }
             else
             {
-                FullscreenCheck = new Sprite(spriteBatch, 50, 50, GameResources.Unchecked, GameResources.basecolor);
+                FullscreenCheck = new Sprite(spriteBatch, 50, 75, GameResources.Unchecked, GameResources.basecolor);
             }
 
             if (FullscreenCheck.hitbox.Intersects(Game1.cursorbox))
@@ -75,7 +75,7 @@ namespace Rizumu.GameScreens
                 }
             }
             FullscreenCheck.draw();
-            Text.draw(GameResources.font, "Enable Fullscreen", 110, 55, spriteBatch);
+            Text.draw(GameResources.font, "Enable Fullscreen", 110, 80, spriteBatch);
         }
 
         public static void Update()
