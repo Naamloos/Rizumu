@@ -41,7 +41,6 @@ namespace Rizumu
         public static string skin = "none";
         public static int health = 100;
         public static bool showcursor = true;
-        public static bool fullscreen = true;
         public static int offset = 0;
         public static int totalnotes = 0;
         public static MouseState scorebackmouse;

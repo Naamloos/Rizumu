@@ -28,15 +28,13 @@ namespace Rizumu.GameScreens
             {
                 if (mstate.LeftButton == ButtonState.Pressed)
                 {
-                    if (GameResources.Optionss.Fullscreen == true && !GameResources.fullscreen)
-                    {
-                        IngamePopup.SetPopup("Fullscreen disabled!", "Please restart the game for changes to take effect!");
-                        GameResources.Optionss.Fullscreen = false;
-                    }
-                    if (GameResources.Optionss.Fullscreen == false && GameResources.fullscreen)
+                    if (GameResources.Optionss.Fullscreen == true)
                     {
                         IngamePopup.SetPopup("Fullscreen enabled!", "Please restart the game for changes to take effect!");
-                        GameResources.Optionss.Fullscreen = true;
+                    }
+                    if (GameResources.Optionss.Fullscreen == false)
+                    {
+                        IngamePopup.SetPopup("Fullscreen disabled!", "Please restart the game for changes to take effect!");
                     }
                     File.WriteAllText("settings.json", JObject.FromObject(GameResources.Optionss).ToString());
                     GameResources.GameScreen = 0;
@@ -51,7 +49,7 @@ namespace Rizumu.GameScreens
             Text.draw(GameResources.font, "Back", 50, Game1.graphics.PreferredBackBufferHeight - 90, spriteBatch);
 
             Sprite FullscreenCheck;
-            if (GameResources.fullscreen == true)
+            if (GameResources.Optionss.Fullscreen == true)
             {
                 FullscreenCheck = new Sprite(spriteBatch, 50, 50, GameResources.Checked, GameResources.basecolor);
             }
@@ -64,13 +62,13 @@ namespace Rizumu.GameScreens
             {
                 if (mstate.LeftButton == ButtonState.Pressed && !(oldstate.LeftButton == ButtonState.Pressed))
                 {
-                    if (GameResources.fullscreen == false)
+                    if (GameResources.Optionss.Fullscreen == false)
                     {
-                        GameResources.fullscreen = true;
+                        GameResources.Optionss.Fullscreen = true;
                     }
                     else
                     {
-                        GameResources.fullscreen = false;
+                        GameResources.Optionss.Fullscreen = false;
                     }
                 }
             }
