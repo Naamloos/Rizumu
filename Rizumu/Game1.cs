@@ -32,9 +32,7 @@ namespace Rizumu
         {
             graphics = new GraphicsDeviceManager(this);
             bool isfull = false;
-            Objects.Options o = JObject.Parse(File.ReadAllText("settings.json")).ToObject<Objects.Options>();
-            GameResources.Optionss = o;
-            isfull = o.Fullscreen;
+            isfull = GameResources.Optionss.Fullscreen;
             if (isfull)
             {
                 graphics.PreferredBackBufferHeight = System.Windows.Forms.SystemInformation.WorkingArea.Height;

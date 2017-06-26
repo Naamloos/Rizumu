@@ -64,6 +64,9 @@ namespace Rizumu
                 }
             }
 
+            Objects.Options op = JObject.Parse(File.ReadAllText("settings.json")).ToObject<Objects.Options>();
+            GameResources.Optionss = op;
+
             //try
             //{
             Randomsong();

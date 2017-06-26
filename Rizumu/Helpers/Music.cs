@@ -31,7 +31,10 @@ namespace Rizumu
 
             song = Song.FromUri(mp3, new Uri(Path.Combine(mp3, GameResources.Maps[mp3].FileName), UriKind.Relative));
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume = GameResources.Optionss.Volume;
+            if (GameResources.Optionss != null)
+                MediaPlayer.Volume = GameResources.Optionss.Volume;
+            else
+                MediaPlayer.Volume = 0.3f;
             MediaPlayer.Play(song);
         }
 
