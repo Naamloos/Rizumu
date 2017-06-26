@@ -13,25 +13,28 @@ namespace Rizumu.GameScreens
     class Options
     {
         public static MouseState mstate;
+        public static bool fschanged;
         public static void Draw(SpriteBatch spriteBatch)
         {
             MouseState oldstate = mstate;
             mstate = Mouse.GetState();
             Background mainbg = new Background(spriteBatch, GameResources.background_menu);
             mainbg.draw();
-            Text.draw(GameResources.font, "Options", 0, 0, spriteBatch);
+            Text.draw(GameResources.font, "Options", 20, 20, spriteBatch);
             Sprite backbtn = new Sprite(spriteBatch, 0, Game1.graphics.PreferredBackBufferHeight - 100, GameResources.Button, GameResources.basecolor);
             if (backbtn.hitbox.Intersects(Game1.cursorbox))
             {
                 if (mstate.LeftButton == ButtonState.Pressed)
                 {
-                    if (GameResources.Optionss.Fullscreen == true)
+                    if (GameResources.Optionss.Fullscreen == true && fschanged == true)
                     {
                         IngamePopup.SetPopup("Fullscreen enabled!", "Please restart the game for changes to take effect!");
+                        fschanged = false;
                     }
-                    if (GameResources.Optionss.Fullscreen == false)
+                    if (GameResources.Optionss.Fullscreen == false && fschanged == true)
                     {
                         IngamePopup.SetPopup("Fullscreen disabled!", "Please restart the game for changes to take effect!");
+                        fschanged = false;
                     }
                     File.WriteAllText("settings.json", JObject.FromObject(GameResources.Optionss).ToString());
                     GameResources.GameScreen = 0;
@@ -62,10 +65,12 @@ namespace Rizumu.GameScreens
                     if (GameResources.Optionss.Fullscreen == false)
                     {
                         GameResources.Optionss.Fullscreen = true;
+                        fschanged = true;
                     }
                     else
                     {
                         GameResources.Optionss.Fullscreen = false;
+                        fschanged = true;
                     }
                 }
             }
