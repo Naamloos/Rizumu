@@ -24,5 +24,8 @@ namespace Rizumu.Objects
 
         [JsonProperty("downkey")]
         public int Down;
+
+        [JsonProperty("volume")]
+        public float Volume;
     }
 }

@@ -33,7 +33,8 @@ namespace Rizumu
                     Left = 100,
                     Down = 98,
                     Right = 102,
-                    Up = 104
+                    Up = 104,
+                    Volume = 0.3f
                 };
                 File.WriteAllText("settings.json", JObject.FromObject(o).ToString());
             }
