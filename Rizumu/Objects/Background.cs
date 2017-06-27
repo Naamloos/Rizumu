@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Rizumu
 {
-    struct Background
+    public struct Background
     {
         public SpriteBatch spriteBatch;
         public Texture2D texture;
@@ -22,6 +22,11 @@ namespace Rizumu
         public void draw()
         {
             this.spriteBatch.Draw(texture, new Rectangle(0, 0, Game1.graphics.PreferredBackBufferWidth, Game1.graphics.PreferredBackBufferHeight), GameResources.basecolor);
+        }
+
+        public void draw(int width_override, int height_override)
+        {
+            this.spriteBatch.Draw(texture, new Rectangle(0, 0, width_override, height_override), Color.White);
         }
     }
 }

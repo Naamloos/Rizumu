@@ -35,5 +35,11 @@ namespace Rizumu
             hitbox = new Rectangle(new Point(x, y), new Point(texture.Width, texture.Height));
             spriteBatch.Draw(texture, new Vector2(x + ((texture.Width * scale) / 2), y + ((texture.Height * scale) / 2)), null, color, rotation, new Vector2((texture.Width) / 2, (texture.Height) / 2), scale, SpriteEffects.None, 0);
         }
+
+        public void draw(int width, int height)
+        {
+            hitbox = new Rectangle(new Point(x, y), new Point(width, height));
+            spriteBatch.Draw(texture, new Rectangle(x, y, width, height), color);
+        }
     }
 }
