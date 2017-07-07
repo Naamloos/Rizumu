@@ -22,6 +22,7 @@ namespace Rizumu
                 File.WriteAllText("Options.json", JObject.FromObject(new Options()).ToString());
             }
 
+            // useless commit I know
             using (var game = new Game1())
                 game.Run();
         }
