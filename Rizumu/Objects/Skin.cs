@@ -74,6 +74,7 @@ namespace Rizumu.Objects
             skin.FontSmall = content.Load<SpriteFont>("Fonts/MainSmall");
             skin.Hit = content.Load<SoundEffect>("SoundEffects/hit");
             skin.Miss = content.Load<SoundEffect>("SoundEffects/break");
+            skin.PauseOverlay = content.Load<Texture2D>("Backgrounds/PauseOverlay");
 
             return skin;
         }
