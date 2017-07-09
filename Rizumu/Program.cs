@@ -16,6 +16,7 @@ namespace Rizumu
             // CreateDirectory should only create when a folder does not exist.
             Directory.CreateDirectory("songs");
             Directory.CreateDirectory("skins");
+            Directory.CreateDirectory("replays");
             if (!File.Exists("Options.json"))
             {
                 File.Create("Options.json").Close();

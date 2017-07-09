@@ -30,5 +30,8 @@ namespace Rizumu.Objects
 
         [JsonProperty("skin")]
         public string SkinName = "default";
+
+        [JsonProperty("player")]
+        public string Player = "user";
     }
 }

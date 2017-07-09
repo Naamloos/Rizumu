@@ -13,16 +13,16 @@ namespace Rizumu.Objects
         public string Md5;
 
         [JsonProperty("leftpresses")]
-        public int[] PressesLeft;
+        public List<int> PressesLeft = new List<int>();
 
         [JsonProperty("uppresses")]
-        public int[] PressesUp;
+        public List<int> PressesUp = new List<int>();
 
         [JsonProperty("rightpresses")]
-        public int[] PressesRight;
+        public List<int> PressesRight = new List<int>();
 
         [JsonProperty("downpresses")]
-        public int[] PressesDown;
+        public List<int> PressesDown = new List<int>();
 
         [JsonProperty("player")]
         public string Player;

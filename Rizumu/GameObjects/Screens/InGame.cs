@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Rizumu.Objects;
 using Microsoft.Xna.Framework.Input;
 using Rizumu.GuiObjects;
+using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace Rizumu.GameObjects.Screens
 {
@@ -25,6 +27,9 @@ namespace Rizumu.GameObjects.Screens
         public int lastnote = 0;
         public Background Background;
         public Background PauseOverlay;
+        public Replay Recording;
+        public bool Replaying = false;
+        public Replay Replay;
 
         public KeyboardState OldState;
 
@@ -42,31 +47,6 @@ namespace Rizumu.GameObjects.Screens
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked)
         {
-            var NewState = Keyboard.GetState();
-            bool LeftPress = false;
-            bool UpPress = false;
-            bool RightPress = false;
-            bool DownPress = false;
-
-            if (NewState.IsKeyDown(Keys.NumPad4) && !OldState.IsKeyDown(Keys.NumPad4))
-                LeftPress = true;
-            if (NewState.IsKeyDown(Keys.NumPad8) && !OldState.IsKeyDown(Keys.NumPad8))
-                UpPress = true;
-            if (NewState.IsKeyDown(Keys.NumPad6) && !OldState.IsKeyDown(Keys.NumPad6))
-                RightPress = true;
-            if (NewState.IsKeyDown(Keys.NumPad2) && !OldState.IsKeyDown(Keys.NumPad2))
-                DownPress = true;
-
-            if (NewState.IsKeyDown(Keys.Escape) && !OldState.IsKeyDown(Keys.Escape))
-            {
-                if (Paused)
-                    Paused = false;
-                else
-                    Paused = true;
-            }
-
-            OldState = NewState;
-
             if (!MapLoaded)
             {
                 Playing = GameData.MapManager.Current;
@@ -122,11 +102,65 @@ namespace Rizumu.GameObjects.Screens
                 #endregion
                 Background.Texture = Playing.Background;
                 lastnote = GetLastNote();
+                Recording = new Replay();
+                Recording.Md5 = Playing.MD5;
+                Recording.Player = GameData.Instance.Options.Player;
                 GameData.MusicManager.Restart();
                 MapLoaded = true;
             }
             else
             {
+                var NewState = Keyboard.GetState();
+                bool LeftPress = false;
+                bool UpPress = false;
+                bool RightPress = false;
+                bool DownPress = false;
+
+                if (!Replaying)
+                {
+                    if (NewState.IsKeyDown(Keys.NumPad4) && !OldState.IsKeyDown(Keys.NumPad4))
+                    {
+                        Recording.PressesLeft.Add(Timer);
+                        LeftPress = true;
+                    }
+                    if (NewState.IsKeyDown(Keys.NumPad8) && !OldState.IsKeyDown(Keys.NumPad8))
+                    {
+                        Recording.PressesUp.Add(Timer);
+                        UpPress = true;
+                    }
+                    if (NewState.IsKeyDown(Keys.NumPad6) && !OldState.IsKeyDown(Keys.NumPad6))
+                    {
+                        Recording.PressesRight.Add(Timer);
+                        RightPress = true;
+                    }
+                    if (NewState.IsKeyDown(Keys.NumPad2) && !OldState.IsKeyDown(Keys.NumPad2))
+                    {
+                        Recording.PressesDown.Add(Timer);
+                        DownPress = true;
+                    }
+                }
+                else
+                {
+                    if (Replay.PressesLeft.Contains(Timer))
+                        LeftPress = true;
+                    if (Replay.PressesUp.Contains(Timer))
+                        UpPress = true;
+                    if (Replay.PressesRight.Contains(Timer))
+                        RightPress = true;
+                    if (Replay.PressesDown.Contains(Timer))
+                        DownPress = true;
+                }
+
+                if (NewState.IsKeyDown(Keys.Escape) && !OldState.IsKeyDown(Keys.Escape))
+                {
+                    if (Paused)
+                        Paused = false;
+                    else
+                        Paused = true;
+                }
+
+                OldState = NewState;
+
                 if (NewState.IsKeyDown(Keys.NumPad4))
                     LeftNote.Color = Color.DarkGray;
                 else
@@ -239,8 +273,11 @@ namespace Rizumu.GameObjects.Screens
             {
                 GameData.MusicManager.UnPause();
             }
-            if(Timer > lastnote + 1000)
+            if (Timer > lastnote + 1000)
             {
+                string path = Path.Combine("replays/", $"{Playing.Name}-{GameData.Instance.Options.Player}-{new Random().Next(int.MaxValue)}");
+                File.Create(path).Close();
+                File.WriteAllText(path, JObject.FromObject(Recording).ToString());
                 GameData.Instance.CurrentScreen = "results";
                 ((Results)GameData.Instance.Screens.Find(x => x.Name == "results")).ResultsPreloaded = false;
                 Timer = 0;
@@ -253,7 +290,7 @@ namespace Rizumu.GameObjects.Screens
             int up = 0;
             int right = 0;
             int down = 0;
-            foreach(Note n in NotesLeft)
+            foreach (Note n in NotesLeft)
             {
                 if (n.Time > left)
                     left = n.Time;
