@@ -119,7 +119,9 @@ namespace Rizumu
 
             Click = false;
             MouseState current = Mouse.GetState();
-            if (current.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && OldMouseState.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
+            if (current.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed 
+                && OldMouseState.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released
+                && IsActive)
                 Click = true;
             OldMouseState = current;
 

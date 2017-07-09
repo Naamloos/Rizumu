@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Rizumu.Engine;
+using Rizumu.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace Rizumu.GameObjects
         public int BaseX;
         public int BaseY;
         public int traveldistance;
+        public int Alpha;
 
         public Note(SpriteBatch spriteBatch, NoteMode mode, int screenWidth, int screenHeight)
         {
@@ -56,12 +58,17 @@ namespace Rizumu.GameObjects
                 NoteSprite = new Sprite(spriteBatch, BaseX, BaseY, tex, Color.White);
                 traveldistance = screenHeight / 2 + NoteSprite.Texture.Height;
             }
+            Alpha = -50;
         }
 
         public void Draw(ref bool KeyPress, bool Paused)
         {
-            if(!Paused)
+            if (!Paused)
+            {
                 Position++;
+                Alpha++;
+                NoteSprite.Color = new Color(0, 0, 0, Alpha);
+            }
 
             if (Mode == NoteMode.left)
             {

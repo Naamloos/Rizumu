@@ -47,7 +47,7 @@ namespace Rizumu.GameObjects.Screens
                 GameData.MusicManager.Change(new Map()
                 {
                     Path = "editor/",
-                    FileName = "song.flac",
+                    FileName = "song.mp3",
                     Name = "editorsong",
                     Creator = "me"
                 });
