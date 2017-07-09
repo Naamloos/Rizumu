@@ -45,5 +45,8 @@ namespace Rizumu.Objects
 
         [JsonIgnore]
         public Texture2D Background;
+
+        [JsonIgnore]
+        public string MD5;
     }
 }

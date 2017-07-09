@@ -80,7 +80,9 @@ namespace Rizumu.GameObjects
                 NoteSprite.Y = BaseY - Position;
             }
             if (traveldistance + (NoteSprite.Texture.Width / 2) > Position && Hit == false)
+            {
                 NoteSprite.Draw();
+            }
             else if (Miss == false && Hit == false)
             {
                 GameData.Instance.CurrentSkin.Miss.Play();

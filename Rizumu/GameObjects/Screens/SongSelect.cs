@@ -31,7 +31,7 @@ namespace Rizumu.GameObjects.Screens
                 if (m.Y > (m.MapDataHolder.Texture.Height * 2 + 50) - 1 && m.Y < (m.MapDataHolder.Texture.Height * 2 + 50) + m.MapDataHolder.Texture.Height)
                 {
                     m.Selected = true;
-                    var map = GameData.MapManager.Maps.Find(x => x.Name == m.MapName.Content && x.Creator == m.MapCreator.Content);
+                    var map = GameData.MapManager.Maps.Find(x => x.MD5 == m.MapMD5);
                     GameData.MapManager.Current = map;
                     MapInfo.Content = map.Description;
                     GameData.MusicManager.Change(GameData.MapManager.Current);
@@ -54,7 +54,7 @@ namespace Rizumu.GameObjects.Screens
             MapDatas = new List<MapData>();
             foreach (Map m in GameData.MapManager.Maps)
             {
-                MapDatas.Add(new MapData(spriteBatch, (Graphics.PreferredBackBufferWidth / 2) - (BarWidth / 2), Y, m.Name, m.Creator, false));
+                MapDatas.Add(new MapData(spriteBatch, (Graphics.PreferredBackBufferWidth / 2) - (BarWidth / 2), Y, m.Name, m.Creator, false, m.MD5));
                 Y += BarHeight + 25;
             }
             MapDatas.First().Selected = true;

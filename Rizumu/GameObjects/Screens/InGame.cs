@@ -127,7 +127,6 @@ namespace Rizumu.GameObjects.Screens
             }
             else
             {
-                Background.Draw();
                 if (NewState.IsKeyDown(Keys.NumPad4))
                     LeftNote.Color = Color.DarkGray;
                 else
@@ -148,18 +147,9 @@ namespace Rizumu.GameObjects.Screens
                 else
                     DownNote.Color = Color.White;
 
+                Background.Draw();
 
-                LeftNote.Draw();
-                UpNote.Draw();
-                RightNote.Draw();
-                DownNote.Draw();
 
-                if (Paused)
-                {
-                    PauseOverlay.Draw();
-                    ResumeButton.Draw(cursor, clicked);
-                    ExitButton.Draw(cursor, clicked);
-                }
                 #region Gameplay (yay!)
                 foreach (Note n in NotesLeft)
                 {
@@ -182,8 +172,22 @@ namespace Rizumu.GameObjects.Screens
                         n.Draw(ref DownPress, Paused);
                 }
                 #endregion
+
+                LeftNote.Draw();
+                UpNote.Draw();
+                RightNote.Draw();
+                DownNote.Draw();
+
+                if (Paused)
+                {
+                    PauseOverlay.Draw();
+                    ResumeButton.Draw(cursor, clicked);
+                    ExitButton.Draw(cursor, clicked);
+                }
+
                 TimerTex.Content = "" + Timer;
                 TimerTex.Draw();
+
                 if (NewState.IsKeyDown(Keys.OemTilde))
                     MapLoaded = false;
             }
@@ -217,7 +221,9 @@ namespace Rizumu.GameObjects.Screens
             {
                 MapLoaded = false;
                 GameData.Instance.CurrentScreen = "select";
+                Paused = false;
                 GameData.MusicManager.UnPause();
+                GameData.MusicManager.Restart();
             };
         }
 

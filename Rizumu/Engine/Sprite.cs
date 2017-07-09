@@ -33,12 +33,7 @@ namespace Rizumu.Engine
 
         public void Draw()
         {
-            SpriteBatch.Draw(Texture, new Vector2(X, Y), null, Color, Rotation, new Vector2(0, 0), Scale, SpriteEffects.None, 0);
-        }
-
-        public void DrawSize(int width, int height)
-        {
-            SpriteBatch.Draw(Texture, new Rectangle(X, Y, width, height), Color);
+            SpriteBatch.Draw(Texture, new Vector2(X, Y), null, Color, Rotation, new Vector2(0, 0), Scale, SpriteEffects.None, 1f);
         }
     }
 }

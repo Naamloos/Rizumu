@@ -17,11 +17,13 @@ namespace Rizumu.GuiObjects
         public Sprite MapDataHolder;
         public Text MapName;
         public Text MapCreator;
+        public string MapMD5;
         public bool Selected = false;
         public Sprite MapPreview;
 
-        public MapData(SpriteBatch spriteBatch, int x, int y, string name, string creator, bool selected)
+        public MapData(SpriteBatch spriteBatch, int x, int y, string name, string creator, bool selected, string MD5)
         {
+            MapMD5 = MD5;
             X = x;
             Y = y;
             MapDataHolder = new Sprite(spriteBatch, x, y, GameData.Instance.CurrentSkin.SongBar, Color.White);
@@ -32,7 +34,7 @@ namespace Rizumu.GuiObjects
             }
             MapName = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, name, x + 5, y + 5, Color.White);
             MapCreator = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, creator, MapName.X + MapName.Width + 5, MapName.Y + MapName.Height + 5, Color.White);
-            Map mm = GameData.MapManager.Maps.Find(xm => xm.Name == name && xm.Creator == creator);
+            Map mm = GameData.MapManager.Maps.Find(xm => xm.MD5 == MD5);
             var pc = new Color(Color.White, 0.8f);
             MapPreview = new Sprite(spriteBatch, X, Y, mm.Background, pc);
         }

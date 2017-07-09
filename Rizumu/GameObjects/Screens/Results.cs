@@ -50,6 +50,7 @@ namespace Rizumu.GameObjects.Screens
                 MapResults.Content += "Hits Up: " + ig.NotesUp.FindAll(x => x.Hit == true).Count() + " Miss Up: " + ig.NotesUp.FindAll(x => x.Miss == true).Count() + "\n";
                 MapResults.Content += "Hits Right: " + ig.NotesRight.FindAll(x => x.Hit == true).Count() + " Miss Right: " + ig.NotesRight.FindAll(x => x.Miss == true).Count() + "\n";
                 MapResults.Content += "Hits Down: " + ig.NotesDown.FindAll(x => x.Hit == true).Count() + " Miss Down: " + ig.NotesDown.FindAll(x => x.Miss == true).Count() + "\n";
+                bg.Texture = ig.Background.Texture;
                 ResultsPreloaded = true;
             }
         }

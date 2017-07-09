@@ -41,6 +41,9 @@ namespace Rizumu.Objects
         public SpriteFont Font;
         public SpriteFont FontSmall;
 
+        // Effects
+        public Effect AlphaShader;
+
         public static Skin LoadFromPath(GraphicsDevice Graphics, ContentManager content, string path)
         {
             Skin skin = new Skin();
@@ -75,6 +78,7 @@ namespace Rizumu.Objects
             skin.Hit = content.Load<SoundEffect>("SoundEffects/hit");
             skin.Miss = content.Load<SoundEffect>("SoundEffects/break");
             skin.PauseOverlay = content.Load<Texture2D>("Backgrounds/PauseOverlay");
+            skin.AlphaShader = content.Load<Effect>("Fx/AlphaMap");
 
             return skin;
         }
@@ -92,6 +96,7 @@ namespace Rizumu.Objects
             skin.Hit = content.Load<SoundEffect>("SoundEffects/hit");
             skin.Miss = content.Load<SoundEffect>("SoundEffects/break");
             skin.PauseOverlay = content.Load<Texture2D>("Backgrounds/PauseOverlay");
+            skin.AlphaShader = content.Load<Effect>("Fx/AlphaMap");
             return skin;
         }
     }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.Xna.Framework.Graphics;
+using System.Security.Cryptography;
 
 namespace Rizumu.Helpers
 {
@@ -29,8 +30,15 @@ namespace Rizumu.Helpers
                 if(File.Exists(Path.Combine(folder, "map.json")))
                 {
                     Map m = JObject.Parse(File.ReadAllText(Path.Combine(folder, "map.json"))).ToObject<Map>();
+                    using (var md5 = MD5.Create())
+                    {
+                        using (var stream = File.OpenRead(Path.Combine(folder, "map.json")))
+                        {
+                            m.MD5 = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
+                        }
+                    }
                     m.Path = folder;
-                    Maps.Add(m);
+                     Maps.Add(m);
                 }
             }
             if (Maps.Count < 1)
