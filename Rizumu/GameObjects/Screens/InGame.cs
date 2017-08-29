@@ -63,6 +63,8 @@ namespace Rizumu.GameObjects.Screens
                 NotesUp = new List<Note>();
                 NotesRight = new List<Note>();
                 NotesDown = new List<Note>();
+                CurrentCombo = 0;
+                HighestCombo = 0;
                 foreach (int n in Playing.NotesLeft)
                 {
                     NotesLeft.Add(new Note(spriteBatch, NoteMode.left, Background.Width, Background.Height)
