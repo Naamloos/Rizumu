@@ -146,22 +146,22 @@ namespace Rizumu.GameObjects.Screens
 
                 if (!Replaying)
                 {
-                    if (NewState.IsKeyDown(Keys.NumPad4) && !OldState.IsKeyDown(Keys.NumPad4))
+                    if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Left))
                     {
                         Recording.PressesLeft.Add(Timer);
                         LeftPress = true;
                     }
-                    if (NewState.IsKeyDown(Keys.NumPad8) && !OldState.IsKeyDown(Keys.NumPad8))
+                    if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Up))
                     {
                         Recording.PressesUp.Add(Timer);
                         UpPress = true;
                     }
-                    if (NewState.IsKeyDown(Keys.NumPad6) && !OldState.IsKeyDown(Keys.NumPad6))
+                    if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Right))
                     {
                         Recording.PressesRight.Add(Timer);
                         RightPress = true;
                     }
-                    if (NewState.IsKeyDown(Keys.NumPad2) && !OldState.IsKeyDown(Keys.NumPad2))
+                    if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Down))
                     {
                         Recording.PressesDown.Add(Timer);
                         DownPress = true;
@@ -189,22 +189,22 @@ namespace Rizumu.GameObjects.Screens
 
                 OldState = NewState;
 
-                if (NewState.IsKeyDown(Keys.NumPad4))
+                if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left))
                     LeftNote.Color = Color.DarkGray;
                 else
                     LeftNote.Color = Color.White;
 
-                if (NewState.IsKeyDown(Keys.NumPad8))
+                if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up))
                     UpNote.Color = Color.DarkGray;
                 else
                     UpNote.Color = Color.White;
 
-                if (NewState.IsKeyDown(Keys.NumPad6))
+                if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right))
                     RightNote.Color = Color.DarkGray;
                 else
                     RightNote.Color = Color.White;
 
-                if (NewState.IsKeyDown(Keys.NumPad2))
+                if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down))
                     DownNote.Color = Color.DarkGray;
                 else
                     DownNote.Color = Color.White;
@@ -296,7 +296,7 @@ namespace Rizumu.GameObjects.Screens
 
             if (!ready && !Paused)
                 new Background(spriteBatch, GameData.Instance.CurrentSkin.GetReady, Color.White, Background.Width, Background.Height).Draw();
-            if (Keyboard.GetState().IsKeyDown(Keys.NumPad8))
+            if (Keyboard.GetState().IsKeyDown((Keys)GameData.Instance.Options.Up))
                 ready = true;
         }
 
@@ -350,11 +350,13 @@ namespace Rizumu.GameObjects.Screens
             {
                 GameData.MusicManager.Restart();
                 IsRestarted = true;
+                LetsGoPlayed = false;
             }
             if (Paused)
             {
                 GameData.MusicManager.Pause();
                 LetsGoPlayed = false;
+                ready = false;
             }
             else if(ready)
             {
@@ -375,6 +377,7 @@ namespace Rizumu.GameObjects.Screens
                 ((Results)GameData.Instance.Screens.Find(x => x.Name == "results")).ResultsPreloaded = false;
                 Timer = 0;
                 LetsGoPlayed = false;
+                ready = false;
             }
         }
 
