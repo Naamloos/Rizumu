@@ -25,9 +25,13 @@ namespace Rizumu.GameObjects
         public int BaseY;
         public int traveldistance;
         public int Alpha;
+        int bgw = 0;
+        int bgh = 0;
 
         public Note(SpriteBatch spriteBatch, NoteMode mode, int screenWidth, int screenHeight)
         {
+            bgw = screenWidth;
+            bgh = screenHeight;
             var tex = GameData.Instance.CurrentSkin.Note;
             Mode = mode;
             if (mode == NoteMode.left)
@@ -61,30 +65,33 @@ namespace Rizumu.GameObjects
             Alpha = -50;
         }
 
-        public void Draw(ref bool KeyPress, bool Paused, bool Ready, float rotation, ref int CurrentCombo, ref float visiondist)
+        public void Draw(ref bool KeyPress, bool Paused, bool Ready, float rotation, ref int CurrentCombo, ref float visiondist, int Timer)
         {
             if (!Paused && Ready)
             {
                 NoteSprite.Rotation = rotation;
-                Position++;
                 Alpha++;
                 NoteSprite.Color = new Color(Color.White, 1f);
             }
 
             if (Mode == NoteMode.left)
             {
+                Position = Timer - (Time - ((bgw / 2) + NoteSprite.Texture.Width));
                 NoteSprite.X = BaseX + Position;
             }
             if (Mode == NoteMode.up)
             {
+                Position = Timer - (Time - ((bgh / 2) + NoteSprite.Texture.Height));
                 NoteSprite.Y = BaseY + Position;
             }
             if (Mode == NoteMode.right)
             {
+                Position = Timer - (Time - ((bgw / 2) + NoteSprite.Texture.Width));
                 NoteSprite.X = BaseX - Position;
             }
             if (Mode == NoteMode.down)
             {
+                Position = Timer - (Time - ((bgh / 2) + NoteSprite.Texture.Height));
                 NoteSprite.Y = BaseY - Position;
             }
             if (traveldistance + (NoteSprite.Texture.Width / 2) > Position && Hit == false)

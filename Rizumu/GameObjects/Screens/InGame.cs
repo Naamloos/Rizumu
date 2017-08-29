@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Input;
 using Rizumu.GuiObjects;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using Microsoft.Xna.Framework.Media;
 
 namespace Rizumu.GameObjects.Screens
 {
@@ -218,22 +219,22 @@ namespace Rizumu.GameObjects.Screens
                 foreach (Note n in NotesLeft)
                 {
                     if (n.Time - ((Background.Width / 2) + n.NoteSprite.Texture.Width) < Timer)
-                        n.Draw(ref LeftPress, Paused, ready, Rotation, ref CurrentCombo, ref leftdist);
+                        n.Draw(ref LeftPress, Paused, ready, Rotation, ref CurrentCombo, ref leftdist, Timer);
                 }
                 foreach (Note n in NotesUp)
                 {
                     if (n.Time - ((Background.Height / 2) + n.NoteSprite.Texture.Height) < Timer)
-                        n.Draw(ref UpPress, Paused, ready, Rotation, ref CurrentCombo, ref updist);
+                        n.Draw(ref UpPress, Paused, ready, Rotation, ref CurrentCombo, ref updist, Timer);
                 }
                 foreach (Note n in NotesRight)
                 {
                     if (n.Time - ((Background.Width / 2) + (n.NoteSprite.Texture.Width * 2)) < Timer)
-                        n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo, ref rightdist);
+                        n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer);
                 }
                 foreach (Note n in NotesDown)
                 {
                     if (n.Time - ((Background.Height / 2) + (n.NoteSprite.Texture.Height * 2)) < Timer)
-                        n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo, ref downdist);
+                        n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer);
                 }
                 LeftNote.Rotation = Rotation;
                 UpNote.Rotation = Rotation;
@@ -340,10 +341,11 @@ namespace Rizumu.GameObjects.Screens
         }
 
         public bool IsRestarted = false;
+        public bool LetsGoPlayed = false;
         public void Update(GameTime gameTime, Rectangle cursor, bool clicked)
         {
             if (MapLoaded && !Paused && ready)
-                Timer++;
+                Timer = (int)((MediaPlayer.PlayPosition.TotalMilliseconds * 500) / 1000);
             if (ready && !IsRestarted)
             {
                 GameData.MusicManager.Restart();
@@ -352,10 +354,16 @@ namespace Rizumu.GameObjects.Screens
             if (Paused)
             {
                 GameData.MusicManager.Pause();
+                LetsGoPlayed = false;
             }
             else if(ready)
             {
                 GameData.MusicManager.UnPause();
+                if (!LetsGoPlayed)
+                {
+                    GameData.Instance.CurrentSkin.LetsGo.Play();
+                    LetsGoPlayed = true;
+                }
             }
             if (Timer > lastnote + 1000)
             {

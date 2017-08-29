@@ -47,6 +47,7 @@ namespace Rizumu.Objects
         public SoundEffect Hello;
         public SoundEffect Click;
         public SoundEffect MouseOver;
+        public SoundEffect LetsGo;
 
         // Fonts
         public SpriteFont FontBig;
@@ -99,6 +100,7 @@ namespace Rizumu.Objects
             skin.Hello = content.Load<SoundEffect>("SoundEffects/hello");
             skin.Click = content.Load<SoundEffect>("SoundEffects/click");
             skin.MouseOver = content.Load<SoundEffect>("SoundEffects/mover");
+            skin.LetsGo = content.Load<SoundEffect>("SoundEffects/letsgo");
 
             return skin;
         }
@@ -129,6 +131,7 @@ namespace Rizumu.Objects
             skin.Hello = content.Load<SoundEffect>("SoundEffects/hello");
             skin.Click = content.Load<SoundEffect>("SoundEffects/click");
             skin.MouseOver = content.Load<SoundEffect>("SoundEffects/mover");
+            skin.LetsGo = content.Load<SoundEffect>("SoundEffects/letsgo");
             return skin;
         }
     }
