@@ -58,7 +58,7 @@ namespace Rizumu.GameObjects.Screens
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked)
         {
-            Rotation += 0.005f;
+            Rotation = Timer * 0.005f;
             if (CurrentCombo > HighestCombo)
                 HighestCombo = CurrentCombo;
             if (!MapLoaded)

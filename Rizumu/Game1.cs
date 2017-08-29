@@ -28,7 +28,7 @@ namespace Rizumu
             Window.Position = new Point(50, 50);
             // Making sure OldMouseState to prevent errors
             OldMouseState = Mouse.GetState();
-            IsFixedTimeStep = true;
+            IsFixedTimeStep = false;
             OGTimeSpan = TargetElapsedTime;
         }
 
@@ -104,8 +104,7 @@ namespace Rizumu
 
             if (GameData.Instance.CurrentScreen == "ingame" || GameData.Instance.CurrentScreen == "editor")
             {
-                TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 500.0f);
-                Window.IsBorderless = true;
+                //TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 500.0f);
             }
             else
             {

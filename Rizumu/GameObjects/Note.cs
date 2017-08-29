@@ -86,12 +86,12 @@ namespace Rizumu.GameObjects
             }
             if (Mode == NoteMode.right)
             {
-                Position = Timer - (Time - ((bgw / 2) + NoteSprite.Texture.Width));
+                Position = Timer - (Time - ((bgw / 2) + NoteSprite.Texture.Width * 2));
                 NoteSprite.X = BaseX - Position;
             }
             if (Mode == NoteMode.down)
             {
-                Position = Timer - (Time - ((bgh / 2) + NoteSprite.Texture.Height));
+                Position = Timer - (Time - ((bgh / 2) + NoteSprite.Texture.Height * 2));
                 NoteSprite.Y = BaseY - Position;
             }
             if (traveldistance + (NoteSprite.Texture.Width / 2) > Position && Hit == false)
