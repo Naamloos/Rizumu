@@ -365,7 +365,7 @@ namespace Rizumu.GameObjects.Screens
                     LetsGoPlayed = true;
                 }
             }
-            if (Timer > lastnote + 1000)
+            if (Timer > lastnote + 1000 || MediaPlayer.State == MediaState.Stopped && ready)
             {
                 string path = Path.Combine("replays/", $"{Playing.Name}-{GameData.Instance.Options.Player}-{new Random().Next(int.MaxValue)}.rizumuplay");
                 File.Create(path).Close();

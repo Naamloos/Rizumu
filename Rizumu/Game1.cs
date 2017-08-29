@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json.Linq;
+using Rizumu.Engine;
 using Rizumu.Objects;
 using System;
 using System.IO;
@@ -88,6 +89,7 @@ namespace Rizumu
             GameData.Instance.LoadScreens(spriteBatch, graphics);
             graphics.GraphicsDevice.PresentationParameters.PresentationInterval = PresentInterval.Immediate;
             graphics.GraphicsDevice.PresentationParameters.MultiSampleCount = 500;
+            Framerate = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, "0", 0, 0, Color.White);
         }
 
         protected override void UnloadContent()
@@ -129,11 +131,16 @@ namespace Rizumu
                 Exit();
         }
 
+        Text Framerate;
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied);
             GameData.Instance.Screens.Find(x => x.Name == GameData.Instance.CurrentScreen).Draw(spriteBatch, gameTime, CursorLocation, Click);
+            Framerate.Content = $"{Math.Round(1 / gameTime.ElapsedGameTime.TotalSeconds)} FPS";
+            Framerate.X = graphics.PreferredBackBufferWidth - Framerate.Width;
+            Framerate.Y = graphics.PreferredBackBufferHeight - Framerate.Height;
+            Framerate.Draw();
             spriteBatch.End();
             base.Draw(gameTime);
         }

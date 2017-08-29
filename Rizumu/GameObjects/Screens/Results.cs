@@ -36,6 +36,7 @@ namespace Rizumu.GameObjects.Screens
                 GameData.Instance.CurrentScreen = "select";
                 ((InGame)GameData.Instance.Screens.Find(x => x.Name == "ingame")).MapLoaded = false;
                 ResultsPreloaded = false;
+                GameData.MusicManager.Restart();
             };
             MapResults = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, "if you read this u suk", 5, 5, Color.Thistle);
         }

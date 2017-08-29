@@ -16,8 +16,8 @@ namespace Rizumu.Engine
         public string Content;
         public int X;
         public int Y;
-        public int Width;
-        public int Height;
+        public int Width => (int)Font.MeasureString(Content).X;
+        public int Height => (int)Font.MeasureString(Content).Y;
         public float Opacity;
 
         public Text(SpriteBatch spriteBatch, SpriteFont font, string content, int x, int y, Color color, float opacity = 1f)
@@ -29,9 +29,6 @@ namespace Rizumu.Engine
             Y = y;
             Opacity = opacity;
             Color = color;
-
-            Width = (int)font.MeasureString(content).X;
-            Height = (int)font.MeasureString(content).Y;
         }
 
         public void Draw()
