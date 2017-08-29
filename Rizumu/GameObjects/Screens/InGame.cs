@@ -49,6 +49,7 @@ namespace Rizumu.GameObjects.Screens
 
         public Text TimerTex;
         public Text ComboText;
+        public Text ComboTextSmall;
         public int CurrentCombo = 0;
         public int HighestCombo = 0;
 
@@ -278,10 +279,15 @@ namespace Rizumu.GameObjects.Screens
                     ExitButton.Draw(cursor, clicked);
                 }
 
-                TimerTex.Content = "" + Timer;
+                var totaltime = TimeSpan.FromSeconds((lastnote + 1000) / 500);
+                var currenttime = TimeSpan.FromSeconds(Timer / 500);
+
+                TimerTex.Content = $"{currenttime.ToReadableString()} / {totaltime.ToReadableString()}";
                 TimerTex.Draw();
                 ComboText.Content = $"{CurrentCombo}";
                 ComboText.Draw();
+                ComboTextSmall.Content = $"{HighestCombo}";
+                ComboTextSmall.Draw();
 
                 if (NewState.IsKeyDown(Keys.OemTilde))
                     MapLoaded = false;
@@ -302,10 +308,12 @@ namespace Rizumu.GameObjects.Screens
             UpNote = new Sprite(spriteBatch, (int)(Background.Width / 2 - notetex.Width * 0.5), (int)(Background.Height / 2 - notetex.Width * 1.5), notetex, Color.White);
             RightNote = new Sprite(spriteBatch, (int)(Background.Width / 2 + notetex.Width * 0.5), (int)(Background.Height / 2 - notetex.Width * 0.5), notetex, Color.White);
             DownNote = new Sprite(spriteBatch, (int)(Background.Width / 2 - notetex.Width * 0.5), (int)(Background.Height / 2 + notetex.Width * 0.5), notetex, Color.White);
-            TimerTex = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, "" + Timer, 0, 0, Color.GreenYellow);
+            TimerTex = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, "" + Timer, 0, 0, Color.White);
 
             ComboText = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontBig, "0", 15, 0, Color.White);
             ComboText.Y = Background.Height - ComboText.Height - 15;
+            ComboTextSmall = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "0", 15, 0, Color.White);
+            ComboTextSmall.Y = ((Background.Height - ComboText.Height - 15) - ComboTextSmall.Height) - 3;
             // Making sure OldState is not null
             OldState = Keyboard.GetState();
             ResumeButton = new Button(spriteBatch, (Graphics.PreferredBackBufferWidth / 2) - (GameData.Instance.CurrentSkin.Button.Width / 2),
@@ -387,6 +395,24 @@ namespace Rizumu.GameObjects.Screens
             }
 
             return Math.Max(left, Math.Max(up, Math.Max(right, down)));
+        }
+
+
+    }
+
+    public static class tshelper
+    {
+        public static string ToReadableString(this TimeSpan span)
+        {
+            string formatted = string.Format("{0}:{1}",
+                string.Format("{0:0}", span.Minutes),
+                string.Format("{0:0}", span.Seconds).PadLeft(2, '0'));
+
+            if (formatted.EndsWith(", ")) formatted = formatted.Substring(0, formatted.Length - 2);
+
+            if (string.IsNullOrEmpty(formatted)) formatted = "0 seconds";
+
+            return formatted;
         }
     }
 }
