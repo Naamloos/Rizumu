@@ -200,22 +200,22 @@ namespace Rizumu.GameObjects.Screens
                 foreach (Note n in NotesLeft)
                 {
                     if (n.Time - ((Background.Width / 2) + n.NoteSprite.Texture.Width) < Timer)
-                        n.Draw(ref LeftPress, Paused, Rotation, ref CurrentCombo);
+                        n.Draw(ref LeftPress, Paused, ready, Rotation, ref CurrentCombo);
                 }
                 foreach (Note n in NotesUp)
                 {
                     if (n.Time - ((Background.Height / 2) + n.NoteSprite.Texture.Height) < Timer)
-                        n.Draw(ref UpPress, Paused, Rotation, ref CurrentCombo);
+                        n.Draw(ref UpPress, Paused, ready, Rotation, ref CurrentCombo);
                 }
                 foreach (Note n in NotesRight)
                 {
                     if (n.Time - ((Background.Width / 2) + (n.NoteSprite.Texture.Width * 2)) < Timer)
-                        n.Draw(ref RightPress, Paused, Rotation, ref CurrentCombo);
+                        n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo);
                 }
                 foreach (Note n in NotesDown)
                 {
                     if (n.Time - ((Background.Height / 2) + (n.NoteSprite.Texture.Height * 2)) < Timer)
-                        n.Draw(ref DownPress, Paused, Rotation, ref CurrentCombo);
+                        n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo);
                 }
                 LeftNote.Rotation = Rotation;
                 UpNote.Rotation = Rotation;
@@ -230,6 +230,7 @@ namespace Rizumu.GameObjects.Screens
 
                 if (Paused)
                 {
+                    ready = false;
                     PauseOverlay.Draw();
                     ResumeButton.Draw(cursor, clicked);
                     ExitButton.Draw(cursor, clicked);
@@ -301,7 +302,7 @@ namespace Rizumu.GameObjects.Screens
             {
                 GameData.MusicManager.Pause();
             }
-            else
+            else if(ready)
             {
                 GameData.MusicManager.UnPause();
             }

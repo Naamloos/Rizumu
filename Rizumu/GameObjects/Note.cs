@@ -61,9 +61,9 @@ namespace Rizumu.GameObjects
             Alpha = -50;
         }
 
-        public void Draw(ref bool KeyPress, bool Paused, float rotation, ref int CurrentCombo)
+        public void Draw(ref bool KeyPress, bool Paused, bool Ready, float rotation, ref int CurrentCombo)
         {
-            if (!Paused)
+            if (!Paused && Ready)
             {
                 NoteSprite.Rotation = rotation;
                 Position++;
