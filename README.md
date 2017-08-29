@@ -1,4 +1,4 @@
-# Rizumu <3
+![Rizumu](https://i.imgur.com/xGkjvxz.png)
 ## What is Rizumu?
 Rizumu is an open source rhythm game inspired by games like Osu!, Taiko and DDR. Rizumu was written in C# on top of [MonoGame](https://github.com/MonoGame/MonoGame)
 
