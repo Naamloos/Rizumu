@@ -89,6 +89,7 @@ namespace Rizumu
             GameData.Instance.LoadScreens(spriteBatch, graphics);
             graphics.GraphicsDevice.PresentationParameters.PresentationInterval = PresentInterval.Immediate;
             graphics.GraphicsDevice.PresentationParameters.MultiSampleCount = 500;
+            GameData.Instance.CurrentSkin.Hello.Play();
         }
 
         protected override void UnloadContent()

@@ -208,3 +208,9 @@
 /processorParam:TextureFormat=Color
 /build:Backgrounds/PauseOverlay.png
 
+#begin SoundEffects/hello.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SoundEffects/hello.mp3
+
