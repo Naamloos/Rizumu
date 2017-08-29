@@ -14,7 +14,9 @@ namespace Rizumu.GuiObjects
         public Sprite StaticSprite;
         public Sprite HoverSprite;
         public Text Text;
+        public bool MouseIsOver;
         public event EventHandler<ButtonEventArgs> OnClick;
+        public event EventHandler<ButtonEventArgs> OnMouseEnter;
 
         public Button(SpriteBatch spriteBatch, int x, int y, Texture2D staticTexture, Texture2D hoverTexture, string text = "")
         {
@@ -33,10 +35,20 @@ namespace Rizumu.GuiObjects
                 HoverSprite.Draw();
                 Text.Draw();
                 if (click)
-                    OnClick.Invoke(null, new ButtonEventArgs());
+                {
+                    OnClick?.Invoke(null, new ButtonEventArgs());
+                    GameData.Instance.CurrentSkin.Click.Play();
+                }
+                if (!MouseIsOver)
+                {
+                    MouseIsOver = true;
+                    OnMouseEnter?.Invoke(null, new ButtonEventArgs());
+                    GameData.Instance.CurrentSkin.MouseOver.Play();
+                }
             }
             else
             {
+                MouseIsOver = false;
                 StaticSprite.Draw();
                 Text.Draw();
             }

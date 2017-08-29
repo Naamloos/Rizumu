@@ -39,11 +39,14 @@ namespace Rizumu.Objects
         public Texture2D VisionDown;
         public Texture2D VisionLeft;
         public Texture2D VisionRight;
+        public Texture2D FunctionOverlay;
 
         // Sounds
         public SoundEffect Hit;
         public SoundEffect Miss;
         public SoundEffect Hello;
+        public SoundEffect Click;
+        public SoundEffect MouseOver;
 
         // Fonts
         public SpriteFont FontBig;
@@ -92,7 +95,10 @@ namespace Rizumu.Objects
             skin.Particle = content.Load<Texture2D>("Particles/circle");
             skin.Circle = content.Load<Texture2D>("Sprite/circle");
             skin.GetReady = content.Load<Texture2D>("Backgrounds/getready");
+            skin.FunctionOverlay = content.Load<Texture2D>("Backgrounds/functionoverlay");
             skin.Hello = content.Load<SoundEffect>("SoundEffects/hello");
+            skin.Click = content.Load<SoundEffect>("SoundEffects/click");
+            skin.MouseOver = content.Load<SoundEffect>("SoundEffects/mover");
 
             return skin;
         }
@@ -119,7 +125,10 @@ namespace Rizumu.Objects
             skin.VisionDown = content.Load<Texture2D>("Backgrounds/visionbottom");
             skin.VisionLeft = content.Load<Texture2D>("Backgrounds/visionleft");
             skin.VisionRight = content.Load<Texture2D>("Backgrounds/visionright");
+            skin.FunctionOverlay = content.Load<Texture2D>("Backgrounds/functionoverlay");
             skin.Hello = content.Load<SoundEffect>("SoundEffects/hello");
+            skin.Click = content.Load<SoundEffect>("SoundEffects/click");
+            skin.MouseOver = content.Load<SoundEffect>("SoundEffects/mover");
             return skin;
         }
     }

@@ -22,6 +22,7 @@ namespace Rizumu.GameObjects.Screens
 
         // Background
         public Background Background;
+        public Background MenuOverlay;
 
         public string Name { get => "main"; }
 
@@ -55,6 +56,7 @@ namespace Rizumu.GameObjects.Screens
             #endregion
 
             Background = new Background(spriteBatch, GameData.Instance.CurrentSkin.MenuBackground, Color.White, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
+            MenuOverlay = new Background(spriteBatch, GameData.Instance.CurrentSkin.FunctionOverlay, Color.White, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
         }
         #endregion
 
@@ -65,6 +67,8 @@ namespace Rizumu.GameObjects.Screens
             PlayButton.Draw(cursor, clicked);
             OptionsButton.Draw(cursor, clicked);
             ExitButton.Draw(cursor, clicked);
+
+            MenuOverlay.Draw();
         }
 
         public void Update(GameTime gameTime, Rectangle cursor, bool clicked)
@@ -80,6 +84,7 @@ namespace Rizumu.GameObjects.Screens
                 ((InGame)GameData.Instance.Screens.Find(x => x.Name == "ingame")).Replaying = true;
                 GameData.MapManager.Current = GameData.MapManager.Maps.Find(x => x.MD5 == replay.Md5);
                 GameData.Instance.CurrentScreen = "ingame";
+                GameData.MusicManager.Change(GameData.MapManager.Current);
             }
         }
     }

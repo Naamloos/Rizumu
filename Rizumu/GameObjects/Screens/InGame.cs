@@ -333,6 +333,7 @@ namespace Rizumu.GameObjects.Screens
                 MapLoaded = false;
                 GameData.Instance.CurrentScreen = "select";
                 Paused = false;
+                Replaying = false;
                 GameData.MusicManager.UnPause();
                 GameData.MusicManager.Restart();
             };
@@ -358,10 +359,11 @@ namespace Rizumu.GameObjects.Screens
             }
             if (Timer > lastnote + 1000)
             {
-                string path = Path.Combine("replays/", $"{Playing.Name}-{GameData.Instance.Options.Player}-{new Random().Next(int.MaxValue)}");
+                string path = Path.Combine("replays/", $"{Playing.Name}-{GameData.Instance.Options.Player}-{new Random().Next(int.MaxValue)}.rizumuplay");
                 File.Create(path).Close();
                 File.WriteAllText(path, JObject.FromObject(Recording).ToString());
                 GameData.Instance.CurrentScreen = "results";
+                Replaying = false;
                 ((Results)GameData.Instance.Screens.Find(x => x.Name == "results")).ResultsPreloaded = false;
                 Timer = 0;
             }
