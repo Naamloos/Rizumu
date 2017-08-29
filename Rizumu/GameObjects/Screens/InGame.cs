@@ -29,6 +29,7 @@ namespace Rizumu.GameObjects.Screens
         public Background PauseOverlay;
         public Replay Recording;
         public bool Replaying = false;
+        public bool ready;
         public Replay Replay;
         public float Rotation = 0f;
 
@@ -56,6 +57,9 @@ namespace Rizumu.GameObjects.Screens
                 HighestCombo = CurrentCombo;
             if (!MapLoaded)
             {
+                ready = false;
+                IsRestarted = false;
+                GameData.MusicManager.Stop();
                 Playing = GameData.MapManager.Current;
                 Timer = Playing.Offset;
                 #region Preloading notes
@@ -114,7 +118,6 @@ namespace Rizumu.GameObjects.Screens
                 Recording = new Replay();
                 Recording.Md5 = Playing.MD5;
                 Recording.Player = GameData.Instance.Options.Player;
-                GameData.MusicManager.Restart();
                 MapLoaded = true;
             }
             else
@@ -240,6 +243,11 @@ namespace Rizumu.GameObjects.Screens
                 if (NewState.IsKeyDown(Keys.OemTilde))
                     MapLoaded = false;
             }
+
+            if (!ready && !Paused)
+                new Background(spriteBatch, GameData.Instance.CurrentSkin.GetReady, Color.White, Background.Width, Background.Height).Draw();
+            if (Keyboard.GetState().IsKeyDown(Keys.NumPad8))
+                ready = true;
         }
 
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
@@ -279,10 +287,16 @@ namespace Rizumu.GameObjects.Screens
             };
         }
 
+        public bool IsRestarted = false;
         public void Update(GameTime gameTime, Rectangle cursor, bool clicked)
         {
-            if (MapLoaded && !Paused)
+            if (MapLoaded && !Paused && ready)
                 Timer++;
+            if (ready && !IsRestarted)
+            {
+                GameData.MusicManager.Restart();
+                IsRestarted = true;
+            }
             if (Paused)
             {
                 GameData.MusicManager.Pause();

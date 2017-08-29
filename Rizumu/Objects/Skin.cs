@@ -34,6 +34,7 @@ namespace Rizumu.Objects
         // Backgrounds
         public Texture2D MenuBackground;
         public Texture2D PauseOverlay;
+        public Texture2D GetReady;
 
         // Sounds
         public SoundEffect Hit;
@@ -85,6 +86,7 @@ namespace Rizumu.Objects
             skin.AlphaShader = content.Load<Effect>("Fx/AlphaMap");
             skin.Particle = content.Load<Texture2D>("Particles/circle");
             skin.Circle = content.Load<Texture2D>("Sprite/circle");
+            skin.GetReady = content.Load<Texture2D>("Backgrounds/getready");
 
             return skin;
         }
@@ -98,6 +100,7 @@ namespace Rizumu.Objects
             skin.Font = content.Load<SpriteFont>("Fonts/Main");
             skin.FontSmall = content.Load<SpriteFont>("Fonts/MainSmall");
             skin.MenuBackground = content.Load<Texture2D>("Backgrounds/MainBackground");
+            skin.GetReady = content.Load<Texture2D>("Backgrounds/getready");
             skin.SongBar = content.Load<Texture2D>("Gui/MapData");
             skin.Note = content.Load<Texture2D>("Sprite/Note");
             skin.Hit = content.Load<SoundEffect>("SoundEffects/hit");

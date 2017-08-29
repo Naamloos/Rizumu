@@ -13,6 +13,7 @@ namespace Rizumu.Helpers
     {
         public Song Current;
         public Map Playing;
+        public bool IsPlaying => MediaPlayer.State == MediaState.Playing;
         public MusicManager()
         {
             int songindex = new Random().Next(0, GameData.MapManager.Maps.Count - 1);
@@ -27,6 +28,11 @@ namespace Rizumu.Helpers
         {
             if (MediaPlayer.State == MediaState.Playing)
                 MediaPlayer.Pause();
+        }
+
+        public void Stop()
+        {
+            MediaPlayer.Stop();
         }
 
         public void UnPause()
@@ -49,6 +55,7 @@ namespace Rizumu.Helpers
 
         public void Restart()
         {
+            UnPause();
             MediaPlayer.Stop();
             MediaPlayer.Play(Current);
         }
