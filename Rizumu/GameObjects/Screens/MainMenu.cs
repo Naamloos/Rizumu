@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Rizumu.Engine;
 using Rizumu.GuiObjects;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
+using Newtonsoft.Json.Linq;
 
 namespace Rizumu.GameObjects.Screens
 {
@@ -69,6 +71,16 @@ namespace Rizumu.GameObjects.Screens
         {
             if (Keyboard.GetState().IsKeyDown(Keys.F1))
                 GameData.Instance.CurrentScreen = "editor";
+            if (Keyboard.GetState().IsKeyDown(Keys.F2))
+            {
+                var ofd = new System.Windows.Forms.OpenFileDialog();
+                ofd.ShowDialog();
+                var replay = JObject.Parse(File.ReadAllText(ofd.FileName)).ToObject<Objects.Replay>();
+                ((InGame)GameData.Instance.Screens.Find(x => x.Name == "ingame")).Replay = replay;
+                ((InGame)GameData.Instance.Screens.Find(x => x.Name == "ingame")).Replaying = true;
+                GameData.MapManager.Current = GameData.MapManager.Maps.Find(x => x.MD5 == replay.Md5);
+                GameData.Instance.CurrentScreen = "ingame";
+            }
         }
     }
 }

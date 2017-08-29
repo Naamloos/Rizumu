@@ -28,6 +28,8 @@ namespace Rizumu.Objects
         public Texture2D RankC;
         public Texture2D RankD;
         public Texture2D Popup;
+        public Texture2D Particle;
+        public Texture2D Circle;
 
         // Backgrounds
         public Texture2D MenuBackground;
@@ -38,6 +40,7 @@ namespace Rizumu.Objects
         public SoundEffect Miss;
 
         // Fonts
+        public SpriteFont FontBig;
         public SpriteFont Font;
         public SpriteFont FontSmall;
 
@@ -73,12 +76,15 @@ namespace Rizumu.Objects
             else
                 skin.Note = content.Load<Texture2D>("Sprite/Note");
 
+            skin.FontBig = content.Load<SpriteFont>("Fonts/MainBig");
             skin.Font = content.Load<SpriteFont>("Fonts/Main");
             skin.FontSmall = content.Load<SpriteFont>("Fonts/MainSmall");
             skin.Hit = content.Load<SoundEffect>("SoundEffects/hit");
             skin.Miss = content.Load<SoundEffect>("SoundEffects/break");
             skin.PauseOverlay = content.Load<Texture2D>("Backgrounds/PauseOverlay");
             skin.AlphaShader = content.Load<Effect>("Fx/AlphaMap");
+            skin.Particle = content.Load<Texture2D>("Particles/circle");
+            skin.Circle = content.Load<Texture2D>("Sprite/circle");
 
             return skin;
         }
@@ -88,6 +94,7 @@ namespace Rizumu.Objects
             Skin skin = new Skin();
             skin.Button = content.Load<Texture2D>("Gui/Button");
             skin.ButtonHover = content.Load<Texture2D>("Gui/ButtonSelected");
+            skin.FontBig = content.Load<SpriteFont>("Fonts/MainBig");
             skin.Font = content.Load<SpriteFont>("Fonts/Main");
             skin.FontSmall = content.Load<SpriteFont>("Fonts/MainSmall");
             skin.MenuBackground = content.Load<Texture2D>("Backgrounds/MainBackground");
@@ -97,6 +104,8 @@ namespace Rizumu.Objects
             skin.Miss = content.Load<SoundEffect>("SoundEffects/break");
             skin.PauseOverlay = content.Load<Texture2D>("Backgrounds/PauseOverlay");
             skin.AlphaShader = content.Load<Effect>("Fx/AlphaMap");
+            skin.Particle = content.Load<Texture2D>("Particles/circle");
+            skin.Circle = content.Load<Texture2D>("Sprite/circle");
             return skin;
         }
     }

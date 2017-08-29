@@ -30,6 +30,7 @@ namespace Rizumu.GameObjects.Screens
         public Replay Recording;
         public bool Replaying = false;
         public Replay Replay;
+        public float Rotation = 0f;
 
         public KeyboardState OldState;
 
@@ -42,11 +43,17 @@ namespace Rizumu.GameObjects.Screens
         public Button ResumeButton;
 
         public Text TimerTex;
+        public Text ComboText;
+        public int CurrentCombo = 0;
+        public int HighestCombo = 0;
 
         public string Name { get => "ingame"; }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked)
         {
+            Rotation += 0.005f;
+            if (CurrentCombo > HighestCombo)
+                HighestCombo = CurrentCombo;
             if (!MapLoaded)
             {
                 Playing = GameData.MapManager.Current;
@@ -188,29 +195,33 @@ namespace Rizumu.GameObjects.Screens
                 foreach (Note n in NotesLeft)
                 {
                     if (n.Time - ((Background.Width / 2) + n.NoteSprite.Texture.Width) < Timer)
-                        n.Draw(ref LeftPress, Paused);
+                        n.Draw(ref LeftPress, Paused, Rotation, ref CurrentCombo);
                 }
                 foreach (Note n in NotesUp)
                 {
                     if (n.Time - ((Background.Height / 2) + n.NoteSprite.Texture.Height) < Timer)
-                        n.Draw(ref UpPress, Paused);
+                        n.Draw(ref UpPress, Paused, Rotation, ref CurrentCombo);
                 }
                 foreach (Note n in NotesRight)
                 {
                     if (n.Time - ((Background.Width / 2) + (n.NoteSprite.Texture.Width * 2)) < Timer)
-                        n.Draw(ref RightPress, Paused);
+                        n.Draw(ref RightPress, Paused, Rotation, ref CurrentCombo);
                 }
                 foreach (Note n in NotesDown)
                 {
                     if (n.Time - ((Background.Height / 2) + (n.NoteSprite.Texture.Height * 2)) < Timer)
-                        n.Draw(ref DownPress, Paused);
+                        n.Draw(ref DownPress, Paused, Rotation, ref CurrentCombo);
                 }
+                LeftNote.Rotation = Rotation;
+                UpNote.Rotation = Rotation;
+                RightNote.Rotation = Rotation;
+                DownNote.Rotation = Rotation;
                 #endregion
 
-                LeftNote.Draw();
-                UpNote.Draw();
-                RightNote.Draw();
-                DownNote.Draw();
+                LeftNote.Draw(true);
+                UpNote.Draw(true);
+                RightNote.Draw(true);
+                DownNote.Draw(true);
 
                 if (Paused)
                 {
@@ -221,6 +232,8 @@ namespace Rizumu.GameObjects.Screens
 
                 TimerTex.Content = "" + Timer;
                 TimerTex.Draw();
+                ComboText.Content = $"{CurrentCombo}";
+                ComboText.Draw();
 
                 if (NewState.IsKeyDown(Keys.OemTilde))
                     MapLoaded = false;
@@ -237,6 +250,9 @@ namespace Rizumu.GameObjects.Screens
             RightNote = new Sprite(spriteBatch, (int)(Background.Width / 2 + notetex.Width * 0.5), (int)(Background.Height / 2 - notetex.Width * 0.5), notetex, Color.White);
             DownNote = new Sprite(spriteBatch, (int)(Background.Width / 2 - notetex.Width * 0.5), (int)(Background.Height / 2 + notetex.Width * 0.5), notetex, Color.White);
             TimerTex = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, "" + Timer, 0, 0, Color.GreenYellow);
+
+            ComboText = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontBig, "0", 15, 0, Color.White);
+            ComboText.Y = Background.Height - ComboText.Height - 15;
             // Making sure OldState is not null
             OldState = Keyboard.GetState();
             ResumeButton = new Button(spriteBatch, (Graphics.PreferredBackBufferWidth / 2) - (GameData.Instance.CurrentSkin.Button.Width / 2),

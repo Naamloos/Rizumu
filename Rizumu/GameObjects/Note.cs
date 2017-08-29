@@ -61,13 +61,14 @@ namespace Rizumu.GameObjects
             Alpha = -50;
         }
 
-        public void Draw(ref bool KeyPress, bool Paused)
+        public void Draw(ref bool KeyPress, bool Paused, float rotation, ref int CurrentCombo)
         {
             if (!Paused)
             {
+                NoteSprite.Rotation = rotation;
                 Position++;
                 Alpha++;
-                NoteSprite.Color = new Color(0, 0, 0, Alpha);
+                NoteSprite.Color = new Color(Color.White, 1f);
             }
 
             if (Mode == NoteMode.left)
@@ -88,11 +89,12 @@ namespace Rizumu.GameObjects
             }
             if (traveldistance + (NoteSprite.Texture.Width / 2) > Position && Hit == false)
             {
-                NoteSprite.Draw();
+                NoteSprite.Draw(true);
             }
             else if (Miss == false && Hit == false)
             {
                 GameData.Instance.CurrentSkin.Miss.Play();
+                CurrentCombo = 0;
                 Miss = true;
             }
 
@@ -102,6 +104,7 @@ namespace Rizumu.GameObjects
                 {
                     KeyPress = false;
                     GameData.Instance.CurrentSkin.Hit.Play();
+                    CurrentCombo++;
                 }
                 Hit = true;
             }
