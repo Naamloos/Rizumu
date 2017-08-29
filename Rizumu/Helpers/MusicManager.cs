@@ -49,7 +49,8 @@ namespace Rizumu.Helpers
             if (Playing != m)
             {
                 MediaPlayer.Stop();
-                Current = m.Song;
+                Current = Song.FromUri(m.MD5,
+                    new Uri(Path.Combine(m.Path, m.FileName), UriKind.Relative));
                 Playing = m;
                 MediaPlayer.Play(Current);
             }

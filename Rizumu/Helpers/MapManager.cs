@@ -43,7 +43,6 @@ namespace Rizumu.Helpers
             }
             if (Maps.Count < 1)
                 return false;
-            Map.PreloadSongs();
             return true;
         }
 
