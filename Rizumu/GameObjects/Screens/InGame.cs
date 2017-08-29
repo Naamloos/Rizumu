@@ -374,6 +374,7 @@ namespace Rizumu.GameObjects.Screens
                 Replaying = false;
                 ((Results)GameData.Instance.Screens.Find(x => x.Name == "results")).ResultsPreloaded = false;
                 Timer = 0;
+                LetsGoPlayed = false;
             }
         }
 
