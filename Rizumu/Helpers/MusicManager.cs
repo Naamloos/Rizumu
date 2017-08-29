@@ -18,6 +18,8 @@ namespace Rizumu.Helpers
         public MusicManager()
         {
             MediaPlayer.Volume = GameData.Instance.Options.Volume;
+            MediaPlayer.IsRepeating = false;
+            MediaPlayer.IsShuffled = false;
         }
 
         public void Pause()
@@ -46,9 +48,8 @@ namespace Rizumu.Helpers
         {
             if (Playing != m)
             {
-                Current = Song.FromUri(m.MD5,
-                    new Uri(Path.Combine(m.Path, m.FileName), UriKind.Relative));
                 MediaPlayer.Stop();
+                Current = m.Song;
                 Playing = m;
                 MediaPlayer.Play(Current);
             }
@@ -59,6 +60,12 @@ namespace Rizumu.Helpers
             UnPause();
             MediaPlayer.Stop();
             MediaPlayer.Play(Current);
+        }
+
+        public void KeepPlaying()
+        {
+            if (!IsPlaying)
+                Change(Playing);
         }
     }
 }

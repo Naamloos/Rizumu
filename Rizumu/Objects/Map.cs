@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,14 @@ namespace Rizumu.Objects
 {
     class Map
     {
+        private static Dictionary<string, Song> _songs;
+        public static void PreloadSongs()
+        {
+            _songs = new Dictionary<string, Song>();
+            foreach (Map m in GameData.MapManager.Maps)
+                _songs.Add(m.MD5, Song.FromUri(m.MD5, new Uri(System.IO.Path.Combine(m.Path, m.FileName), UriKind.Relative)));
+        }
+
         [JsonProperty("name")]
         public string Name;
 
@@ -48,5 +57,8 @@ namespace Rizumu.Objects
 
         [JsonIgnore]
         public string MD5;
+
+        [JsonIgnore]
+        public Song Song => _songs[MD5];
     }
 }
