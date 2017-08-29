@@ -48,16 +48,18 @@ namespace Rizumu.GameObjects.Screens
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
         {
             Background = new Background(spriteBatch, GameData.Instance.CurrentSkin.MenuBackground, Color.White, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
-            int Y = 0;
             int BarWidth = GameData.Instance.CurrentSkin.SongBar.Width;
             int BarHeight = GameData.Instance.CurrentSkin.SongBar.Height;
+            int index = new Random().Next(0, GameData.MapManager.Maps.Count - 1);
+            int Y = -((BarHeight + 25) * (index - 3));
             MapDatas = new List<MapData>();
             foreach (Map m in GameData.MapManager.Maps)
             {
                 MapDatas.Add(new MapData(spriteBatch, (Graphics.PreferredBackBufferWidth / 2) - (BarWidth / 2), Y, m.Name, m.Creator, false, m.MD5));
                 Y += BarHeight + 25;
             }
-            MapDatas.First().Selected = true;
+
+            GameData.MusicManager.Change(MapDatas[index].MapMD5);
 
             BackButton = new Button(spriteBatch, 25, Graphics.PreferredBackBufferHeight - GameData.Instance.CurrentSkin.Button.Height - 25,
                 GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Back");
@@ -94,7 +96,8 @@ namespace Rizumu.GameObjects.Screens
             if (Keyboard.GetState().IsKeyDown(Keys.Up) && MapDatas.First().Y < MapDatas.First().MapDataHolder.Texture.Height * 2 + 70)
             {
                 scrollac += 2;
-            }else if (Keyboard.GetState().IsKeyDown(Keys.Down) && MapDatas.Last().Y > MapDatas.Last().MapDataHolder.Texture.Height * 2 + 70)
+            }
+            else if (Keyboard.GetState().IsKeyDown(Keys.Down) && MapDatas.Last().Y > MapDatas.Last().MapDataHolder.Texture.Height * 2 + 70)
             {
                 scrollac -= 2;
             }
@@ -144,7 +147,7 @@ namespace Rizumu.GameObjects.Screens
                         }
                     }
                 }
-                if(GameData.MapManager.Current?.Background != null)
+                if (GameData.MapManager.Current?.Background != null)
                     Background.Texture = GameData.MapManager.Current.Background;
             }
             #endregion

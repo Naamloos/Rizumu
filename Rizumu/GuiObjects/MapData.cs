@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Rizumu.Engine;
+using Rizumu.Helpers;
 using Rizumu.Objects;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Rizumu.GuiObjects
         public string MapMD5;
         public bool Selected = false;
         public Sprite MapPreview;
+        public MusicManager msc => GameData.MusicManager;
 
         public MapData(SpriteBatch spriteBatch, int x, int y, string name, string creator, bool selected, string MD5)
         {

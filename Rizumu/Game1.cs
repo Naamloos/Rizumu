@@ -82,14 +82,12 @@ namespace Rizumu
                 MessageBox.Show("Please add some maps to '/songs' before playing!");
                 Environment.Exit(-1);
             }
-
+            GameData.Instance.CurrentSkin.Hello.Play();
             GameData.MusicManager = new Helpers.MusicManager();
-
             GameData.MapManager.PreloadBackgrounds(spriteBatch);
             GameData.Instance.LoadScreens(spriteBatch, graphics);
             graphics.GraphicsDevice.PresentationParameters.PresentationInterval = PresentInterval.Immediate;
             graphics.GraphicsDevice.PresentationParameters.MultiSampleCount = 500;
-            GameData.Instance.CurrentSkin.Hello.Play();
         }
 
         protected override void UnloadContent()

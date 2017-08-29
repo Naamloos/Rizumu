@@ -14,14 +14,10 @@ namespace Rizumu.Helpers
         public Song Current;
         public Map Playing;
         public bool IsPlaying => MediaPlayer.State == MediaState.Playing;
+        public int songindex = 0;
         public MusicManager()
         {
-            int songindex = new Random().Next(0, GameData.MapManager.Maps.Count - 1);
-            Current = Song.FromUri(Path.Combine(GameData.MapManager.Maps[songindex].Path, GameData.MapManager.Maps[songindex].FileName),
-                new Uri(Path.Combine(GameData.MapManager.Maps[songindex].Path, GameData.MapManager.Maps[songindex].FileName), UriKind.Relative));
-            MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = GameData.Instance.Options.Volume;
-            MediaPlayer.Play(Current);
         }
 
         public void Pause()
@@ -39,6 +35,11 @@ namespace Rizumu.Helpers
         {
             if (MediaPlayer.State == MediaState.Paused)
                 MediaPlayer.Resume();
+        }
+
+        public void Change(string md5)
+        {
+            Change(GameData.MapManager.Maps.Find(x => x.MD5 == md5));
         }
 
         public void Change(Map m)
