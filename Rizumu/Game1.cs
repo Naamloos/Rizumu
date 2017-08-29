@@ -28,7 +28,7 @@ namespace Rizumu
             Window.Position = new Point(50, 50);
             // Making sure OldMouseState to prevent errors
             OldMouseState = Mouse.GetState();
-            IsFixedTimeStep = false;
+            IsFixedTimeStep = true;
             OGTimeSpan = TargetElapsedTime;
         }
 
