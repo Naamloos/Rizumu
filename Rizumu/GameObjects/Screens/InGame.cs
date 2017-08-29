@@ -27,6 +27,10 @@ namespace Rizumu.GameObjects.Screens
         public int lastnote = 0;
         public Background Background;
         public Background PauseOverlay;
+        public Sprite VisionUp;
+        public Sprite VisionDown;
+        public Sprite VisionLeft;
+        public Sprite VisionRight;
         public Replay Recording;
         public bool Replaying = false;
         public bool ready;
@@ -114,6 +118,16 @@ namespace Rizumu.GameObjects.Screens
                 }
                 #endregion
                 Background.Texture = Playing.Background;
+
+                VisionUp = new Sprite(spriteBatch, 0, 0, GameData.Instance.CurrentSkin.VisionUp, Color.White);
+                VisionDown = new Sprite(spriteBatch, 0, 0, GameData.Instance.CurrentSkin.VisionDown, Color.White);
+                VisionLeft = new Sprite(spriteBatch, 0, 0, GameData.Instance.CurrentSkin.VisionLeft, Color.White);
+                VisionRight = new Sprite(spriteBatch, 0, 0, GameData.Instance.CurrentSkin.VisionRight, Color.White);
+                VisionUp.Alpha = 0f;
+                VisionDown.Alpha = 0f;
+                VisionLeft.Alpha = 0f;
+                VisionRight.Alpha = 0f;
+
                 lastnote = GetLastNote();
                 Recording = new Replay();
                 Recording.Md5 = Playing.MD5;
@@ -195,32 +209,60 @@ namespace Rizumu.GameObjects.Screens
 
                 Background.Draw();
 
-
                 #region Gameplay (yay!)
+                float leftdist = 0;
+                float updist = 0;
+                float rightdist = 0;
+                float downdist = 0;
                 foreach (Note n in NotesLeft)
                 {
                     if (n.Time - ((Background.Width / 2) + n.NoteSprite.Texture.Width) < Timer)
-                        n.Draw(ref LeftPress, Paused, ready, Rotation, ref CurrentCombo);
+                        n.Draw(ref LeftPress, Paused, ready, Rotation, ref CurrentCombo, ref leftdist);
                 }
                 foreach (Note n in NotesUp)
                 {
                     if (n.Time - ((Background.Height / 2) + n.NoteSprite.Texture.Height) < Timer)
-                        n.Draw(ref UpPress, Paused, ready, Rotation, ref CurrentCombo);
+                        n.Draw(ref UpPress, Paused, ready, Rotation, ref CurrentCombo, ref updist);
                 }
                 foreach (Note n in NotesRight)
                 {
                     if (n.Time - ((Background.Width / 2) + (n.NoteSprite.Texture.Width * 2)) < Timer)
-                        n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo);
+                        n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo, ref rightdist);
                 }
                 foreach (Note n in NotesDown)
                 {
                     if (n.Time - ((Background.Height / 2) + (n.NoteSprite.Texture.Height * 2)) < Timer)
-                        n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo);
+                        n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo, ref downdist);
                 }
                 LeftNote.Rotation = Rotation;
                 UpNote.Rotation = Rotation;
                 RightNote.Rotation = Rotation;
                 DownNote.Rotation = Rotation;
+
+                if (updist != 0)
+                    VisionUp.Alpha = (updist / 2);
+                else
+                    VisionUp.Alpha = VisionUp.Alpha - 0.1f;
+
+                if (downdist != 0)
+                    VisionDown.Alpha = (downdist / 2);
+                else
+                    VisionDown.Alpha = VisionDown.Alpha - 0.1f;
+
+                if (leftdist != 0)
+                    VisionLeft.Alpha = (leftdist / 2);
+                else
+                    VisionLeft.Alpha = VisionLeft.Alpha - 0.1f;
+
+                if (rightdist != 0)
+                    VisionRight.Alpha = (rightdist / 2);
+                else
+                    VisionRight.Alpha = VisionRight.Alpha - 0.1f;
+
+                VisionUp.DrawScaled(Background.Width, Background.Height);
+                VisionDown.DrawScaled(Background.Width, Background.Height);
+                VisionLeft.DrawScaled(Background.Width, Background.Height);
+                VisionRight.DrawScaled(Background.Width, Background.Height);
                 #endregion
 
                 LeftNote.Draw(true);

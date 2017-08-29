@@ -61,7 +61,7 @@ namespace Rizumu.GameObjects
             Alpha = -50;
         }
 
-        public void Draw(ref bool KeyPress, bool Paused, bool Ready, float rotation, ref int CurrentCombo)
+        public void Draw(ref bool KeyPress, bool Paused, bool Ready, float rotation, ref int CurrentCombo, ref float visiondist)
         {
             if (!Paused && Ready)
             {
@@ -89,6 +89,8 @@ namespace Rizumu.GameObjects
             }
             if (traveldistance + (NoteSprite.Texture.Width / 2) > Position && Hit == false)
             {
+                float vis = traveldistance - Position;
+                visiondist = vis / 1000;
                 NoteSprite.Draw(true);
             }
             else if (Miss == false && Hit == false)

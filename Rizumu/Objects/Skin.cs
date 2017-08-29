@@ -35,6 +35,10 @@ namespace Rizumu.Objects
         public Texture2D MenuBackground;
         public Texture2D PauseOverlay;
         public Texture2D GetReady;
+        public Texture2D VisionUp;
+        public Texture2D VisionDown;
+        public Texture2D VisionLeft;
+        public Texture2D VisionRight;
 
         // Sounds
         public SoundEffect Hit;
@@ -109,6 +113,10 @@ namespace Rizumu.Objects
             skin.AlphaShader = content.Load<Effect>("Fx/AlphaMap");
             skin.Particle = content.Load<Texture2D>("Particles/circle");
             skin.Circle = content.Load<Texture2D>("Sprite/circle");
+            skin.VisionUp = content.Load<Texture2D>("Backgrounds/visiontop");
+            skin.VisionDown = content.Load<Texture2D>("Backgrounds/visionbottom");
+            skin.VisionLeft = content.Load<Texture2D>("Backgrounds/visionleft");
+            skin.VisionRight = content.Load<Texture2D>("Backgrounds/visionright");
             return skin;
         }
     }
