@@ -27,9 +27,9 @@ namespace Rizumu.Helpers
         public bool Preload()
         {
             ConvertOsuMaps();
-            foreach(string folder in Directory.GetDirectories("songs"))
+            foreach (string folder in Directory.GetDirectories("songs"))
             {
-                if(File.Exists(Path.Combine(folder, "map.json")))
+                if (File.Exists(Path.Combine(folder, "map.json")))
                 {
                     Map m = JObject.Parse(File.ReadAllText(Path.Combine(folder, "map.json"))).ToObject<Map>();
                     using (var md5 = MD5.Create())
@@ -40,7 +40,7 @@ namespace Rizumu.Helpers
                         }
                     }
                     m.Path = folder;
-                     Maps.Add(m);
+                    Maps.Add(m);
                 }
             }
             if (Maps.Count < 1)
@@ -55,7 +55,7 @@ namespace Rizumu.Helpers
 
         public void PreloadBackgrounds(SpriteBatch spriteBatch)
         {
-            foreach(Map m in Maps)
+            foreach (Map m in Maps)
             {
                 if (File.Exists(Path.Combine(m.Path, m.BackgroundFile)))
                 {
@@ -77,6 +77,7 @@ namespace Rizumu.Helpers
                 bool HasOsu = false;
                 if (Directory.GetFiles(folder).Where(x => x.EndsWith(".osu")).Count() > 0)
                 {
+                    int heck = 0;
                     foreach (string file in Directory.GetFiles(folder))
                     {
                         if (file.EndsWith(".osu"))
@@ -88,7 +89,7 @@ namespace Rizumu.Helpers
                             m.Creator = "OsuGame";
 
                             var images = Directory.GetFiles(folder).Where(x => x.EndsWith(".png") || x.EndsWith(".jpg") || x.EndsWith(".jpeg"));
-                            if(images.Count() > 0)
+                            if (images.Count() > 0)
                             {
                                 m.BackgroundFile = images.First().Substring(images.First().LastIndexOf('\\') + 1);
                             }
@@ -98,18 +99,19 @@ namespace Rizumu.Helpers
                             {
                                 m.FileName = mp3s.First().Substring(mp3s.First().LastIndexOf('\\') + 1);
                             }
-
-                            string newpath = Path.Combine("songs", file.Substring(file.LastIndexOf('\\') + 1).Replace(".osu", ""));
+                            string fn = file.Substring(file.LastIndexOf('\\') + 1).Replace(".osu", "");
+                            string newpath = Path.Combine("songs", fn);
                             Directory.CreateDirectory(newpath);
                             if (m.FileName != "empty")
                                 File.Copy(Path.Combine(folder, m.FileName), Path.Combine(newpath, m.FileName));
-                            if(m.BackgroundFile != "empty")
+                            if (m.BackgroundFile != "empty")
                                 File.Copy(Path.Combine(folder, m.BackgroundFile), Path.Combine(newpath, m.BackgroundFile));
                             File.Create(Path.Combine(newpath, "map.json")).Close();
                             File.WriteAllText(Path.Combine(newpath, "map.json"), JsonConvert.SerializeObject(m));
                             HasOsu = true;
                         }
                     }
+
                     Directory.Delete(folder, true);
                 }
             }

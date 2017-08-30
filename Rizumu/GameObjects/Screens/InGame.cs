@@ -345,7 +345,7 @@ namespace Rizumu.GameObjects.Screens
         public void Update(GameTime gameTime, Rectangle cursor, bool clicked)
         {
             if (MapLoaded && !Paused && ready)
-                Timer = (int)((MediaPlayer.PlayPosition.TotalMilliseconds * 500) / 1000);
+                Timer = (int)((MediaPlayer.PlayPosition.TotalMilliseconds * 500) / 1000) + GameData.MapManager.Current.Offset;
             if (ready && !IsRestarted)
             {
                 GameData.MusicManager.Restart();
