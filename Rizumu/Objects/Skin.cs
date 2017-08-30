@@ -66,7 +66,7 @@ namespace Rizumu.Objects
             skin.FontBig = content.Load<SpriteFont>("Fonts/MainBig");
             skin.Font = content.Load<SpriteFont>("Fonts/Main");
             skin.FontSmall = content.Load<SpriteFont>("Fonts/MainSmall");
-            skin.MenuBackground = content.Load<Texture2D>("Backgrounds/MainBackground");
+            skin.MenuBackground = content.Load<Texture2D>("Backgrounds/tempwp1");
             skin.GetReady = content.Load<Texture2D>("Backgrounds/getready");
             skin.SongBar = content.Load<Texture2D>("Gui/MapData");
             skin.Note = content.Load<Texture2D>("Sprite/Note");
@@ -112,7 +112,7 @@ namespace Rizumu.Objects
             skin.FontBig = content.Load<SpriteFont>("Fonts/MainBig");
             skin.Font = content.Load<SpriteFont>("Fonts/Main");
             skin.FontSmall = content.Load<SpriteFont>("Fonts/MainSmall");
-            skin.MenuBackground = content.Load<Texture2D>("Backgrounds/MainBackground");
+            skin.MenuBackground = content.Load<Texture2D>("Backgrounds/tempwp1");
             skin.GetReady = content.Load<Texture2D>("Backgrounds/getready");
             skin.SongBar = content.Load<Texture2D>("Gui/MapData");
             skin.Note = content.Load<Texture2D>("Sprite/Note");
