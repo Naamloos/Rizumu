@@ -97,10 +97,10 @@ namespace Rizumu.GameObjects.Screens
                 Creator = "User",
                 Description = "Made by you\nyes yes it is",
                 FileName = "song.mp3",
-                NotesDown = Down.ToArray(),
-                NotesLeft = Left.ToArray(),
-                NotesRight = Right.ToArray(),
-                NotesUp = Up.ToArray(),
+                NotesDown = Down,
+                NotesLeft = Left,
+                NotesRight = Right,
+                NotesUp = Up,
             };
 
             JObject map = JObject.FromObject(m);

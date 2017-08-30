@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Microsoft.Xna.Framework.Graphics;
 using System.Security.Cryptography;
+using Microsoft.Xna.Framework.Media;
 
 namespace Rizumu.Helpers
 {
@@ -25,6 +26,7 @@ namespace Rizumu.Helpers
         // returns true if map list is not empty!
         public bool Preload()
         {
+            ConvertOsuMaps();
             foreach(string folder in Directory.GetDirectories("songs"))
             {
                 if(File.Exists(Path.Combine(folder, "map.json")))
@@ -46,6 +48,11 @@ namespace Rizumu.Helpers
             return true;
         }
 
+        public void PreloadSongs()
+        {
+
+        }
+
         public void PreloadBackgrounds(SpriteBatch spriteBatch)
         {
             foreach(Map m in Maps)
@@ -59,6 +66,51 @@ namespace Rizumu.Helpers
                 else
                 {
                     m.Background = GameData.Instance.CurrentSkin.MenuBackground;
+                }
+            }
+        }
+
+        public void ConvertOsuMaps()
+        {
+            foreach (string folder in Directory.GetDirectories("songs"))
+            {
+                bool HasOsu = false;
+                if (Directory.GetFiles(folder).Where(x => x.EndsWith(".osu")).Count() > 0)
+                {
+                    foreach (string file in Directory.GetFiles(folder))
+                    {
+                        if (file.EndsWith(".osu"))
+                        {
+                            Map m = new Map();
+
+                            m = ShittyOsuConverter.FromBeatmap(file);
+                            m.Name = file.Substring(file.LastIndexOf('\\') + 1).Replace(".osu", "");
+                            m.Creator = "OsuGame";
+
+                            var images = Directory.GetFiles(folder).Where(x => x.EndsWith(".png") || x.EndsWith(".jpg") || x.EndsWith(".jpeg"));
+                            if(images.Count() > 0)
+                            {
+                                m.BackgroundFile = images.First().Substring(images.First().LastIndexOf('\\') + 1);
+                            }
+
+                            var mp3s = Directory.GetFiles(folder).Where(x => x.EndsWith(".mp3"));
+                            if (mp3s.Count() > 0)
+                            {
+                                m.FileName = mp3s.First().Substring(mp3s.First().LastIndexOf('\\') + 1);
+                            }
+
+                            string newpath = Path.Combine("songs", file.Substring(file.LastIndexOf('\\') + 1).Replace(".osu", ""));
+                            Directory.CreateDirectory(newpath);
+                            if (m.FileName != "empty")
+                                File.Copy(Path.Combine(folder, m.FileName), Path.Combine(newpath, m.FileName));
+                            if(m.BackgroundFile != "empty")
+                                File.Copy(Path.Combine(folder, m.BackgroundFile), Path.Combine(newpath, m.BackgroundFile));
+                            File.Create(Path.Combine(newpath, "map.json")).Close();
+                            File.WriteAllText(Path.Combine(newpath, "map.json"), JsonConvert.SerializeObject(m));
+                            HasOsu = true;
+                        }
+                    }
+                    Directory.Delete(folder, true);
                 }
             }
         }

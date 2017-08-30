@@ -61,6 +61,7 @@
     <Compile Include="GuiObjects\MapData.cs" />
     <Compile Include="Helpers\MapManager.cs" />
     <Compile Include="Helpers\MusicManager.cs" />
+    <Compile Include="Helpers\ShittyOsuConverter.cs" />
     <Compile Include="Objects\Map.cs" />
     <Compile Include="Objects\Options.cs" />
     <Compile Include="Objects\Replay.cs" />

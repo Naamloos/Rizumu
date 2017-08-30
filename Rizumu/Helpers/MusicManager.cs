@@ -30,6 +30,8 @@ namespace Rizumu.Helpers
 
         public void Stop()
         {
+            Current?.Dispose();
+            Current = Playing.Song;
             MediaPlayer.Stop();
         }
 
@@ -49,9 +51,9 @@ namespace Rizumu.Helpers
             if (Playing != m)
             {
                 MediaPlayer.Stop();
-                Current = Song.FromUri(m.MD5,
-                    new Uri(Path.Combine(m.Path, m.FileName), UriKind.Relative));
+                Current?.Dispose();
                 Playing = m;
+                Current = Playing.Song;
                 MediaPlayer.Play(Current);
             }
         }
@@ -59,7 +61,7 @@ namespace Rizumu.Helpers
         public void Restart()
         {
             UnPause();
-            MediaPlayer.Stop();
+            Stop();
             MediaPlayer.Play(Current);
         }
 

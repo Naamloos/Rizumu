@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,31 +12,31 @@ namespace Rizumu.Objects
     class Map
     {
         [JsonProperty("name")]
-        public string Name;
+        public string Name = "empty";
 
         [JsonProperty("desc")]
-        public string Description;
+        public string Description = "empty";
 
         [JsonProperty("creator")]
-        public string Creator;
+        public string Creator = "empty";
 
         [JsonProperty("songfile")]
-        public string FileName;
+        public string FileName = "empty";
 
         [JsonProperty("backgroundfile")]
-        public string BackgroundFile;
+        public string BackgroundFile = "empty";
 
         [JsonProperty("leftnotes")]
-        public int[] NotesLeft;
+        public List<int> NotesLeft = new List<int>();
 
         [JsonProperty("upnotes")]
-        public int[] NotesUp;
+        public List<int> NotesUp = new List<int>();
 
         [JsonProperty("rightnotes")]
-        public int[] NotesRight;
+        public List<int> NotesRight = new List<int>();
 
         [JsonProperty("downnotes")]
-        public int[] NotesDown;
+        public List<int> NotesDown = new List<int>();
 
         [JsonProperty("offset")]
         public int Offset = 0;
@@ -48,5 +49,9 @@ namespace Rizumu.Objects
 
         [JsonIgnore]
         public string MD5;
+
+        [JsonIgnore]
+        public Song Song => Song.FromUri(MD5,
+                    new Uri(System.IO.Path.Combine(Path, FileName), UriKind.Relative));
     }
 }

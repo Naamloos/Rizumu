@@ -77,6 +77,7 @@ namespace Rizumu
 
             GameData.MapManager = new Helpers.MapManager();
             bool hasmaps = GameData.MapManager.Preload();
+            GameData.MapManager.PreloadSongs();
 
             if (!hasmaps)
             {
