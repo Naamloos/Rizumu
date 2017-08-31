@@ -146,25 +146,28 @@ namespace Rizumu.GameObjects.Screens
 
                 if (!Replaying)
                 {
-                    if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Left))
+                    if (!GameData.Instance.AutoMode)
                     {
-                        Recording.PressesLeft.Add(Timer);
-                        LeftPress = true;
-                    }
-                    if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Up))
-                    {
-                        Recording.PressesUp.Add(Timer);
-                        UpPress = true;
-                    }
-                    if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Right))
-                    {
-                        Recording.PressesRight.Add(Timer);
-                        RightPress = true;
-                    }
-                    if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Down))
-                    {
-                        Recording.PressesDown.Add(Timer);
-                        DownPress = true;
+                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Left))
+                        {
+                            Recording.PressesLeft.Add(Timer);
+                            LeftPress = true;
+                        }
+                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Up))
+                        {
+                            Recording.PressesUp.Add(Timer);
+                            UpPress = true;
+                        }
+                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Right))
+                        {
+                            Recording.PressesRight.Add(Timer);
+                            RightPress = true;
+                        }
+                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Down))
+                        {
+                            Recording.PressesDown.Add(Timer);
+                            DownPress = true;
+                        }
                     }
                 }
                 else
@@ -189,25 +192,28 @@ namespace Rizumu.GameObjects.Screens
 
                 OldState = NewState;
 
-                if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left))
-                    LeftNote.Color = Color.DarkGray;
-                else
-                    LeftNote.Color = Color.White;
+                if (!GameData.Instance.AutoMode)
+                {
+                    if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left))
+                        LeftNote.Color = Color.DarkGray;
+                    else
+                        LeftNote.Color = Color.White;
 
-                if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up))
-                    UpNote.Color = Color.DarkGray;
-                else
-                    UpNote.Color = Color.White;
+                    if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up))
+                        UpNote.Color = Color.DarkGray;
+                    else
+                        UpNote.Color = Color.White;
 
-                if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right))
-                    RightNote.Color = Color.DarkGray;
-                else
-                    RightNote.Color = Color.White;
+                    if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right))
+                        RightNote.Color = Color.DarkGray;
+                    else
+                        RightNote.Color = Color.White;
 
-                if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down))
-                    DownNote.Color = Color.DarkGray;
-                else
-                    DownNote.Color = Color.White;
+                    if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down))
+                        DownNote.Color = Color.DarkGray;
+                    else
+                        DownNote.Color = Color.White;
+                }
 
                 Background.Draw();
 
@@ -219,22 +225,22 @@ namespace Rizumu.GameObjects.Screens
                 foreach (Note n in NotesLeft)
                 {
                     if (n.Time - ((Background.Width / 2) + n.NoteSprite.Texture.Width) < Timer)
-                        n.Draw(ref LeftPress, Paused, ready, Rotation, ref CurrentCombo, ref leftdist, Timer);
+                        n.Draw(ref LeftPress, Paused, ready, Rotation, ref CurrentCombo, ref leftdist, Timer, GameData.Instance.AutoMode);
                 }
                 foreach (Note n in NotesUp)
                 {
                     if (n.Time - ((Background.Height / 2) + n.NoteSprite.Texture.Height) < Timer)
-                        n.Draw(ref UpPress, Paused, ready, Rotation, ref CurrentCombo, ref updist, Timer);
+                        n.Draw(ref UpPress, Paused, ready, Rotation, ref CurrentCombo, ref updist, Timer, GameData.Instance.AutoMode);
                 }
                 foreach (Note n in NotesRight)
                 {
                     if (n.Time - ((Background.Width / 2) + (n.NoteSprite.Texture.Width * 2)) < Timer)
-                        n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer);
+                        n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer, GameData.Instance.AutoMode);
                 }
                 foreach (Note n in NotesDown)
                 {
                     if (n.Time - ((Background.Height / 2) + (n.NoteSprite.Texture.Height * 2)) < Timer)
-                        n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer);
+                        n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer, GameData.Instance.AutoMode);
                 }
                 LeftNote.Rotation = Rotation;
                 UpNote.Rotation = Rotation;
@@ -358,7 +364,7 @@ namespace Rizumu.GameObjects.Screens
                 LetsGoPlayed = false;
                 ready = false;
             }
-            else if(ready)
+            else if (ready)
             {
                 GameData.MusicManager.UnPause();
                 if (!LetsGoPlayed)
@@ -378,6 +384,7 @@ namespace Rizumu.GameObjects.Screens
                 Timer = 0;
                 LetsGoPlayed = false;
                 ready = false;
+                GameData.Instance.AutoMode = false;
             }
         }
 

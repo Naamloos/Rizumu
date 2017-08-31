@@ -65,6 +65,8 @@ namespace Rizumu.GameObjects.Screens
                 GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Back");
             BackButton.OnClick += (sender, e) =>
             {
+                if (Keyboard.GetState().IsKeyDown(Keys.F1))
+                    GameData.Instance.AutoMode = true;
                 GameData.Instance.CurrentScreen = "main";
             };
 

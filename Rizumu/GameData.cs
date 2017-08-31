@@ -30,6 +30,7 @@ namespace Rizumu
 
         // Public vars
         public bool Exiting; //im lazy
+        public bool AutoMode = false;
 
         public GameData(ContentManager content)
         {

@@ -65,7 +65,7 @@ namespace Rizumu.GameObjects
             Alpha = -50;
         }
 
-        public void Draw(ref bool KeyPress, bool Paused, bool Ready, float rotation, ref int CurrentCombo, ref float visiondist, int Timer)
+        public void Draw(ref bool KeyPress, bool Paused, bool Ready, float rotation, ref int CurrentCombo, ref float visiondist, int Timer, bool Auto)
         {
             if (!Paused && Ready)
             {
@@ -107,15 +107,31 @@ namespace Rizumu.GameObjects
                 Miss = true;
             }
 
-            if (Position > traveldistance - (NoteSprite.Texture.Width * 1.6f) && KeyPress && Miss == false)
+            if (Auto)
             {
-                if (Hit == false)
+                if (Position > traveldistance && !Miss)
                 {
-                    KeyPress = false;
-                    GameData.Instance.CurrentSkin.Hit.Play();
-                    CurrentCombo++;
+                    if (Hit == false)
+                    {
+                        KeyPress = false;
+                        GameData.Instance.CurrentSkin.Hit.Play();
+                        CurrentCombo++;
+                    }
+                    Hit = true;
                 }
-                Hit = true;
+            }
+            else
+            {
+                if (Position > traveldistance - (NoteSprite.Texture.Width * 1.6f) && KeyPress && Miss == false)
+                {
+                    if (Hit == false)
+                    {
+                        KeyPress = false;
+                        GameData.Instance.CurrentSkin.Hit.Play();
+                        CurrentCombo++;
+                    }
+                    Hit = true;
+                }
             }
         }
     }
