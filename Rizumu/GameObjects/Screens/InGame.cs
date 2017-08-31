@@ -53,6 +53,7 @@ namespace Rizumu.GameObjects.Screens
         public Text ComboTextSmall;
         public int CurrentCombo = 0;
         public int HighestCombo = 0;
+        bool auto = false;
 
         public string Name { get => "ingame"; }
 
@@ -75,6 +76,7 @@ namespace Rizumu.GameObjects.Screens
                 NotesDown = new List<Note>();
                 CurrentCombo = 0;
                 HighestCombo = 0;
+                auto = GameData.Instance.AutoMode;
                 foreach (int n in Playing.NotesLeft)
                 {
                     NotesLeft.Add(new Note(spriteBatch, NoteMode.left, Background.Width, Background.Height)
@@ -146,7 +148,7 @@ namespace Rizumu.GameObjects.Screens
 
                 if (!Replaying)
                 {
-                    if (!GameData.Instance.AutoMode)
+                    if (!auto)
                     {
                         if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Left))
                         {
@@ -192,7 +194,7 @@ namespace Rizumu.GameObjects.Screens
 
                 OldState = NewState;
 
-                if (!GameData.Instance.AutoMode)
+                if (!auto)
                 {
                     if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left))
                         LeftNote.Color = Color.DarkGray;
@@ -225,22 +227,22 @@ namespace Rizumu.GameObjects.Screens
                 foreach (Note n in NotesLeft)
                 {
                     if (n.Time - ((Background.Width / 2) + n.NoteSprite.Texture.Width) < Timer)
-                        n.Draw(ref LeftPress, Paused, ready, Rotation, ref CurrentCombo, ref leftdist, Timer, GameData.Instance.AutoMode);
+                        n.Draw(ref LeftPress, Paused, ready, Rotation, ref CurrentCombo, ref leftdist, Timer, auto);
                 }
                 foreach (Note n in NotesUp)
                 {
                     if (n.Time - ((Background.Height / 2) + n.NoteSprite.Texture.Height) < Timer)
-                        n.Draw(ref UpPress, Paused, ready, Rotation, ref CurrentCombo, ref updist, Timer, GameData.Instance.AutoMode);
+                        n.Draw(ref UpPress, Paused, ready, Rotation, ref CurrentCombo, ref updist, Timer, auto);
                 }
                 foreach (Note n in NotesRight)
                 {
                     if (n.Time - ((Background.Width / 2) + (n.NoteSprite.Texture.Width * 2)) < Timer)
-                        n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer, GameData.Instance.AutoMode);
+                        n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer, auto);
                 }
                 foreach (Note n in NotesDown)
                 {
                     if (n.Time - ((Background.Height / 2) + (n.NoteSprite.Texture.Height * 2)) < Timer)
-                        n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer, GameData.Instance.AutoMode);
+                        n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer, auto);
                 }
                 LeftNote.Rotation = Rotation;
                 UpNote.Rotation = Rotation;
@@ -384,7 +386,6 @@ namespace Rizumu.GameObjects.Screens
                 Timer = 0;
                 LetsGoPlayed = false;
                 ready = false;
-                GameData.Instance.AutoMode = false;
             }
         }
 

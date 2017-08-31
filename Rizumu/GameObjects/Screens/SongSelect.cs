@@ -65,8 +65,6 @@ namespace Rizumu.GameObjects.Screens
                 GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Back");
             BackButton.OnClick += (sender, e) =>
             {
-                if (Keyboard.GetState().IsKeyDown(Keys.F1))
-                    GameData.Instance.AutoMode = true;
                 GameData.Instance.CurrentScreen = "main";
             };
 
@@ -75,6 +73,10 @@ namespace Rizumu.GameObjects.Screens
                 GameData.Instance.CurrentSkin.ButtonHover, "Play");
             PlayButton.OnClick += (sender, e) =>
             {
+                if (Keyboard.GetState().IsKeyDown(Keys.F1))
+                    GameData.Instance.AutoMode = true;
+                else
+                    GameData.Instance.AutoMode = false;
                 GameData.Instance.CurrentScreen = "ingame";
             };
             MapInfo = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "mapinfo", 25, 25, Color.White);
