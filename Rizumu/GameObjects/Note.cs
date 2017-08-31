@@ -109,7 +109,7 @@ namespace Rizumu.GameObjects
 
             if (Auto)
             {
-                if (Position > traveldistance && !Miss)
+                if (Position > traveldistance - NoteSprite.Texture.Width && !Miss)
                 {
                     if (Hit == false)
                     {
