@@ -60,7 +60,7 @@ namespace Rizumu
                 graphics.PreferredBackBufferHeight = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height;
                 graphics.PreferredBackBufferWidth = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Width;
                 graphics.IsFullScreen = true;
-                Window.IsBorderless = true;
+                Window.IsBorderless = false;
 
                 graphics.ApplyChanges();
             }
