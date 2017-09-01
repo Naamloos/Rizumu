@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Rizumu.Engine;
+using Rizumu.GameObjects;
 using Rizumu.GameObjects.Screens;
 using Rizumu.Helpers;
 using Rizumu.Objects;
@@ -30,7 +31,7 @@ namespace Rizumu
 
         // Public vars
         public bool Exiting; //im lazy
-        public bool AutoMode = false;
+        public ModCollection Mods = new ModCollection();
 
         public GameData(ContentManager content)
         {

@@ -63,6 +63,7 @@ namespace Rizumu.GameObjects
                 traveldistance = screenHeight / 2 + NoteSprite.Texture.Height;
             }
             Alpha = -50;
+            NoteSprite.Scale = GameData.Instance.Mods.SizeMultiplier;
         }
 
         public void Draw(ref bool KeyPress, bool Paused, bool Ready, float rotation, ref int CurrentCombo, ref float visiondist, int Timer, bool Auto)

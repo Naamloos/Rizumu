@@ -41,6 +41,9 @@ namespace Rizumu.Objects
         [JsonProperty("offset")]
         public int Offset = 0;
 
+        [JsonProperty("events")]
+        public List<MapEvent> Events = new List<MapEvent>();
+
         [JsonIgnore]
         public string Path;
 
@@ -53,5 +56,38 @@ namespace Rizumu.Objects
         [JsonIgnore]
         public Song Song => Song.FromUri(MD5,
                     new Uri(System.IO.Path.Combine(Path, FileName), UriKind.Relative));
+    }
+
+    class MapEvent
+    {
+        [JsonProperty("filename")]
+        public string filename = "file.png";
+
+        [JsonProperty("states")]
+        public List<EventState> States;
+    }
+
+    class EventState
+    {
+        [JsonProperty("time")]
+        public int Time = 0;
+
+        [JsonProperty("x")]
+        public int X = 0;
+
+        [JsonProperty("y")]
+        public int Y = 0;
+
+        [JsonProperty("scale")]
+        public float Scale = 1f;
+
+        [JsonProperty("rotation")]
+        public int Rotation = 0;
+
+        [JsonProperty("movetowards")]
+        public bool MoveTowards = false;
+
+        [JsonProperty("rotatetowards")]
+        public bool RotateTowards = false;
     }
 }

@@ -57,6 +57,9 @@ namespace Rizumu.GameObjects.Screens
         bool skippable = false;
         int firstnote = 0;
 
+        public Text ModCollection;
+        public int ScreenWidth;
+
         public string Name { get => "ingame"; }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked)
@@ -78,7 +81,7 @@ namespace Rizumu.GameObjects.Screens
                 NotesDown = new List<Note>();
                 CurrentCombo = 0;
                 HighestCombo = 0;
-                auto = GameData.Instance.AutoMode;
+                auto = GameData.Instance.Mods.Automode;
                 foreach (int n in Playing.NotesLeft)
                 {
                     NotesLeft.Add(new Note(spriteBatch, NoteMode.left, Background.Width, Background.Height)
@@ -321,6 +324,10 @@ namespace Rizumu.GameObjects.Screens
                 new Background(spriteBatch, GameData.Instance.CurrentSkin.GetReady, Color.White, Background.Width, Background.Height).Draw();
             if (Keyboard.GetState().IsKeyDown((Keys)GameData.Instance.Options.Up))
                 ready = true;
+
+            ModCollection.Content = GameData.Instance.Mods.GetCollectionString();
+            ModCollection.X = (ScreenWidth - ModCollection.Width) - 5;
+            ModCollection.Draw();
         }
 
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
@@ -361,6 +368,9 @@ namespace Rizumu.GameObjects.Screens
                 GameData.MusicManager.UnPause();
                 GameData.MusicManager.Restart();
             };
+
+            ModCollection = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "", Graphics.PreferredBackBufferWidth, 5, Color.Azure);
+            ScreenWidth = Graphics.PreferredBackBufferWidth;
         }
 
         public bool IsRestarted = false;

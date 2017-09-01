@@ -17,6 +17,8 @@ namespace Rizumu.GameObjects.Screens
         public Button BackButton;
         public Button PlayButton;
         public Text MapInfo;
+        public Text ModCollection;
+        public int ScreenWidth;
 
         public string Name { get => "select"; }
 
@@ -43,6 +45,9 @@ namespace Rizumu.GameObjects.Screens
             BackButton.Draw(cursor, clicked);
             PlayButton.Draw(cursor, clicked);
             MapInfo.Draw();
+            ModCollection.Content = GameData.Instance.Mods.GetCollectionString();
+            ModCollection.X = (ScreenWidth - ModCollection.Width) - 5;
+            ModCollection.Draw();
         }
 
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
@@ -74,12 +79,14 @@ namespace Rizumu.GameObjects.Screens
             PlayButton.OnClick += (sender, e) =>
             {
                 if (Keyboard.GetState().IsKeyDown(Keys.F1))
-                    GameData.Instance.AutoMode = true;
+                    GameData.Instance.Mods.Automode = true;
                 else
-                    GameData.Instance.AutoMode = false;
+                    GameData.Instance.Mods.Automode = false;
                 GameData.Instance.CurrentScreen = "ingame";
             };
             MapInfo = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "mapinfo", 25, 25, Color.White);
+            ModCollection = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "", Graphics.PreferredBackBufferWidth, 5, Color.Azure);
+            ScreenWidth = Graphics.PreferredBackBufferWidth;
         }
 
         int osv;
