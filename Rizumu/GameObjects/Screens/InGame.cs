@@ -54,6 +54,8 @@ namespace Rizumu.GameObjects.Screens
         public int CurrentCombo = 0;
         public int HighestCombo = 0;
         bool auto = false;
+        bool skippable = false;
+        int firstnote = 0;
 
         public string Name { get => "ingame"; }
 
@@ -133,6 +135,9 @@ namespace Rizumu.GameObjects.Screens
                 VisionRight.Alpha = 0f;
 
                 lastnote = GetLastNote();
+                firstnote = GetFirstNote();
+                if (firstnote > 2500)
+                    skippable = true;
                 Recording = new Replay();
                 Recording.Md5 = Playing.MD5;
                 Recording.Player = GameData.Instance.Options.Player;
@@ -145,6 +150,16 @@ namespace Rizumu.GameObjects.Screens
                 bool UpPress = false;
                 bool RightPress = false;
                 bool DownPress = false;
+
+                if(skippable && Keyboard.GetState().IsKeyDown(Keys.Space))
+                {
+                    GameData.MusicManager.Restart(TimeSpan.FromMilliseconds((GetFirstNote() - 500) * 2));
+                    skippable = false;
+                }
+                if(Timer > firstnote)
+                {
+                    skippable = false;
+                }
 
                 if (!Replaying)
                 {
@@ -417,6 +432,20 @@ namespace Rizumu.GameObjects.Screens
             }
 
             return Math.Max(left, Math.Max(up, Math.Max(right, down)));
+        }
+
+        public int GetFirstNote()
+        {
+            int left = 0;
+            int up = 0;
+            int right = 0;
+            int down = 0;
+            left = NotesLeft[0].Time;
+            up = NotesUp[0].Time;
+            right = NotesRight[0].Time;
+            down = NotesDown[0].Time;
+
+            return Math.Min(left, Math.Min(up, Math.Min(right, down)));
         }
 
 

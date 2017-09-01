@@ -65,6 +65,13 @@ namespace Rizumu.Helpers
             MediaPlayer.Play(Current);
         }
 
+        public void Restart(TimeSpan ts)
+        {
+            UnPause();
+            Stop();
+            MediaPlayer.Play(Current, ts);
+        }
+
         public void KeepPlaying()
         {
             if (!IsPlaying)
