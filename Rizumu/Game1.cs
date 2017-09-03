@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using Newtonsoft.Json.Linq;
 using Rizumu.Engine;
 using Rizumu.Objects;
@@ -135,6 +136,8 @@ namespace Rizumu
         Text Framerate;
         protected override void Draw(GameTime gameTime)
         {
+            if (MediaPlayer.State == MediaState.Stopped)
+                GameData.MusicManager.Restart();
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied);
             GameData.Instance.Screens.Find(x => x.Name == GameData.Instance.CurrentScreen).Draw(spriteBatch, gameTime, CursorLocation, Click);

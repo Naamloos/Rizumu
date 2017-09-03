@@ -48,6 +48,7 @@
     <Compile Include="Engine\IScreen.cs" />
     <Compile Include="Engine\Sprite.cs" />
     <Compile Include="Engine\Text.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameData.cs" />
     <Compile Include="GameObjects\ModCollection.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="GameObjects\Screens\SongSelect.cs" />
     <Compile Include="GuiObjects\Button.cs" />
     <Compile Include="GuiObjects\MapData.cs" />
+    <Compile Include="GuiObjects\ModSelector.cs" />
     <Compile Include="Helpers\MapManager.cs" />
     <Compile Include="Helpers\MusicManager.cs" />
     <Compile Include="Helpers\ShittyOsuConverter.cs" />

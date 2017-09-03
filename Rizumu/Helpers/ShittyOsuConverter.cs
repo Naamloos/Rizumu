@@ -13,7 +13,7 @@ namespace Rizumu.Helpers
         public static Map FromBeatmap(string path)
         {
             Map m = new Map();
-            m.Offset = -50;
+            m.Offset = -100;
             string Beatmap = File.ReadAllText(path);
 
             string notes = Beatmap.Substring(Beatmap.IndexOf("[HitObjects]") + 12);

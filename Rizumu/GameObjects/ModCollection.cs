@@ -11,8 +11,8 @@ namespace Rizumu.GameObjects
         public float SpeedMultiplier = 1f; // Current note speed
         public bool HorizontalMirror = false; // Mirror input horizontally
         public bool VerticalMirror = false; // Mirror input vertically
-        public bool Automode = true; // Auto mode
-        public float SizeMultiplier = 0.5f; // Current note size. Just for fun.
+        public bool Automode = false; // Auto mode
+        public float SizeMultiplier = 1f; // Current note size. Just for fun.
         public bool FleshLight = false; // :^) Shine a flashligt to the middle of the screen
         public bool NoFail = false; // You can't fail
         public bool Instafail = false; // One miss makes you fail

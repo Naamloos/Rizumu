@@ -18,6 +18,7 @@ namespace Rizumu.GameObjects.Screens
         public Button PlayButton;
         public Text MapInfo;
         public Text ModCollection;
+        public ModSelector MSelector;
         public int ScreenWidth;
 
         public string Name { get => "select"; }
@@ -45,9 +46,16 @@ namespace Rizumu.GameObjects.Screens
             BackButton.Draw(cursor, clicked);
             PlayButton.Draw(cursor, clicked);
             MapInfo.Draw();
-            ModCollection.Content = GameData.Instance.Mods.GetCollectionString();
-            ModCollection.X = (ScreenWidth - ModCollection.Width) - 5;
-            ModCollection.Draw();
+            if (Keyboard.GetState().IsKeyDown(Keys.LeftShift))
+            {
+                MSelector.Draw();
+            }
+            else
+            {
+                ModCollection.Content = GameData.Instance.Mods.GetCollectionString();
+                ModCollection.X = (ScreenWidth - ModCollection.Width) - 5;
+                ModCollection.Draw();
+            }
         }
 
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
@@ -78,14 +86,11 @@ namespace Rizumu.GameObjects.Screens
                 GameData.Instance.CurrentSkin.ButtonHover, "Play");
             PlayButton.OnClick += (sender, e) =>
             {
-                if (Keyboard.GetState().IsKeyDown(Keys.F1))
-                    GameData.Instance.Mods.Automode = true;
-                else
-                    GameData.Instance.Mods.Automode = false;
                 GameData.Instance.CurrentScreen = "ingame";
             };
             MapInfo = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "mapinfo", 25, 25, Color.White);
             ModCollection = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "", Graphics.PreferredBackBufferWidth, 5, Color.Azure);
+            MSelector = new ModSelector(spriteBatch, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
             ScreenWidth = Graphics.PreferredBackBufferWidth;
         }
 
@@ -104,13 +109,13 @@ namespace Rizumu.GameObjects.Screens
             }
             osv = Mouse.GetState().ScrollWheelValue;
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Up) && MapDatas.First().Y < MapDatas.First().MapDataHolder.Texture.Height * 2 + 70)
+            if (Keyboard.GetState().IsKeyDown(Keys.Up) && Keyboard.GetState().IsKeyUp(Keys.LeftShift) && MapDatas.First().Y < MapDatas.First().MapDataHolder.Texture.Height * 2 + 70)
             {
-                scrollac += 2;
+                scrollac = 2;
             }
-            else if (Keyboard.GetState().IsKeyDown(Keys.Down) && MapDatas.Last().Y > MapDatas.Last().MapDataHolder.Texture.Height * 2 + 70)
+            else if (Keyboard.GetState().IsKeyDown(Keys.Down) && Keyboard.GetState().IsKeyUp(Keys.LeftShift) && MapDatas.Last().Y > MapDatas.Last().MapDataHolder.Texture.Height * 2 + 70)
             {
-                scrollac -= 2;
+                scrollac = -2;
             }
 
             foreach (MapData m in MapDatas)

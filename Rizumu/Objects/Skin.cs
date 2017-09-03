@@ -30,6 +30,7 @@ namespace Rizumu.Objects
         public Texture2D Popup;
         public Texture2D Particle;
         public Texture2D Circle;
+        public Texture2D SelectorBG;
 
         // Backgrounds
         public Texture2D MenuBackground;
@@ -85,6 +86,7 @@ namespace Rizumu.Objects
             skin.Click = content.Load<SoundEffect>("SoundEffects/click");
             skin.MouseOver = content.Load<SoundEffect>("SoundEffects/mover");
             skin.LetsGo = content.Load<SoundEffect>("SoundEffects/letsgo");
+            skin.SelectorBG = content.Load<Texture2D>("Sprite/ModSelectorBG");
 
             if (File.Exists(Path.Combine(path, "button.png")))
                 skin.Button = Texture2D.FromStream(Graphics, new FileStream(Path.Combine(path, "button.png"), FileMode.Open));
@@ -131,6 +133,7 @@ namespace Rizumu.Objects
             skin.Click = content.Load<SoundEffect>("SoundEffects/click");
             skin.MouseOver = content.Load<SoundEffect>("SoundEffects/mover");
             skin.LetsGo = content.Load<SoundEffect>("SoundEffects/letsgo");
+            skin.SelectorBG = content.Load<Texture2D>("Sprite/ModSelectorBG");
             return skin;
         }
     }

@@ -32,7 +32,7 @@ namespace Rizumu.Helpers
         {
             Current?.Dispose();
             Current = Playing.Song;
-            MediaPlayer.Stop();
+            MediaPlayer.Pause();
         }
 
         public void UnPause()

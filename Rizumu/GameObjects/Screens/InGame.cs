@@ -37,6 +37,7 @@ namespace Rizumu.GameObjects.Screens
         public bool ready;
         public Replay Replay;
         public float Rotation = 0f;
+        float Modrotation;
 
         public KeyboardState OldState;
 
@@ -53,9 +54,9 @@ namespace Rizumu.GameObjects.Screens
         public Text ComboTextSmall;
         public int CurrentCombo = 0;
         public int HighestCombo = 0;
-        bool auto = false;
         bool skippable = false;
         int firstnote = 0;
+        SpriteBatch sb;
 
         public Text ModCollection;
         public int ScreenWidth;
@@ -64,7 +65,10 @@ namespace Rizumu.GameObjects.Screens
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked)
         {
+            sb = spriteBatch;
             Rotation = Timer * 0.005f;
+            if (GameData.Instance.Mods.RotationMode)
+                Modrotation = Timer * 0.005f;
             if (CurrentCombo > HighestCombo)
                 HighestCombo = CurrentCombo;
             if (!MapLoaded)
@@ -81,7 +85,6 @@ namespace Rizumu.GameObjects.Screens
                 NotesDown = new List<Note>();
                 CurrentCombo = 0;
                 HighestCombo = 0;
-                auto = GameData.Instance.Mods.Automode;
                 foreach (int n in Playing.NotesLeft)
                 {
                     NotesLeft.Add(new Note(spriteBatch, NoteMode.left, Background.Width, Background.Height)
@@ -144,6 +147,8 @@ namespace Rizumu.GameObjects.Screens
                 Recording = new Replay();
                 Recording.Md5 = Playing.MD5;
                 Recording.Player = GameData.Instance.Options.Player;
+                if (GameData.Instance.Mods.Automode)
+                    ready = true;
                 MapLoaded = true;
             }
             else
@@ -154,19 +159,19 @@ namespace Rizumu.GameObjects.Screens
                 bool RightPress = false;
                 bool DownPress = false;
 
-                if(skippable && Keyboard.GetState().IsKeyDown(Keys.Space))
+                if (skippable && Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
                     GameData.MusicManager.Restart(TimeSpan.FromMilliseconds((GetFirstNote() - 500) * 2));
                     skippable = false;
                 }
-                if(Timer > firstnote)
+                if (Timer > firstnote)
                 {
                     skippable = false;
                 }
 
                 if (!Replaying)
                 {
-                    if (!auto)
+                    if (!GameData.Instance.Mods.Automode)
                     {
                         if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Left))
                         {
@@ -212,7 +217,7 @@ namespace Rizumu.GameObjects.Screens
 
                 OldState = NewState;
 
-                if (!auto)
+                if (!GameData.Instance.Mods.Automode)
                 {
                     if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left))
                         LeftNote.Color = Color.DarkGray;
@@ -245,22 +250,22 @@ namespace Rizumu.GameObjects.Screens
                 foreach (Note n in NotesLeft)
                 {
                     if (n.Time - ((Background.Width / 2) + n.NoteSprite.Texture.Width) < Timer)
-                        n.Draw(ref LeftPress, Paused, ready, Rotation, ref CurrentCombo, ref leftdist, Timer, auto);
+                        n.Draw(ref LeftPress, Paused, ready, Rotation, ref CurrentCombo, ref leftdist, Timer, GameData.Instance.Mods.Automode);
                 }
                 foreach (Note n in NotesUp)
                 {
                     if (n.Time - ((Background.Height / 2) + n.NoteSprite.Texture.Height) < Timer)
-                        n.Draw(ref UpPress, Paused, ready, Rotation, ref CurrentCombo, ref updist, Timer, auto);
+                        n.Draw(ref UpPress, Paused, ready, Rotation, ref CurrentCombo, ref updist, Timer, GameData.Instance.Mods.Automode);
                 }
                 foreach (Note n in NotesRight)
                 {
                     if (n.Time - ((Background.Width / 2) + (n.NoteSprite.Texture.Width * 2)) < Timer)
-                        n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer, auto);
+                        n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer, GameData.Instance.Mods.Automode);
                 }
                 foreach (Note n in NotesDown)
                 {
                     if (n.Time - ((Background.Height / 2) + (n.NoteSprite.Texture.Height * 2)) < Timer)
-                        n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer, auto);
+                        n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer, GameData.Instance.Mods.Automode);
                 }
                 LeftNote.Rotation = Rotation;
                 UpNote.Rotation = Rotation;
