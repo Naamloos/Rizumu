@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Rizumu.GuiObjects;
 using Rizumu.Objects;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Rizumu.GameObjects.Screens
 {
@@ -23,7 +24,7 @@ namespace Rizumu.GameObjects.Screens
 
         public string Name { get => "select"; }
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.F2))
                 scrollac = new Random().Next((MapDatas.Count * -4),
@@ -60,7 +61,7 @@ namespace Rizumu.GameObjects.Screens
 
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
         {
-            Background = new Background(spriteBatch, GameData.Instance.CurrentSkin.MenuBackground, Color.White, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
+            Background = new Background(spriteBatch, GameData.Instance.CurrentSkin.MenuBackground, Color.White, GameData.globalwidth, GameData.globalheight);
             int BarWidth = GameData.Instance.CurrentSkin.SongBar.Width;
             int BarHeight = GameData.Instance.CurrentSkin.SongBar.Height;
             int index = new Random().Next(0, GameData.MapManager.Maps.Count - 1);
@@ -68,13 +69,13 @@ namespace Rizumu.GameObjects.Screens
             MapDatas = new List<MapData>();
             foreach (Map m in GameData.MapManager.Maps)
             {
-                MapDatas.Add(new MapData(spriteBatch, (Graphics.PreferredBackBufferWidth / 2) - (BarWidth / 2), Y, m.Name, m.Creator, false, m.MD5));
+                MapDatas.Add(new MapData(spriteBatch, (GameData.globalwidth / 2) - (BarWidth / 2), Y, m.Name, m.Creator, false, m.MD5));
                 Y += BarHeight + 25;
             }
 
             GameData.MusicManager.Change(MapDatas[index].MapMD5);
 
-            BackButton = new Button(spriteBatch, 25, Graphics.PreferredBackBufferHeight - GameData.Instance.CurrentSkin.Button.Height - 25,
+            BackButton = new Button(spriteBatch, 25, GameData.globalheight - GameData.Instance.CurrentSkin.Button.Height - 25,
                 GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Back");
             BackButton.OnClick += (sender, e) =>
             {
@@ -82,16 +83,16 @@ namespace Rizumu.GameObjects.Screens
             };
 
             PlayButton = new Button(spriteBatch, 25,
-                Graphics.PreferredBackBufferHeight - GameData.Instance.CurrentSkin.Button.Height * 2 - 35, GameData.Instance.CurrentSkin.Button,
+                GameData.globalheight - GameData.Instance.CurrentSkin.Button.Height * 2 - 35, GameData.Instance.CurrentSkin.Button,
                 GameData.Instance.CurrentSkin.ButtonHover, "Play");
             PlayButton.OnClick += (sender, e) =>
             {
                 GameData.Instance.CurrentScreen = "ingame";
             };
             MapInfo = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "mapinfo", 25, 25, Color.White);
-            ModCollection = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "", Graphics.PreferredBackBufferWidth, 5, Color.Azure);
-            MSelector = new ModSelector(spriteBatch, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
-            ScreenWidth = Graphics.PreferredBackBufferWidth;
+            ModCollection = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "", GameData.globalwidth, 5, Color.Azure);
+            MSelector = new ModSelector(spriteBatch, GameData.globalwidth, GameData.globalheight);
+            ScreenWidth = GameData.globalwidth;
         }
 
         int osv;
@@ -134,6 +135,22 @@ namespace Rizumu.GameObjects.Screens
             else
             {
                 scrollac = 0;
+            }
+
+            TouchCollection touchCollection = TouchPanel.GetState();
+            foreach (var t in touchCollection)
+            {
+                float x = t.Position.X;
+                float y = t.Position.Y;
+
+                if (y > GameData.globalheight / 2)
+                {
+                    scrollac -= 5;
+                }
+                else
+                {
+                    scrollac += 5;
+                }
             }
 
             if (scrollac == 0)

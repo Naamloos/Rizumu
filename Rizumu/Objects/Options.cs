@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Rizumu.Objects
 {
     // Default values == Default options
-    class Options
+    public class Options
     {
         [JsonProperty("fullscreen")]
         public bool Fullscreen = false;

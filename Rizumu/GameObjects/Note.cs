@@ -115,7 +115,8 @@ namespace Rizumu.GameObjects
                     if (Hit == false)
                     {
                         KeyPress = false;
-                        GameData.Instance.CurrentSkin.Hit.Play();
+                        if (Game1.Windows)
+                            GameData.Instance.CurrentSkin.HitIns.Play();
                         CurrentCombo++;
                     }
                     Hit = true;
@@ -128,7 +129,8 @@ namespace Rizumu.GameObjects
                     if (Hit == false)
                     {
                         KeyPress = false;
-                        GameData.Instance.CurrentSkin.Hit.Play();
+                        if (Game1.Windows)
+                            GameData.Instance.CurrentSkin.HitIns.Play();
                         CurrentCombo++;
                     }
                     Hit = true;

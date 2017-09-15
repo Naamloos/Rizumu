@@ -55,12 +55,12 @@ namespace Rizumu.GameObjects.Screens
             };
             #endregion
 
-            Background = new Background(spriteBatch, GameData.Instance.CurrentSkin.MenuBackground, Color.White, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
-            MenuOverlay = new Background(spriteBatch, GameData.Instance.CurrentSkin.FunctionOverlay, Color.White, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
+            Background = new Background(spriteBatch, GameData.Instance.CurrentSkin.MenuBackground, Color.White, GameData.globalwidth, GameData.globalheight);
+            MenuOverlay = new Background(spriteBatch, GameData.Instance.CurrentSkin.FunctionOverlay, Color.White, GameData.globalwidth, GameData.globalheight);
         }
         #endregion
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
         {
             Background.Draw();
 
@@ -75,6 +75,7 @@ namespace Rizumu.GameObjects.Screens
         {
             if (Keyboard.GetState().IsKeyDown(Keys.F1))
                 GameData.Instance.CurrentScreen = "editor";
+            /* TODO: Implement platform specific Open File code
             if (Keyboard.GetState().IsKeyDown(Keys.F2))
             {
                 var ofd = new System.Windows.Forms.OpenFileDialog();
@@ -85,7 +86,7 @@ namespace Rizumu.GameObjects.Screens
                 GameData.MapManager.Current = GameData.MapManager.Maps.Find(x => x.MD5 == replay.Md5);
                 GameData.Instance.CurrentScreen = "ingame";
                 GameData.MusicManager.Change(GameData.MapManager.Current);
-            }
+            }*/
         }
     }
 }

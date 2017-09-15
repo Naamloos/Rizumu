@@ -1,33 +1,39 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
 using Newtonsoft.Json.Linq;
 using Rizumu.Engine;
 using Rizumu.Objects;
 using System;
 using System.IO;
-using System.Windows.Forms;
 
 namespace Rizumu
 {
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
+        public static EventHandler<EventArgs.RegisterAndroidUriArgs> RegisterAndroidUri;
+        public GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Rectangle CursorLocation;
         MouseState OldMouseState;
         TimeSpan OGTimeSpan;
         bool Click;
-        
-        public Game1()
+        RenderTarget2D RenderTarget;
+        public static bool Windows;
+        TouchLocationState oldtls;
+
+        public Game1(int width, int height, bool Windows = false)
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = 720;
             graphics.PreferredBackBufferWidth = 1280;
+            GameData.globalheight = height;
+            GameData.globalwidth = width;
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            Window.Position = new Point(50, 50);
+
             // Making sure OldMouseState to prevent errors
             OldMouseState = Mouse.GetState();
             IsFixedTimeStep = false;
@@ -55,34 +61,36 @@ namespace Rizumu
                 GameData.Instance.Options = new Options();
             }
 
-            if(GameData.Instance.Options.Fullscreen == true)
+            if (GameData.Instance.Options.Fullscreen == true)
             {
                 // hacky shit stolen from stackoverflow
-                graphics.PreferredBackBufferHeight = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Height;
-                graphics.PreferredBackBufferWidth = System.Windows.Forms.Screen.PrimaryScreen.WorkingArea.Width;
                 graphics.IsFullScreen = true;
                 Window.IsBorderless = false;
 
                 graphics.ApplyChanges();
             }
 
-            if(GameData.Instance.Options.SkinName == "default")
+            if (GameData.Instance.Options.SkinName == "default")
                 GameData.Instance.CurrentSkin = GameData.Instance.DefaultSkin;
             else
             {
-                if(Directory.Exists("skins/" + GameData.Instance.Options.SkinName))
+                if (Directory.Exists("skins/" + GameData.Instance.Options.SkinName))
                     GameData.Instance.CurrentSkin = Skin.LoadFromPath(GraphicsDevice, Content, "skins/" + GameData.Instance.Options.SkinName);
                 else
                     GameData.Instance.CurrentSkin = GameData.Instance.DefaultSkin;
             }
 
             GameData.MapManager = new Helpers.MapManager();
+            GameData.realheight = Window.ClientBounds.Height;
+            GameData.realwidth = Window.ClientBounds.Width;
             bool hasmaps = GameData.MapManager.Preload();
             GameData.MapManager.PreloadSongs();
 
             if (!hasmaps)
             {
-                MessageBox.Show("Please add some maps to '/songs' before playing!");
+#if WINDOWS
+                System.Windows.Forms.MessageBox.Show("Please add some maps to '/songs' before playing!");
+#endif
                 Environment.Exit(-1);
             }
             GameData.Instance.CurrentSkin.Hello.Play();
@@ -92,6 +100,9 @@ namespace Rizumu
             graphics.GraphicsDevice.PresentationParameters.PresentationInterval = PresentInterval.Immediate;
             graphics.GraphicsDevice.PresentationParameters.MultiSampleCount = 500;
             Framerate = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, "0", 0, 0, Color.White);
+
+            RenderTarget = new RenderTarget2D(GraphicsDevice, GameData.globalwidth, GameData.globalheight);
+
         }
 
         protected override void UnloadContent()
@@ -100,11 +111,11 @@ namespace Rizumu
 
         protected override void Update(GameTime gameTime)
         {
-            #if DEBUG
+#if DEBUG
             // SAVE ME KEY
             if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F12))
                 Exit();
-            #endif
+#endif
 
             if (GameData.Instance.CurrentScreen == "ingame" || GameData.Instance.CurrentScreen == "editor")
             {
@@ -113,23 +124,50 @@ namespace Rizumu
             else
             {
                 TargetElapsedTime = OGTimeSpan;
-                if(!GameData.Instance.Options.Fullscreen)
-                Window.IsBorderless = false;
+#if WINDOWS
+                if (!GameData.Instance.Options.Fullscreen)
+                    Window.IsBorderless = false;
+#endif
             }
 
-            CursorLocation = new Rectangle(Mouse.GetState(Window).Position, new Point(1, 1));
+            var p = Mouse.GetState(Window).Position;
 
-            Click = false;
-            MouseState current = Mouse.GetState();
-            if (current.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed 
-                && OldMouseState.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released
-                && IsActive)
-                Click = true;
-            OldMouseState = current;
+            CursorLocation = new Rectangle(p, new Point(1, 1));
+
+            if (Windows)
+            {
+                Click = false;
+                MouseState current = Mouse.GetState();
+                if (current.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed
+                    && OldMouseState.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released
+                    && IsActive)
+                    Click = true;
+                OldMouseState = current;
+            }
+            else
+            {
+                TouchCollection touchCollection = TouchPanel.GetState();
+
+                var pos = new Point(0, 0);
+                Click = false;
+                if (touchCollection.Count > 0)
+                {
+                    pos.X = (int)touchCollection[0].Position.X;
+                    pos.Y = (int)touchCollection[0].Position.Y;
+                    Click = touchCollection[0].State == TouchLocationState.Pressed && oldtls == (TouchLocationState)0;
+                    oldtls = touchCollection[0].State;
+                }
+                else
+                {
+                    oldtls = (TouchLocationState)0;
+                }
+
+                CursorLocation = new Rectangle(pos, new Point(1, 1));
+            }
 
             GameData.Instance.Screens.Find(x => x.Name == GameData.Instance.CurrentScreen).Update(gameTime, CursorLocation, Click);
             base.Update(gameTime);
-            if(GameData.Instance.Exiting)
+            if (GameData.Instance.Exiting)
                 Exit();
         }
 
@@ -138,13 +176,20 @@ namespace Rizumu
         {
             if (MediaPlayer.State == MediaState.Stopped)
                 GameData.MusicManager.Restart();
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.SetRenderTarget(RenderTarget);
+            GraphicsDevice.Clear(Color.Black);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied);
-            GameData.Instance.Screens.Find(x => x.Name == GameData.Instance.CurrentScreen).Draw(spriteBatch, gameTime, CursorLocation, Click);
+            GameData.Instance.Screens.Find(x => x.Name == GameData.Instance.CurrentScreen).Draw(spriteBatch, gameTime, CursorLocation, Click, GraphicsDevice);
             Framerate.Content = $"{Math.Round(1 / gameTime.ElapsedGameTime.TotalSeconds)} FPS";
-            Framerate.X = graphics.PreferredBackBufferWidth - Framerate.Width;
-            Framerate.Y = graphics.PreferredBackBufferHeight - Framerate.Height;
+
+            Framerate.X = GameData.globalwidth - Framerate.Width;
+            Framerate.Y = GameData.globalheight - Framerate.Height;
+
             Framerate.Draw();
+            spriteBatch.End();
+            GraphicsDevice.SetRenderTarget(null);
+            spriteBatch.Begin(samplerState: SamplerState.LinearWrap);
+            spriteBatch.Draw(RenderTarget, new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height), Color.White);
             spriteBatch.End();
             base.Draw(gameTime);
         }

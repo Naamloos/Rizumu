@@ -26,7 +26,7 @@ namespace Rizumu.GameObjects.Screens
 
         public Text Instructions;
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
         {
             Instructions.Draw();
         }
@@ -36,7 +36,7 @@ namespace Rizumu.GameObjects.Screens
             OldState = Keyboard.GetState();
             Instructions = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "Press R to record and press keys to the music.\rBetter editor to be made soon-ish\nS to save.",
                 0, 15, Color.Chocolate);
-            Instructions.X = (Graphics.PreferredBackBufferWidth / 2) - (Instructions.Width / 2);
+            Instructions.X = (GameData.globalwidth / 2) - (Instructions.Width / 2);
         }
 
         KeyboardState OldState;

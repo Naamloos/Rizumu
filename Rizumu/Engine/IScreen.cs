@@ -11,7 +11,7 @@ namespace Rizumu.Engine
     interface IScreen
     {
         string Name { get; }
-        void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked);
+        void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g);
         void Update(GameTime gameTime, Rectangle cursor, bool clicked);
         void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics);
     }

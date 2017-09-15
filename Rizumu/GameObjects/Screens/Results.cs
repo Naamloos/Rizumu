@@ -19,7 +19,7 @@ namespace Rizumu.GameObjects.Screens
         Button Back;
         public bool ResultsPreloaded = false;
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
         {
             bg.Draw();
             Back.Draw(cursor, clicked);
@@ -28,8 +28,8 @@ namespace Rizumu.GameObjects.Screens
 
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
         {
-            bg = new Background(spriteBatch, GameData.Instance.CurrentSkin.MenuBackground, Color.White, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
-            Back = new Button(spriteBatch, 25, Graphics.PreferredBackBufferHeight - GameData.Instance.CurrentSkin.Button.Height - 25,
+            bg = new Background(spriteBatch, GameData.Instance.CurrentSkin.MenuBackground, Color.White, GameData.globalwidth, GameData.globalheight);
+            Back = new Button(spriteBatch, 25, GameData.globalheight - GameData.Instance.CurrentSkin.Button.Height - 25,
                 GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Back");
             Back.OnClick += (sender, e) =>
             {

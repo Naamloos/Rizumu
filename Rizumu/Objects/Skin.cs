@@ -44,6 +44,7 @@ namespace Rizumu.Objects
 
         // Sounds
         public SoundEffect Hit;
+        public SoundEffectInstance HitIns;
         public SoundEffect Miss;
         public SoundEffect Hello;
         public SoundEffect Click;
@@ -56,7 +57,7 @@ namespace Rizumu.Objects
         public SpriteFont FontSmall;
 
         // Effects
-        public Effect AlphaShader;
+        //public Effect AlphaShader;
 
         public static Skin LoadFromPath(GraphicsDevice Graphics, ContentManager content, string path)
         {
@@ -74,7 +75,7 @@ namespace Rizumu.Objects
             skin.Hit = content.Load<SoundEffect>("SoundEffects/hit");
             skin.Miss = content.Load<SoundEffect>("SoundEffects/break");
             skin.PauseOverlay = content.Load<Texture2D>("Backgrounds/PauseOverlay");
-            skin.AlphaShader = content.Load<Effect>("Fx/AlphaMap");
+            //skin.AlphaShader = content.Load<Effect>("Fx/AlphaMap");
             skin.Particle = content.Load<Texture2D>("Particles/circle");
             skin.Circle = content.Load<Texture2D>("Sprite/circle");
             skin.VisionUp = content.Load<Texture2D>("Backgrounds/visiontop");
@@ -87,6 +88,7 @@ namespace Rizumu.Objects
             skin.MouseOver = content.Load<SoundEffect>("SoundEffects/mover");
             skin.LetsGo = content.Load<SoundEffect>("SoundEffects/letsgo");
             skin.SelectorBG = content.Load<Texture2D>("Sprite/ModSelectorBG");
+            skin.HitIns = skin.Hit.CreateInstance();
 
             if (File.Exists(Path.Combine(path, "button.png")))
                 skin.Button = Texture2D.FromStream(Graphics, new FileStream(Path.Combine(path, "button.png"), FileMode.Open));
@@ -117,11 +119,11 @@ namespace Rizumu.Objects
             skin.MenuBackground = content.Load<Texture2D>("Backgrounds/tempwp1");
             skin.GetReady = content.Load<Texture2D>("Backgrounds/getready");
             skin.SongBar = content.Load<Texture2D>("Gui/MapData");
-            skin.Note = content.Load<Texture2D>("Sprite/Note");
+            skin.Note = content.Load<Texture2D>("Sprite/note");
             skin.Hit = content.Load<SoundEffect>("SoundEffects/hit");
             skin.Miss = content.Load<SoundEffect>("SoundEffects/break");
             skin.PauseOverlay = content.Load<Texture2D>("Backgrounds/PauseOverlay");
-            skin.AlphaShader = content.Load<Effect>("Fx/AlphaMap");
+            //skin.AlphaShader = content.Load<Effect>("Fx/AlphaMap");
             skin.Particle = content.Load<Texture2D>("Particles/circle");
             skin.Circle = content.Load<Texture2D>("Sprite/circle");
             skin.VisionUp = content.Load<Texture2D>("Backgrounds/visiontop");
@@ -134,6 +136,7 @@ namespace Rizumu.Objects
             skin.MouseOver = content.Load<SoundEffect>("SoundEffects/mover");
             skin.LetsGo = content.Load<SoundEffect>("SoundEffects/letsgo");
             skin.SelectorBG = content.Load<Texture2D>("Sprite/ModSelectorBG");
+            skin.HitIns = skin.Hit.CreateInstance();
             return skin;
         }
     }

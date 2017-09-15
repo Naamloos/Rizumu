@@ -1,14 +1,20 @@
-﻿using Newtonsoft.Json.Linq;
-using Rizumu.Objects;
+﻿#define WINDOWS
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
-using System.Windows.Forms;
+using Rizumu.Objects;
 
-namespace Rizumu
+namespace Rizumu.Windows
 {
+#if WINDOWS || LINUX
+    /// <summary>
+    /// The main class.
+    /// </summary>
     public static class Program
     {
-
+        /// <summary>
+        /// The main entry point for the application.
+        /// </summary>
         [STAThread]
         static void Main()
         {
@@ -24,8 +30,12 @@ namespace Rizumu
             }
 
             // useless commit I know
-            using (var game = new Game1())
+            using (var game = new Game1(1920, 1080, true))
+            {
+                Game1.RegisterAndroidUri += (sender, e) => { };
                 game.Run();
+            }
         }
     }
+#endif
 }

@@ -54,8 +54,24 @@ namespace Rizumu.Objects
         public string MD5;
 
         [JsonIgnore]
-        public Song Song => Song.FromUri(MD5,
-                    new Uri(System.IO.Path.Combine(Path, FileName), UriKind.Relative));
+        public Song Song => SSong();
+
+        public Song SSong()
+        {
+            var uri = new Uri(System.IO.Path.Combine(Path, FileName), UriKind.Relative);
+            var song = Microsoft.Xna.Framework.Media.Song.FromUri(System.IO.Path.Combine(Path, FileName), uri);
+            var songType = song.GetType();
+
+#if WINDOWS == false
+            Game1.RegisterAndroidUri.Invoke(null, new EventArgs.RegisterAndroidUriArgs()
+            {
+                path = System.IO.Path.Combine(Path, FileName),
+                song = song,
+                SongType = songType
+            });
+#endif
+            return song;
+        }
     }
 
     class MapEvent

@@ -3,7 +3,7 @@
 
 /outputDir:bin/$(Platform)
 /intermediateDir:obj/$(Platform)
-/platform:Windows
+/platform:NativeClient
 /config:
 /profile:Reach
 /compress:False
@@ -98,12 +98,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:SoundEffects/break.wav
-
-#begin Fx/AlphaMap.fx
-/importer:EffectImporter
-/processor:EffectProcessor
-/processorParam:DebugMode=Auto
-/build:Fx/AlphaMap.fx
 
 #begin Particles/circle.png
 /importer:TextureImporter

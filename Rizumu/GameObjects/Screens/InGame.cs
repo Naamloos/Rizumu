@@ -12,6 +12,7 @@ using Rizumu.GuiObjects;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Input.Touch;
 
 namespace Rizumu.GameObjects.Screens
 {
@@ -63,7 +64,8 @@ namespace Rizumu.GameObjects.Screens
 
         public string Name { get => "ingame"; }
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked)
+        public bool up;
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
         {
             sb = spriteBatch;
             Rotation = Timer * 0.005f;
@@ -173,27 +175,60 @@ namespace Rizumu.GameObjects.Screens
                 {
                     if (!GameData.Instance.Mods.Automode)
                     {
-                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Left))
+                        if (Game1.Windows)
                         {
-                            Recording.PressesLeft.Add(Timer);
-                            LeftPress = true;
+                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Left))
+                            {
+                                Recording.PressesLeft.Add(Timer);
+                                LeftPress = true;
+                            }
+                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Up))
+                            {
+                                Recording.PressesUp.Add(Timer);
+                                UpPress = true;
+                            }
+                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Right))
+                            {
+                                Recording.PressesRight.Add(Timer);
+                                RightPress = true;
+                            }
+                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Down))
+                            {
+                                Recording.PressesDown.Add(Timer);
+                                DownPress = true;
+                            }
                         }
-                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Up))
+                        else
                         {
-                            Recording.PressesUp.Add(Timer);
-                            UpPress = true;
-                        }
-                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Right))
-                        {
-                            Recording.PressesRight.Add(Timer);
-                            RightPress = true;
-                        }
-                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Down))
-                        {
-                            Recording.PressesDown.Add(Timer);
-                            DownPress = true;
+                            TouchCollection touchCollection = TouchPanel.GetState();
+                            foreach (var t in touchCollection)
+                            {
+                                float x = t.Position.X;
+                                float y = t.Position.Y;
+                                if (y > GameData.globalheight / 2)
+                                {
+                                    Recording.PressesDown.Add(Timer);
+                                    DownPress = true;
+                                }
+                                else
+                                {
+                                    Recording.PressesUp.Add(Timer);
+                                    UpPress = true;
+                                }
+                                if (x > GameData.globalwidth / 2)
+                                {
+                                    Recording.PressesRight.Add(Timer);
+                                    RightPress = true;
+                                }
+                                else
+                                {
+                                    Recording.PressesLeft.Add(Timer);
+                                    LeftPress = true;
+                                }
+                            }
                         }
                     }
+                    up = UpPress;
                 }
                 else
                 {
@@ -219,25 +254,60 @@ namespace Rizumu.GameObjects.Screens
 
                 if (!GameData.Instance.Mods.Automode)
                 {
-                    if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left))
-                        LeftNote.Color = Color.DarkGray;
-                    else
-                        LeftNote.Color = Color.White;
+                    if (Game1.Windows)
+                    {
+                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left))
+                            LeftNote.Color = Color.DarkGray;
+                        else
+                            LeftNote.Color = Color.White;
 
-                    if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up))
-                        UpNote.Color = Color.DarkGray;
-                    else
-                        UpNote.Color = Color.White;
+                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up))
+                            UpNote.Color = Color.DarkGray;
+                        else
+                            UpNote.Color = Color.White;
 
-                    if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right))
-                        RightNote.Color = Color.DarkGray;
-                    else
-                        RightNote.Color = Color.White;
+                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right))
+                            RightNote.Color = Color.DarkGray;
+                        else
+                            RightNote.Color = Color.White;
 
-                    if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down))
-                        DownNote.Color = Color.DarkGray;
+                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down))
+                            DownNote.Color = Color.DarkGray;
+                        else
+                            DownNote.Color = Color.White;
+                    }
                     else
-                        DownNote.Color = Color.White;
+                    {
+                        if (LeftPress)
+                            LeftNote.Color = Color.DarkGray;
+                        else
+                            LeftNote.Color = Color.White;
+
+                        if (UpPress)
+                            UpNote.Color = Color.DarkGray;
+                        else
+                            UpNote.Color = Color.White;
+
+                        if (RightPress)
+                            RightNote.Color = Color.DarkGray;
+                        else
+                            RightNote.Color = Color.White;
+
+                        if (DownPress)
+                            DownNote.Color = Color.DarkGray;
+                        else
+                            DownNote.Color = Color.White;
+                    }
+                }
+
+                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                {
+                    Paused = true;
+                }
+
+                if (GamePad.GetState(PlayerIndex.One).Buttons.Start == ButtonState.Pressed)
+                {
+                    MapLoaded = false;
                 }
 
                 Background.Draw();
@@ -327,7 +397,7 @@ namespace Rizumu.GameObjects.Screens
 
             if (!ready && !Paused)
                 new Background(spriteBatch, GameData.Instance.CurrentSkin.GetReady, Color.White, Background.Width, Background.Height).Draw();
-            if (Keyboard.GetState().IsKeyDown((Keys)GameData.Instance.Options.Up))
+            if (up)
                 ready = true;
 
             ModCollection.Content = GameData.Instance.Mods.GetCollectionString();
@@ -337,8 +407,8 @@ namespace Rizumu.GameObjects.Screens
 
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
         {
-            Background = new Background(spriteBatch, GameData.Instance.CurrentSkin.MenuBackground, Color.White, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
-            PauseOverlay = new Background(spriteBatch, GameData.Instance.CurrentSkin.PauseOverlay, Color.White, Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
+            Background = new Background(spriteBatch, GameData.Instance.CurrentSkin.MenuBackground, Color.White, GameData.globalwidth, GameData.globalheight);
+            PauseOverlay = new Background(spriteBatch, GameData.Instance.CurrentSkin.PauseOverlay, Color.White, GameData.globalwidth, GameData.globalheight);
             var notetex = GameData.Instance.CurrentSkin.Note;
             LeftNote = new Sprite(spriteBatch, (int)(Background.Width / 2 - notetex.Width * 1.5), (int)(Background.Height / 2 - notetex.Width * 0.5), notetex, Color.White);
             UpNote = new Sprite(spriteBatch, (int)(Background.Width / 2 - notetex.Width * 0.5), (int)(Background.Height / 2 - notetex.Width * 1.5), notetex, Color.White);
@@ -352,11 +422,11 @@ namespace Rizumu.GameObjects.Screens
             ComboTextSmall.Y = ((Background.Height - ComboText.Height - 15) - ComboTextSmall.Height) - 3;
             // Making sure OldState is not null
             OldState = Keyboard.GetState();
-            ResumeButton = new Button(spriteBatch, (Graphics.PreferredBackBufferWidth / 2) - (GameData.Instance.CurrentSkin.Button.Width / 2),
-                Graphics.PreferredBackBufferHeight / 2 - (GameData.Instance.CurrentSkin.Button.Height) - 25, GameData.Instance.CurrentSkin.Button,
+            ResumeButton = new Button(spriteBatch, (GameData.globalwidth / 2) - (GameData.Instance.CurrentSkin.Button.Width / 2),
+                GameData.globalheight / 2 - (GameData.Instance.CurrentSkin.Button.Height) - 25, GameData.Instance.CurrentSkin.Button,
                 GameData.Instance.CurrentSkin.ButtonHover, "Resume");
-            ExitButton = new Button(spriteBatch, (Graphics.PreferredBackBufferWidth / 2) - (GameData.Instance.CurrentSkin.Button.Width / 2),
-                Graphics.PreferredBackBufferHeight / 2 + 25, GameData.Instance.CurrentSkin.Button,
+            ExitButton = new Button(spriteBatch, (GameData.globalwidth / 2) - (GameData.Instance.CurrentSkin.Button.Width / 2),
+                GameData.globalheight / 2 + 25, GameData.Instance.CurrentSkin.Button,
                 GameData.Instance.CurrentSkin.ButtonHover, "Exit");
 
             ResumeButton.OnClick += (sender, e) =>
@@ -374,8 +444,8 @@ namespace Rizumu.GameObjects.Screens
                 GameData.MusicManager.Restart();
             };
 
-            ModCollection = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "", Graphics.PreferredBackBufferWidth, 5, Color.Azure);
-            ScreenWidth = Graphics.PreferredBackBufferWidth;
+            ModCollection = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "", GameData.globalwidth, 5, Color.Azure);
+            ScreenWidth = GameData.globalwidth;
         }
 
         public bool IsRestarted = false;

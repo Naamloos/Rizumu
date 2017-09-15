@@ -33,6 +33,11 @@ namespace Rizumu
         public bool Exiting; //im lazy
         public ModCollection Mods = new ModCollection();
 
+        public static int globalwidth;
+        public static int globalheight;
+        public static int realwidth;
+        public static int realheight;
+
         public GameData(ContentManager content)
         {
             DefaultSkin = Skin.LoadDefault(content);

@@ -26,5 +26,10 @@ namespace Rizumu
                 Held.Remove(key);
             return false;
         }
+
+        public static void Toggle(this bool b)
+        {
+            b = !b;
+        }
     }
 }

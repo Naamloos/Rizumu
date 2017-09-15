@@ -55,7 +55,7 @@ namespace Rizumu.GuiObjects
         }
     }
 
-    class ButtonEventArgs : EventArgs
+    class ButtonEventArgs
     {
 
     }
