@@ -38,6 +38,7 @@ namespace Rizumu
             OldMouseState = Mouse.GetState();
             IsFixedTimeStep = false;
             OGTimeSpan = TargetElapsedTime;
+            Game1.Windows = Windows;
         }
 
         protected override void Initialize()
