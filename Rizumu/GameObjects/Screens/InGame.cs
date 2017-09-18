@@ -23,6 +23,10 @@ namespace Rizumu.GameObjects.Screens
         public List<Note> NotesUp;
         public List<Note> NotesRight;
         public List<Note> NotesDown;
+        public List<SNote> SNotesLeft;
+        public List<SNote> SNotesUp;
+        public List<SNote> SNotesRight;
+        public List<SNote> SNotesDown;
         public bool MapLoaded = false;
         public bool Paused = false;
         public int Timer;
@@ -62,6 +66,11 @@ namespace Rizumu.GameObjects.Screens
         public Text ModCollection;
         public int ScreenWidth;
 
+        public bool oldleft;
+        public bool oldup;
+        public bool oldright;
+        public bool olddown;
+
         public string Name { get => "ingame"; }
 
         public bool up;
@@ -85,8 +94,13 @@ namespace Rizumu.GameObjects.Screens
                 NotesUp = new List<Note>();
                 NotesRight = new List<Note>();
                 NotesDown = new List<Note>();
+                SNotesLeft = new List<SNote>();
+                SNotesUp = new List<SNote>();
+                SNotesRight = new List<SNote>();
+                SNotesDown = new List<SNote>();
                 CurrentCombo = 0;
                 HighestCombo = 0;
+                #region Standard notes
                 foreach (int n in Playing.NotesLeft)
                 {
                     NotesLeft.Add(new Note(spriteBatch, NoteMode.left, Background.Width, Background.Height)
@@ -131,6 +145,52 @@ namespace Rizumu.GameObjects.Screens
                     });
                 }
                 #endregion
+                #region Slider notes
+                foreach (int n in Playing.SlidesLeft)
+                {
+                    SNotesLeft.Add(new SNote(spriteBatch, NoteMode.left, Background.Width, Background.Height)
+                    {
+                        Hit = false,
+                        Position = 0,
+                        Time = n,
+                        Accuracy = 0
+                    });
+                }
+
+                foreach (int n in Playing.SlidesUp)
+                {
+                    SNotesUp.Add(new SNote(spriteBatch, NoteMode.up, Background.Width, Background.Height)
+                    {
+                        Hit = false,
+                        Position = 0,
+                        Time = n,
+                        Accuracy = 0
+                    });
+                }
+
+                foreach (int n in Playing.SlidesRight)
+                {
+                    SNotesRight.Add(new SNote(spriteBatch, NoteMode.right, Background.Width, Background.Height)
+                    {
+                        Hit = false,
+                        Position = 0,
+                        Time = n,
+                        Accuracy = 0
+                    });
+                }
+
+                foreach (int n in Playing.SlidesDown)
+                {
+                    SNotesDown.Add(new SNote(spriteBatch, NoteMode.down, Background.Width, Background.Height)
+                    {
+                        Hit = false,
+                        Position = 0,
+                        Time = n,
+                        Accuracy = 0
+                    });
+                }
+                #endregion
+                #endregion
                 Background.Texture = Playing.Background;
 
                 VisionUp = new Sprite(spriteBatch, 0, 0, GameData.Instance.CurrentSkin.VisionUp, Color.White);
@@ -160,6 +220,11 @@ namespace Rizumu.GameObjects.Screens
                 bool UpPress = false;
                 bool RightPress = false;
                 bool DownPress = false;
+
+                bool LeftHold = false;
+                bool UpHold = false;
+                bool RightHold = false;
+                bool DownHold = false;
 
                 if (skippable && Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
@@ -197,6 +262,26 @@ namespace Rizumu.GameObjects.Screens
                                 Recording.PressesDown.Add(Timer);
                                 DownPress = true;
                             }
+
+                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left))
+                                LeftHold = true;
+                            else
+                                LeftHold = false;
+
+                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up))
+                                UpHold = true;
+                            else
+                                UpHold = false;
+
+                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right))
+                                RightHold = true;
+                            else
+                                RightHold = false;
+
+                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down))
+                                DownHold = true;
+                            else
+                                DownHold = false;
                         }
                         else
                         {
@@ -208,23 +293,35 @@ namespace Rizumu.GameObjects.Screens
                                 if (y > GameData.globalheight / 2)
                                 {
                                     Recording.PressesDown.Add(Timer);
-                                    DownPress = true;
+                                    DownHold = true;
+                                    if(!olddown)
+                                        DownPress = true;
                                 }
                                 else
                                 {
                                     Recording.PressesUp.Add(Timer);
-                                    UpPress = true;
+                                    UpHold = true;
+                                    if(!oldup)
+                                        UpPress = true;
                                 }
                                 if (x > GameData.globalwidth / 2)
                                 {
                                     Recording.PressesRight.Add(Timer);
-                                    RightPress = true;
+                                    RightHold = true;
+                                    if(!oldright)
+                                        RightPress = true;
                                 }
                                 else
                                 {
                                     Recording.PressesLeft.Add(Timer);
-                                    LeftPress = true;
+                                    DownHold = true;
+                                    if(!oldleft)
+                                        LeftPress = true;
                                 }
+                                olddown = DownPress;
+                                oldleft = LeftPress;
+                                oldright = RightPress;
+                                olddown = DownPress;
                             }
                         }
                     }
@@ -233,13 +330,25 @@ namespace Rizumu.GameObjects.Screens
                 else
                 {
                     if (Replay.PressesLeft.Contains(Timer))
+                    {
                         LeftPress = true;
+                        LeftHold = true;
+                    }
                     if (Replay.PressesUp.Contains(Timer))
+                    {
                         UpPress = true;
+                        UpHold = true;
+                    }
                     if (Replay.PressesRight.Contains(Timer))
+                    {
                         RightPress = true;
+                        RightHold = true;
+                    }
                     if (Replay.PressesDown.Contains(Timer))
+                    {
                         DownPress = true;
+                        DownHold = true;
+                    }
                 }
 
                 if (NewState.IsKeyDown(Keys.Escape) && !OldState.IsKeyDown(Keys.Escape))
@@ -333,6 +442,27 @@ namespace Rizumu.GameObjects.Screens
                         n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer, GameData.Instance.Mods.Automode);
                 }
                 foreach (Note n in NotesDown)
+                {
+                    if (n.Time - ((Background.Height / 2) + (n.NoteSprite.Texture.Height * 2)) < Timer)
+                        n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer, GameData.Instance.Mods.Automode);
+                }
+
+                foreach (SNote n in SNotesLeft)
+                {
+                    if (n.Time - ((Background.Width / 2) + n.NoteSprite.Texture.Width) < Timer)
+                        n.Draw(ref LeftPress, Paused, ready, Rotation, ref CurrentCombo, ref leftdist, Timer, GameData.Instance.Mods.Automode);
+                }
+                foreach (SNote n in SNotesUp)
+                {
+                    if (n.Time - ((Background.Height / 2) + n.NoteSprite.Texture.Height) < Timer)
+                        n.Draw(ref UpPress, Paused, ready, Rotation, ref CurrentCombo, ref updist, Timer, GameData.Instance.Mods.Automode);
+                }
+                foreach (SNote n in SNotesRight)
+                {
+                    if (n.Time - ((Background.Width / 2) + (n.NoteSprite.Texture.Width * 2)) < Timer)
+                        n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer, GameData.Instance.Mods.Automode);
+                }
+                foreach (SNote n in SNotesDown)
                 {
                     if (n.Time - ((Background.Height / 2) + (n.NoteSprite.Texture.Height * 2)) < Timer)
                         n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer, GameData.Instance.Mods.Automode);
