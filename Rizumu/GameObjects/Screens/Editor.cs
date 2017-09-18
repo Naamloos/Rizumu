@@ -105,13 +105,13 @@ namespace Rizumu.GameObjects.Screens
                 else
                     HDown = 0;
 
-                if (HLeft > 100)
+                if (HLeft > 50)
                     SLeft.Add(Timer);
-                if (HUp > 100)
+                if (HUp > 50)
                     SUp.Add(Timer);
-                if (HRight > 100)
+                if (HRight > 50)
                     SRight.Add(Timer);
-                if (HDown > 100)
+                if (HDown > 50)
                     SDown.Add(Timer);
 
                 OldState = NewState;
