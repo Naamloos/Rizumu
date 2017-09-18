@@ -75,44 +75,60 @@ namespace Rizumu.GameObjects.Screens
             {
                 Timer = (int)((MediaPlayer.PlayPosition.TotalMilliseconds * 500) / 1000);
                 var NewState = Keyboard.GetState();
-                if (NewState.IsKeyDown(Keys.NumPad4) && !OldState.IsKeyDown(Keys.NumPad4))
+                if (NewState.IsKeyDown(Keys.NumPad4))
                 {
-                    Left.Add(Timer);
-                    HLeft++;
+                    if(!OldState.IsKeyDown(Keys.NumPad4))
+                        Left.Add(Timer);
                 }
                 else
-                    HLeft = 0;
+                    HLeft = Timer;
 
-                if (NewState.IsKeyDown(Keys.NumPad8) && !OldState.IsKeyDown(Keys.NumPad8))
+                if (NewState.IsKeyDown(Keys.NumPad8))
                 {
-                    Up.Add(Timer);
-                    HUp++;
+                    if (!OldState.IsKeyDown(Keys.NumPad8))
+                        Up.Add(Timer);
                 }
                 else
-                    HUp = 0;
-                if (NewState.IsKeyDown(Keys.NumPad6) && !OldState.IsKeyDown(Keys.NumPad6))
+                    HUp = Timer;
+                if (NewState.IsKeyDown(Keys.NumPad6))
                 {
-                    Right.Add(Timer);
-                    HRight++;
+                    if (!OldState.IsKeyDown(Keys.NumPad6))
+                        Right.Add(Timer);
                 }
                 else
-                    HRight = 0;
-                if (NewState.IsKeyDown(Keys.NumPad2) && !OldState.IsKeyDown(Keys.NumPad2))
+                    HRight = Timer;
+                if (NewState.IsKeyDown(Keys.NumPad2))
                 {
-                    Down.Add(Timer);
-                    HDown++;
+                    if (!OldState.IsKeyDown(Keys.NumPad2))
+                        Down.Add(Timer);
                 }
                 else
-                    HDown = 0;
+                    HDown = Timer;
 
-                if (HLeft > 50)
+                if (HLeft < Timer - 250 && !SLeft.Contains(Timer))
+                {
+                    if (HLeft == Timer - 250)
+                        Left.Remove(Left.Last());
                     SLeft.Add(Timer);
-                if (HUp > 50)
+                }
+                if (HUp < Timer - 250 && !SUp.Contains(Timer))
+                {
+                    if(HUp == Timer - 250)
+                        Up.Remove(Up.Last());
                     SUp.Add(Timer);
-                if (HRight > 50)
+                }
+                if (HRight < Timer - 250 && !SRight.Contains(Timer))
+                {
+                    if (HRight == Timer - 250)
+                        Right.Remove(Right.Last());
                     SRight.Add(Timer);
-                if (HDown > 50)
+                }
+                if (HDown < Timer - 250 && !SDown.Contains(Timer))
+                {
+                    if (HDown == Timer - 250)
+                        Down.Remove(Down.Last());
                     SDown.Add(Timer);
+                }
 
                 OldState = NewState;
             }
@@ -138,7 +154,8 @@ namespace Rizumu.GameObjects.Screens
                 SlidesDown = SDown,
                 SlidesLeft = SLeft,
                 SlidesRight = SRight,
-                SlidesUp = SUp
+                SlidesUp = SUp,
+                Offset = 0
             };
 
             JObject map = JObject.FromObject(m);

@@ -31,6 +31,10 @@ namespace Rizumu.Objects
         public Texture2D Particle;
         public Texture2D Circle;
         public Texture2D SelectorBG;
+        public Texture2D SlideLeft;
+        public Texture2D SlideUp;
+        public Texture2D SlideRight;
+        public Texture2D SlideDown;
 
         // Backgrounds
         public Texture2D MenuBackground;
@@ -137,6 +141,10 @@ namespace Rizumu.Objects
             skin.LetsGo = content.Load<SoundEffect>("SoundEffects/letsgo");
             skin.SelectorBG = content.Load<Texture2D>("Sprite/ModSelectorBG");
             skin.HitIns = skin.Hit.CreateInstance();
+            skin.SlideLeft = content.Load<Texture2D>("Sprite/slideleft");
+            skin.SlideUp = content.Load<Texture2D>("Sprite/slideup");
+            skin.SlideRight = content.Load<Texture2D>("Sprite/slideright");
+            skin.SlideDown = content.Load<Texture2D>("Sprite/slidedown");
             return skin;
         }
     }

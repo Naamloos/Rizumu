@@ -38,28 +38,28 @@ namespace Rizumu.GameObjects
             {
                 BaseX = -1 * tex.Width;
                 BaseY = (screenHeight / 2) - (tex.Height / 2);
-                NoteSprite = new Sprite(spriteBatch, BaseX, BaseY, tex, Color.White);
+                NoteSprite = new Sprite(spriteBatch, BaseX, BaseY, GameData.Instance.CurrentSkin.SlideLeft, Color.White);
                 traveldistance = screenWidth / 2;
             }
             if (mode == NoteMode.up)
             {
                 BaseX = (screenWidth / 2) - (tex.Width / 2);
                 BaseY = -1 * tex.Height;
-                NoteSprite = new Sprite(spriteBatch, BaseX, BaseY, tex, Color.White);
+                NoteSprite = new Sprite(spriteBatch, BaseX, BaseY, GameData.Instance.CurrentSkin.SlideUp, Color.White);
                 traveldistance = screenHeight / 2;
             }
             if (mode == NoteMode.right)
             {
                 BaseX = screenWidth + tex.Width;
                 BaseY = (screenHeight / 2) - (tex.Height / 2);
-                NoteSprite = new Sprite(spriteBatch, BaseX, BaseY, tex, Color.White);
+                NoteSprite = new Sprite(spriteBatch, BaseX, BaseY, GameData.Instance.CurrentSkin.SlideRight, Color.White);
                 traveldistance = screenWidth / 2 + NoteSprite.Texture.Width;
             }
             if (mode == NoteMode.down)
             {
                 BaseX = (screenWidth / 2) - (tex.Width / 2);
                 BaseY = screenHeight + tex.Height;
-                NoteSprite = new Sprite(spriteBatch, BaseX, BaseY, tex, Color.White);
+                NoteSprite = new Sprite(spriteBatch, BaseX, BaseY, GameData.Instance.CurrentSkin.SlideDown, Color.White);
                 traveldistance = screenHeight / 2 + NoteSprite.Texture.Height;
             }
             Alpha = -50;
@@ -70,7 +70,6 @@ namespace Rizumu.GameObjects
         {
             if (!Paused && Ready)
             {
-                NoteSprite.Rotation = rotation;
                 Alpha++;
                 NoteSprite.Color = new Color(Color.White, 1f);
             }
@@ -103,8 +102,6 @@ namespace Rizumu.GameObjects
             }
             else if (Miss == false && Hit == false)
             {
-                GameData.Instance.CurrentSkin.Miss.Play();
-                CurrentCombo = 0;
                 Miss = true;
             }
 
@@ -114,9 +111,6 @@ namespace Rizumu.GameObjects
                 {
                     if (Hit == false)
                     {
-                        if (Game1.Windows)
-                            GameData.Instance.CurrentSkin.HitIns.Play();
-                        CurrentCombo++;
                     }
                     Hit = true;
                 }
@@ -127,9 +121,6 @@ namespace Rizumu.GameObjects
                 {
                     if (Hit == false)
                     {
-                        if (Game1.Windows)
-                            GameData.Instance.CurrentSkin.HitIns.Play();
-                        CurrentCombo++;
                     }
                     Hit = true;
                 }

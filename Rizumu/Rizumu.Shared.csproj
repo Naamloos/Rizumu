@@ -55,6 +55,7 @@
     <Compile Include="Game1.cs" />
     <Compile Include="GameData.cs" />
     <Compile Include="GameObjects\ModCollection.cs" />
+    <Compile Include="GameObjects\SliderNote.cs" />
     <Compile Include="GameObjects\Note.cs" />
     <Compile Include="GameObjects\Screens\Editor.cs" />
     <Compile Include="GameObjects\Screens\InGame.cs" />
