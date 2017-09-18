@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Rizumu.Objects;
 using Newtonsoft.Json.Linq;
 using System.IO;
+using Microsoft.Xna.Framework.Media;
 
 namespace Rizumu.GameObjects.Screens
 {
@@ -72,6 +73,7 @@ namespace Rizumu.GameObjects.Screens
 
             if (Recording)
             {
+                Timer = (int)((MediaPlayer.PlayPosition.TotalMilliseconds * 500) / 1000);
                 var NewState = Keyboard.GetState();
                 if (NewState.IsKeyDown(Keys.NumPad4) && !OldState.IsKeyDown(Keys.NumPad4))
                 {
@@ -113,7 +115,6 @@ namespace Rizumu.GameObjects.Screens
                     SDown.Add(Timer);
 
                 OldState = NewState;
-                Timer++;
             }
             else
             {
