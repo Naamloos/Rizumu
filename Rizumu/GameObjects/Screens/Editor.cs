@@ -24,6 +24,16 @@ namespace Rizumu.GameObjects.Screens
         public List<int> Right = new List<int>();
         public List<int> Down = new List<int>();
 
+        public List<int> SLeft = new List<int>();
+        public List<int> SUp = new List<int>();
+        public List<int> SRight = new List<int>();
+        public List<int> SDown = new List<int>();
+
+        public int HLeft = 0;
+        public int HUp = 0;
+        public int HRight = 0;
+        public int HDown = 0;
+
         public Text Instructions;
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
@@ -63,22 +73,45 @@ namespace Rizumu.GameObjects.Screens
             if (Recording)
             {
                 var NewState = Keyboard.GetState();
-                if(NewState.IsKeyDown(Keys.NumPad4) && !OldState.IsKeyDown(Keys.NumPad4))
+                if (NewState.IsKeyDown(Keys.NumPad4) && !OldState.IsKeyDown(Keys.NumPad4))
                 {
                     Left.Add(Timer);
+                    HLeft++;
                 }
+                else
+                    HLeft = 0;
+
                 if (NewState.IsKeyDown(Keys.NumPad8) && !OldState.IsKeyDown(Keys.NumPad8))
                 {
                     Up.Add(Timer);
+                    HUp++;
                 }
+                else
+                    HUp = 0;
                 if (NewState.IsKeyDown(Keys.NumPad6) && !OldState.IsKeyDown(Keys.NumPad6))
                 {
                     Right.Add(Timer);
+                    HRight++;
                 }
+                else
+                    HRight = 0;
                 if (NewState.IsKeyDown(Keys.NumPad2) && !OldState.IsKeyDown(Keys.NumPad2))
                 {
                     Down.Add(Timer);
+                    HDown++;
                 }
+                else
+                    HDown = 0;
+
+                if (HLeft > 100)
+                    SLeft.Add(Timer);
+                if (HUp > 100)
+                    SUp.Add(Timer);
+                if (HRight > 100)
+                    SRight.Add(Timer);
+                if (HDown > 100)
+                    SDown.Add(Timer);
+
                 OldState = NewState;
                 Timer++;
             }

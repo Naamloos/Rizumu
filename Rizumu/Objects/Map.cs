@@ -38,6 +38,18 @@ namespace Rizumu.Objects
         [JsonProperty("downnotes")]
         public List<int> NotesDown = new List<int>();
 
+        [JsonProperty("leftslides")]
+        public List<int> SlidesLeft = new List<int>();
+
+        [JsonProperty("upslides")]
+        public List<int> SlidesUp = new List<int>();
+
+        [JsonProperty("rightslides")]
+        public List<int> SlidesRight = new List<int>();
+
+        [JsonProperty("downslides")]
+        public List<int> SlidesDown = new List<int>();
+
         [JsonProperty("offset")]
         public int Offset = 0;
 
