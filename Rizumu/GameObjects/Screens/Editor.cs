@@ -135,6 +135,10 @@ namespace Rizumu.GameObjects.Screens
                 NotesLeft = Left,
                 NotesRight = Right,
                 NotesUp = Up,
+                SlidesDown = SDown,
+                SlidesLeft = SLeft,
+                SlidesRight = SRight,
+                SlidesUp = SUp
             };
 
             JObject map = JObject.FromObject(m);
