@@ -111,6 +111,8 @@ namespace Rizumu.GameObjects
                 {
                     if (Hit == false)
                     {
+                        if (Game1.Windows)
+                            GameData.Instance.CurrentSkin.SlideIns.Play();
                     }
                     Hit = true;
                 }
@@ -121,6 +123,8 @@ namespace Rizumu.GameObjects
                 {
                     if (Hit == false)
                     {
+                        if (Game1.Windows)
+                            GameData.Instance.CurrentSkin.SlideIns.Play();
                     }
                     Hit = true;
                 }

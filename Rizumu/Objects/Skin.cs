@@ -49,6 +49,8 @@ namespace Rizumu.Objects
         // Sounds
         public SoundEffect Hit;
         public SoundEffectInstance HitIns;
+        public SoundEffect Slide;
+        public SoundEffectInstance SlideIns;
         public SoundEffect Miss;
         public SoundEffect Hello;
         public SoundEffect Click;
@@ -93,6 +95,12 @@ namespace Rizumu.Objects
             skin.LetsGo = content.Load<SoundEffect>("SoundEffects/letsgo");
             skin.SelectorBG = content.Load<Texture2D>("Sprite/ModSelectorBG");
             skin.HitIns = skin.Hit.CreateInstance();
+            skin.SlideLeft = content.Load<Texture2D>("Sprite/slideleft");
+            skin.SlideUp = content.Load<Texture2D>("Sprite/slideup");
+            skin.SlideRight = content.Load<Texture2D>("Sprite/slideright");
+            skin.SlideDown = content.Load<Texture2D>("Sprite/slidedown");
+            skin.Slide = content.Load<SoundEffect>("SoundEffects/slide");
+            skin.SlideIns = skin.Slide.CreateInstance();
 
             if (File.Exists(Path.Combine(path, "button.png")))
                 skin.Button = Texture2D.FromStream(Graphics, new FileStream(Path.Combine(path, "button.png"), FileMode.Open));
@@ -145,6 +153,8 @@ namespace Rizumu.Objects
             skin.SlideUp = content.Load<Texture2D>("Sprite/slideup");
             skin.SlideRight = content.Load<Texture2D>("Sprite/slideright");
             skin.SlideDown = content.Load<Texture2D>("Sprite/slidedown");
+            skin.Slide = content.Load<SoundEffect>("SoundEffects/slide");
+            skin.SlideIns = skin.Slide.CreateInstance();
             return skin;
         }
     }
