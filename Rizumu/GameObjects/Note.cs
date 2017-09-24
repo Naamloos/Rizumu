@@ -116,7 +116,7 @@ namespace Rizumu.GameObjects
                     {
                         KeyPress = false;
                         if (Game1.Windows)
-                            GameData.Instance.CurrentSkin.HitIns.Play();
+                            GameData.Instance.CurrentSkin.Hit.Play();
                         CurrentCombo++;
                     }
                     Hit = true;
@@ -130,7 +130,7 @@ namespace Rizumu.GameObjects
                     {
                         KeyPress = false;
                         if (Game1.Windows)
-                            GameData.Instance.CurrentSkin.HitIns.Play();
+                            GameData.Instance.CurrentSkin.Hit.Play();
                         CurrentCombo++;
                     }
                     Hit = true;

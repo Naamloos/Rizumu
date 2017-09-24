@@ -21,7 +21,7 @@ namespace Rizumu.GuiObjects
         public Button(SpriteBatch spriteBatch, int x, int y, Texture2D staticTexture, Texture2D hoverTexture, string text = "")
         {
             StaticSprite = new Sprite(spriteBatch, x, y, staticTexture, Color.White);
-            HoverSprite = new Sprite(spriteBatch, x, y, hoverTexture, Color.White);
+            HoverSprite = new Sprite(spriteBatch, x, y, staticTexture, Color.Gray);
             Text = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, text, x + 20,
                 y + staticTexture.Height / 2, Color.White);
 
