@@ -124,6 +124,7 @@ namespace Rizumu.GuiObjects
                     mods.RotationMode = !mods.RotationMode;
                     break;
             }
+            GameData.Instance.Mods = mods;
         }
     }
 }
