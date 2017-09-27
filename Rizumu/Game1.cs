@@ -8,6 +8,7 @@ using Rizumu.Engine;
 using Rizumu.Objects;
 using System;
 using System.IO;
+using System.Linq;
 
 namespace Rizumu
 {
@@ -151,7 +152,7 @@ namespace Rizumu
 
                 var pos = new Point(0, 0);
                 Click = false;
-                if (touchCollection.Count > 0)
+                if (touchCollection.Any())
                 {
                     pos.X = (int)touchCollection[0].Position.X;
                     pos.Y = (int)touchCollection[0].Position.Y;
