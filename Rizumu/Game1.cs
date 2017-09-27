@@ -62,7 +62,7 @@ namespace Rizumu
                 GameData.Instance.Options = new Options();
             }
 
-            if (GameData.Instance.Options.Fullscreen == true)
+            if (GameData.Instance.Options.Fullscreen)
             {
                 // hacky shit stolen from stackoverflow
                 graphics.IsFullScreen = true;

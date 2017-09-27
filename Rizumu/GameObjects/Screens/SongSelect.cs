@@ -155,7 +155,7 @@ namespace Rizumu.GameObjects.Screens
 
             if (scrollac == 0)
             {
-                while (MapDatas.FindAll(x => x.Selected == true).Count < 1)
+                while (MapDatas.FindAll(x => x.Selected).Count < 1)
                 {
                     if (MapDatas.Last().Y > MapDatas.Last().MapDataHolder.Texture.Height * 2 + 70)
                     {

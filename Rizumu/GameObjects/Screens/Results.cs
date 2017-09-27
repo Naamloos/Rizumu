@@ -47,10 +47,10 @@ namespace Rizumu.GameObjects.Screens
             {
                 var ig = (InGame)GameData.Instance.Screens.Find(x => x.Name == "ingame");
                 MapResults.Content = "Results: (I'm done so no full result screen yet)\n";
-                MapResults.Content += "Hits Left: " + ig.NotesLeft.FindAll(x => x.Hit == true).Count() + " Miss Left: " + ig.NotesLeft.FindAll(x => x.Miss == true).Count() + "\n";
-                MapResults.Content += "Hits Up: " + ig.NotesUp.FindAll(x => x.Hit == true).Count() + " Miss Up: " + ig.NotesUp.FindAll(x => x.Miss == true).Count() + "\n";
-                MapResults.Content += "Hits Right: " + ig.NotesRight.FindAll(x => x.Hit == true).Count() + " Miss Right: " + ig.NotesRight.FindAll(x => x.Miss == true).Count() + "\n";
-                MapResults.Content += "Hits Down: " + ig.NotesDown.FindAll(x => x.Hit == true).Count() + " Miss Down: " + ig.NotesDown.FindAll(x => x.Miss == true).Count() + "\n";
+                MapResults.Content += "Hits Left: " + ig.NotesLeft.FindAll(x => x.Hit).Count() + " Miss Left: " + ig.NotesLeft.FindAll(x => x.Miss).Count() + "\n";
+                MapResults.Content += "Hits Up: " + ig.NotesUp.FindAll(x => x.Hit).Count() + " Miss Up: " + ig.NotesUp.FindAll(x => x.Miss).Count() + "\n";
+                MapResults.Content += "Hits Right: " + ig.NotesRight.FindAll(x => x.Hit).Count() + " Miss Right: " + ig.NotesRight.FindAll(x => x.Miss).Count() + "\n";
+                MapResults.Content += "Hits Down: " + ig.NotesDown.FindAll(x => x.Hit).Count() + " Miss Down: " + ig.NotesDown.FindAll(x => x.Miss).Count() + "\n";
                 bg.Texture = ig.Background.Texture;
                 ResultsPreloaded = true;
             }

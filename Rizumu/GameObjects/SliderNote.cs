@@ -94,13 +94,13 @@ namespace Rizumu.GameObjects
                 Position = Timer - (Time - ((bgh / 2) + NoteSprite.Texture.Height * 2));
                 NoteSprite.Y = BaseY - Position;
             }
-            if (traveldistance + (NoteSprite.Texture.Width / 2) > Position && Hit == false)
+            if (traveldistance + (NoteSprite.Texture.Width / 2) > Position && !Hit)
             {
                 float vis = traveldistance - Position;
                 visiondist = vis / 1000;
                 NoteSprite.Draw(true);
             }
-            else if (Miss == false && Hit == false)
+            else if (!Miss && !Hit)
             {
                 Miss = true;
             }
@@ -109,7 +109,7 @@ namespace Rizumu.GameObjects
             {
                 if (Position > traveldistance - NoteSprite.Texture.Width && !Miss)
                 {
-                    if (Hit == false)
+                    if (!Hit)
                     {
                         if (Game1.Windows)
                             GameData.Instance.CurrentSkin.SlideIns.Play();
@@ -119,9 +119,9 @@ namespace Rizumu.GameObjects
             }
             else
             {
-                if (Position > traveldistance - (NoteSprite.Texture.Width * 1.6f) && KeyHold && Miss == false)
+                if (Position > traveldistance - (NoteSprite.Texture.Width * 1.6f) && KeyHold && !Miss)
                 {
-                    if (Hit == false)
+                    if (!Hit)
                     {
                         if (Game1.Windows)
                             GameData.Instance.CurrentSkin.SlideIns.Play();

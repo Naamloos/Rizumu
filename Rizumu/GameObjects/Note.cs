@@ -95,13 +95,13 @@ namespace Rizumu.GameObjects
                 Position = Timer - (Time - ((bgh / 2) + NoteSprite.Texture.Height * 2));
                 NoteSprite.Y = BaseY - Position;
             }
-            if (traveldistance + (NoteSprite.Texture.Width / 2) > Position && Hit == false)
+            if (traveldistance + (NoteSprite.Texture.Width / 2) > Position && !Hit)
             {
                 float vis = traveldistance - Position;
                 visiondist = vis / 1000;
                 NoteSprite.Draw(true);
             }
-            else if (Miss == false && Hit == false)
+            else if (!Miss && !Hit)
             {
                 GameData.Instance.CurrentSkin.Miss.Play();
                 CurrentCombo = 0;
@@ -112,7 +112,7 @@ namespace Rizumu.GameObjects
             {
                 if (Position > traveldistance - NoteSprite.Texture.Width && !Miss)
                 {
-                    if (Hit == false)
+                    if (!Hit)
                     {
                         KeyPress = false;
                         if (Game1.Windows)
@@ -124,9 +124,9 @@ namespace Rizumu.GameObjects
             }
             else
             {
-                if (Position > traveldistance - (NoteSprite.Texture.Width * 1.6f) && KeyPress && Miss == false)
+                if (Position > traveldistance - (NoteSprite.Texture.Width * 1.6f) && KeyPress && !Miss)
                 {
-                    if (Hit == false)
+                    if (!Hit)
                     {
                         KeyPress = false;
                         if (Game1.Windows)
