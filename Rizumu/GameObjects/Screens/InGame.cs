@@ -227,7 +227,7 @@ namespace Rizumu.GameObjects.Screens
                 bool RightHold = false;
                 bool DownHold = false;
 
-                if (skippable && Keyboard.GetState().IsKeyDown(Keys.Space))
+                if (skippable && NewState.IsKeyDown(Keys.Space))
                 {
                     GameData.MusicManager.Restart(TimeSpan.FromMilliseconds((GetFirstNote() - 500) * 2));
                     skippable = false;
@@ -264,25 +264,13 @@ namespace Rizumu.GameObjects.Screens
                                 DownPress = true;
                             }
 
-                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left))
-                                LeftHold = true;
-                            else
-                                LeftHold = false;
+                            LeftHold = NewState.IsKeyDown((Keys)GameData.Instance.Options.Left);
 
-                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up))
-                                UpHold = true;
-                            else
-                                UpHold = false;
+                            UpHold = NewState.IsKeyDown((Keys)GameData.Instance.Options.Up);
 
-                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right))
-                                RightHold = true;
-                            else
-                                RightHold = false;
+                            RightHold = NewState.IsKeyDown((Keys)GameData.Instance.Options.Right);
 
-                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down))
-                                DownHold = true;
-                            else
-                                DownHold = false;
+                            DownHold = NewState.IsKeyDown((Keys)GameData.Instance.Options.Down);
                         }
                         else
                         {
@@ -354,10 +342,7 @@ namespace Rizumu.GameObjects.Screens
 
                 if (NewState.IsKeyDown(Keys.Escape) && !OldState.IsKeyDown(Keys.Escape))
                 {
-                    if (Paused)
-                        Paused = false;
-                    else
-                        Paused = true;
+                    Paused = !Paused;
                 }
 
                 OldState = NewState;
@@ -366,47 +351,23 @@ namespace Rizumu.GameObjects.Screens
                 {
                     if (Game1.Windows)
                     {
-                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left))
-                            LeftNote.Color = Color.DarkGray;
-                        else
-                            LeftNote.Color = Color.White;
+                        LeftNote.Color = NewState.IsKeyDown((Keys)GameData.Instance.Options.Left) ? Color.DarkGray : Color.White;
 
-                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up))
-                            UpNote.Color = Color.DarkGray;
-                        else
-                            UpNote.Color = Color.White;
+                        UpNote.Color = NewState.IsKeyDown((Keys)GameData.Instance.Options.Up) ? Color.DarkGray : Color.White;
 
-                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right))
-                            RightNote.Color = Color.DarkGray;
-                        else
-                            RightNote.Color = Color.White;
+                        RightNote.Color = NewState.IsKeyDown((Keys)GameData.Instance.Options.Right) ? Color.DarkGray : Color.White;
 
-                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down))
-                            DownNote.Color = Color.DarkGray;
-                        else
-                            DownNote.Color = Color.White;
+                        DownNote.Color = NewState.IsKeyDown((Keys)GameData.Instance.Options.Down) ? Color.DarkGray : Color.White;
                     }
                     else
                     {
-                        if (LeftPress)
-                            LeftNote.Color = Color.DarkGray;
-                        else
-                            LeftNote.Color = Color.White;
+                        LeftNote.Color = LeftPress ? Color.DarkGray : Color.White;
 
-                        if (UpPress)
-                            UpNote.Color = Color.DarkGray;
-                        else
-                            UpNote.Color = Color.White;
+                        UpNote.Color = UpPress ? Color.DarkGray : Color.White;
 
-                        if (RightPress)
-                            RightNote.Color = Color.DarkGray;
-                        else
-                            RightNote.Color = Color.White;
+                        RightNote.Color = RightPress ? Color.DarkGray : Color.White;
 
-                        if (DownPress)
-                            DownNote.Color = Color.DarkGray;
-                        else
-                            DownNote.Color = Color.White;
+                        DownNote.Color = DownPress ? Color.DarkGray : Color.White;
                     }
                 }
 
