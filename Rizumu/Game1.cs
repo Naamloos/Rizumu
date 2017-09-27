@@ -76,8 +76,8 @@ namespace Rizumu
                 GameData.Instance.CurrentSkin = GameData.Instance.DefaultSkin;
             else
             {
-                if (Directory.Exists("skins/" + GameData.Instance.Options.SkinName))
-                    GameData.Instance.CurrentSkin = Skin.LoadFromPath(GraphicsDevice, Content, "skins/" + GameData.Instance.Options.SkinName);
+                if (Directory.Exists($"skins/{GameData.Instance.Options.SkinName}"))
+                    GameData.Instance.CurrentSkin = Skin.LoadFromPath(GraphicsDevice, Content, $"skins/{GameData.Instance.Options.SkinName}");
                 else
                     GameData.Instance.CurrentSkin = GameData.Instance.DefaultSkin;
             }

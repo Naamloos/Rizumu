@@ -544,7 +544,7 @@ namespace Rizumu.GameObjects.Screens
             UpNote = new Sprite(spriteBatch, (int)(Background.Width / 2 - notetex.Width * 0.5), (int)(Background.Height / 2 - notetex.Width * 1.5), notetex, Color.White);
             RightNote = new Sprite(spriteBatch, (int)(Background.Width / 2 + notetex.Width * 0.5), (int)(Background.Height / 2 - notetex.Width * 0.5), notetex, Color.White);
             DownNote = new Sprite(spriteBatch, (int)(Background.Width / 2 - notetex.Width * 0.5), (int)(Background.Height / 2 + notetex.Width * 0.5), notetex, Color.White);
-            TimerTex = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, "" + Timer, 0, 0, Color.White);
+            TimerTex = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, $"{Timer}", 0, 0, Color.White);
 
             ComboText = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontBig, "0", 15, 0, Color.White);
             ComboText.Y = Background.Height - ComboText.Height - 15;
@@ -670,9 +670,8 @@ namespace Rizumu.GameObjects.Screens
     {
         public static string ToReadableString(this TimeSpan span)
         {
-            string formatted = string.Format("{0}:{1}",
-                string.Format("{0:0}", span.Minutes),
-                string.Format("{0:0}", span.Seconds).PadLeft(2, '0'));
+            string formatted = $"{span.Minutes:0}:{$"{span.Seconds:0}".PadLeft(2, '0')}";
+
 
             if (formatted.EndsWith(", ")) formatted = formatted.Substring(0, formatted.Length - 2);
 
