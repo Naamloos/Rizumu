@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Rizumu.Enums;
 
 namespace Rizumu
 {
@@ -27,7 +28,7 @@ namespace Rizumu
 
         // GameScreens
         public List<IScreen> Screens;
-        public string CurrentScreen;
+        public Screen CurrentScreen;
 
         // Public vars
         public bool Exiting; //im lazy
@@ -41,7 +42,7 @@ namespace Rizumu
         public GameData(ContentManager content)
         {
             DefaultSkin = Skin.LoadDefault(content);
-            CurrentScreen = "main";
+            CurrentScreen = Screen.Main;
         }
 
         public void LoadScreens(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)

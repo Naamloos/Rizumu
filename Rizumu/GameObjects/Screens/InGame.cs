@@ -13,6 +13,7 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Input.Touch;
+using Rizumu.Enums;
 
 namespace Rizumu.GameObjects.Screens
 {
@@ -71,7 +72,7 @@ namespace Rizumu.GameObjects.Screens
         public bool oldright;
         public bool olddown;
 
-        public string Name { get => "ingame"; }
+        public Screen Name => Screen.Ingame;
 
         public bool up;
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
@@ -226,7 +227,7 @@ namespace Rizumu.GameObjects.Screens
                 bool RightHold = false;
                 bool DownHold = false;
 
-                if (skippable && Keyboard.GetState().IsKeyDown(Keys.Space))
+                if (skippable && NewState.IsKeyDown(Keys.Space))
                 {
                     GameData.MusicManager.Restart(TimeSpan.FromMilliseconds((GetFirstNote() - 500) * 2));
                     skippable = false;
@@ -263,25 +264,13 @@ namespace Rizumu.GameObjects.Screens
                                 DownPress = true;
                             }
 
-                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left))
-                                LeftHold = true;
-                            else
-                                LeftHold = false;
+                            LeftHold = NewState.IsKeyDown((Keys)GameData.Instance.Options.Left);
 
-                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up))
-                                UpHold = true;
-                            else
-                                UpHold = false;
+                            UpHold = NewState.IsKeyDown((Keys)GameData.Instance.Options.Up);
 
-                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right))
-                                RightHold = true;
-                            else
-                                RightHold = false;
+                            RightHold = NewState.IsKeyDown((Keys)GameData.Instance.Options.Right);
 
-                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down))
-                                DownHold = true;
-                            else
-                                DownHold = false;
+                            DownHold = NewState.IsKeyDown((Keys)GameData.Instance.Options.Down);
                         }
                         else
                         {
@@ -353,10 +342,7 @@ namespace Rizumu.GameObjects.Screens
 
                 if (NewState.IsKeyDown(Keys.Escape) && !OldState.IsKeyDown(Keys.Escape))
                 {
-                    if (Paused)
-                        Paused = false;
-                    else
-                        Paused = true;
+                    Paused = !Paused;
                 }
 
                 OldState = NewState;
@@ -365,47 +351,23 @@ namespace Rizumu.GameObjects.Screens
                 {
                     if (Game1.Windows)
                     {
-                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left))
-                            LeftNote.Color = Color.DarkGray;
-                        else
-                            LeftNote.Color = Color.White;
+                        LeftNote.Color = NewState.IsKeyDown((Keys)GameData.Instance.Options.Left) ? Color.DarkGray : Color.White;
 
-                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up))
-                            UpNote.Color = Color.DarkGray;
-                        else
-                            UpNote.Color = Color.White;
+                        UpNote.Color = NewState.IsKeyDown((Keys)GameData.Instance.Options.Up) ? Color.DarkGray : Color.White;
 
-                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right))
-                            RightNote.Color = Color.DarkGray;
-                        else
-                            RightNote.Color = Color.White;
+                        RightNote.Color = NewState.IsKeyDown((Keys)GameData.Instance.Options.Right) ? Color.DarkGray : Color.White;
 
-                        if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down))
-                            DownNote.Color = Color.DarkGray;
-                        else
-                            DownNote.Color = Color.White;
+                        DownNote.Color = NewState.IsKeyDown((Keys)GameData.Instance.Options.Down) ? Color.DarkGray : Color.White;
                     }
                     else
                     {
-                        if (LeftPress)
-                            LeftNote.Color = Color.DarkGray;
-                        else
-                            LeftNote.Color = Color.White;
+                        LeftNote.Color = LeftPress ? Color.DarkGray : Color.White;
 
-                        if (UpPress)
-                            UpNote.Color = Color.DarkGray;
-                        else
-                            UpNote.Color = Color.White;
+                        UpNote.Color = UpPress ? Color.DarkGray : Color.White;
 
-                        if (RightPress)
-                            RightNote.Color = Color.DarkGray;
-                        else
-                            RightNote.Color = Color.White;
+                        RightNote.Color = RightPress ? Color.DarkGray : Color.White;
 
-                        if (DownPress)
-                            DownNote.Color = Color.DarkGray;
-                        else
-                            DownNote.Color = Color.White;
+                        DownNote.Color = DownPress ? Color.DarkGray : Color.White;
                     }
                 }
 
@@ -544,7 +506,7 @@ namespace Rizumu.GameObjects.Screens
             UpNote = new Sprite(spriteBatch, (int)(Background.Width / 2 - notetex.Width * 0.5), (int)(Background.Height / 2 - notetex.Width * 1.5), notetex, Color.White);
             RightNote = new Sprite(spriteBatch, (int)(Background.Width / 2 + notetex.Width * 0.5), (int)(Background.Height / 2 - notetex.Width * 0.5), notetex, Color.White);
             DownNote = new Sprite(spriteBatch, (int)(Background.Width / 2 - notetex.Width * 0.5), (int)(Background.Height / 2 + notetex.Width * 0.5), notetex, Color.White);
-            TimerTex = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, "" + Timer, 0, 0, Color.White);
+            TimerTex = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, $"{Timer}", 0, 0, Color.White);
 
             ComboText = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontBig, "0", 15, 0, Color.White);
             ComboText.Y = Background.Height - ComboText.Height - 15;
@@ -567,7 +529,7 @@ namespace Rizumu.GameObjects.Screens
             ExitButton.OnClick += (sender, e) =>
             {
                 MapLoaded = false;
-                GameData.Instance.CurrentScreen = "select";
+                GameData.Instance.CurrentScreen = Screen.Select;
                 Paused = false;
                 Replaying = false;
                 GameData.MusicManager.UnPause();
@@ -610,9 +572,9 @@ namespace Rizumu.GameObjects.Screens
                 string path = Path.Combine("replays/", $"{Playing.Name}-{GameData.Instance.Options.Player}-{new Random().Next(int.MaxValue)}.rizumuplay");
                 File.Create(path).Close();
                 File.WriteAllText(path, JObject.FromObject(Recording).ToString());
-                GameData.Instance.CurrentScreen = "results";
+                GameData.Instance.CurrentScreen = Screen.Results;
                 Replaying = false;
-                ((Results)GameData.Instance.Screens.Find(x => x.Name == "results")).ResultsPreloaded = false;
+                ((Results)GameData.Instance.Screens.Find(x => x.Name == Screen.Results)).ResultsPreloaded = false;
                 Timer = 0;
                 LetsGoPlayed = false;
                 ready = false;
@@ -670,9 +632,8 @@ namespace Rizumu.GameObjects.Screens
     {
         public static string ToReadableString(this TimeSpan span)
         {
-            string formatted = string.Format("{0}:{1}",
-                string.Format("{0:0}", span.Minutes),
-                string.Format("{0:0}", span.Seconds).PadLeft(2, '0'));
+            string formatted = $"{span.Minutes:0}:{$"{span.Seconds:0}".PadLeft(2, '0')}";
+
 
             if (formatted.EndsWith(", ")) formatted = formatted.Substring(0, formatted.Length - 2);
 

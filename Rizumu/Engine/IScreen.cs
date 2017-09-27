@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Rizumu.Enums;
 
 namespace Rizumu.Engine
 {
     interface IScreen
     {
-        string Name { get; }
+        Screen Name { get; }
         void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g);
         void Update(GameTime gameTime, Rectangle cursor, bool clicked);
         void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics);

@@ -11,12 +11,13 @@ using Rizumu.Objects;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using Microsoft.Xna.Framework.Media;
+using Rizumu.Enums;
 
 namespace Rizumu.GameObjects.Screens
 {
     class Editor : IScreen
     {
-        public string Name { get => "editor"; }
+        public Screen Name => Screen.Editor;
 
         public bool Recording = false;
         public int Timer = 0;
