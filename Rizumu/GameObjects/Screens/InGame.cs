@@ -13,6 +13,7 @@ using System.IO;
 using Newtonsoft.Json.Linq;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Input.Touch;
+using Rizumu.Enums;
 
 namespace Rizumu.GameObjects.Screens
 {
@@ -71,7 +72,7 @@ namespace Rizumu.GameObjects.Screens
         public bool oldright;
         public bool olddown;
 
-        public string Name { get => "ingame"; }
+        public Screen Name => Screen.Ingame;
 
         public bool up;
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
@@ -567,7 +568,7 @@ namespace Rizumu.GameObjects.Screens
             ExitButton.OnClick += (sender, e) =>
             {
                 MapLoaded = false;
-                GameData.Instance.CurrentScreen = "select";
+                GameData.Instance.CurrentScreen = Screen.Select;
                 Paused = false;
                 Replaying = false;
                 GameData.MusicManager.UnPause();
@@ -610,9 +611,9 @@ namespace Rizumu.GameObjects.Screens
                 string path = Path.Combine("replays/", $"{Playing.Name}-{GameData.Instance.Options.Player}-{new Random().Next(int.MaxValue)}.rizumuplay");
                 File.Create(path).Close();
                 File.WriteAllText(path, JObject.FromObject(Recording).ToString());
-                GameData.Instance.CurrentScreen = "results";
+                GameData.Instance.CurrentScreen = Screen.Results;
                 Replaying = false;
-                ((Results)GameData.Instance.Screens.Find(x => x.Name == "results")).ResultsPreloaded = false;
+                ((Results)GameData.Instance.Screens.Find(x => x.Name == Screen.Results)).ResultsPreloaded = false;
                 Timer = 0;
                 LetsGoPlayed = false;
                 ready = false;

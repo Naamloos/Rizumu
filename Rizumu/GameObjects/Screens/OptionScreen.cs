@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Rizumu.Enums;
 using Rizumu.GuiObjects;
 
 namespace Rizumu.GameObjects.Screens
@@ -16,7 +17,7 @@ namespace Rizumu.GameObjects.Screens
         public Background Background;
         public Button BackButton;
 
-        public string Name { get => "options";}
+        public Screen Name => Screen.Options;
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
         {
@@ -33,7 +34,7 @@ namespace Rizumu.GameObjects.Screens
                 GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Back");
             BackButton.OnClick += (sender, e) =>
             {
-                GameData.Instance.CurrentScreen = "main";
+                GameData.Instance.CurrentScreen = Screen.Main;
             };
         }
 

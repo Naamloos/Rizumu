@@ -8,6 +8,7 @@ using Rizumu.GuiObjects;
 using Rizumu.Objects;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
+using Rizumu.Enums;
 
 namespace Rizumu.GameObjects.Screens
 {
@@ -22,7 +23,7 @@ namespace Rizumu.GameObjects.Screens
         public ModSelector MSelector;
         public int ScreenWidth;
 
-        public string Name { get => "select"; }
+        public Screen Name => Screen.Select;
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
         {
@@ -79,7 +80,7 @@ namespace Rizumu.GameObjects.Screens
                 GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Back");
             BackButton.OnClick += (sender, e) =>
             {
-                GameData.Instance.CurrentScreen = "main";
+                GameData.Instance.CurrentScreen = Screen.Main;
             };
 
             PlayButton = new Button(spriteBatch, 25,
@@ -87,7 +88,7 @@ namespace Rizumu.GameObjects.Screens
                 GameData.Instance.CurrentSkin.ButtonHover, "Play");
             PlayButton.OnClick += (sender, e) =>
             {
-                GameData.Instance.CurrentScreen = "ingame";
+                GameData.Instance.CurrentScreen = Screen.Ingame;
             };
             MapInfo = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "mapinfo", 25, 25, Color.White);
             ModCollection = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "", GameData.globalwidth, 5, Color.Azure);

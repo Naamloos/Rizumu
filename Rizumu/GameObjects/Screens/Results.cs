@@ -6,13 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Rizumu.Enums;
 using Rizumu.GuiObjects;
 
 namespace Rizumu.GameObjects.Screens
 {
     class Results : IScreen
     {
-        public string Name { get => "results"; }
+        public Screen Name => Screen.Results;
 
         Background bg;
         Text MapResults;
@@ -33,8 +34,8 @@ namespace Rizumu.GameObjects.Screens
                 GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Back");
             Back.OnClick += (sender, e) =>
             {
-                GameData.Instance.CurrentScreen = "select";
-                ((InGame)GameData.Instance.Screens.Find(x => x.Name == "ingame")).MapLoaded = false;
+                GameData.Instance.CurrentScreen = Screen.Select;
+                ((InGame)GameData.Instance.Screens.Find(x => x.Name == Screen.Ingame)).MapLoaded = false;
                 ResultsPreloaded = false;
                 GameData.MusicManager.Restart();
             };
@@ -45,7 +46,7 @@ namespace Rizumu.GameObjects.Screens
         {
             if (!ResultsPreloaded)
             {
-                var ig = (InGame)GameData.Instance.Screens.Find(x => x.Name == "ingame");
+                var ig = (InGame)GameData.Instance.Screens.Find(x => x.Name == Screen.Ingame);
                 MapResults.Content = "Results: (I'm done so no full result screen yet)\n";
                 MapResults.Content += $"Hits Left: {ig.NotesLeft.FindAll(x => x.Hit).Count} Miss Left: {ig.NotesLeft.FindAll(x => x.Miss).Count} \n";
                 MapResults.Content += $"Hits Up: {ig.NotesUp.FindAll(x => x.Hit).Count} Miss Up: {ig.NotesUp.FindAll(x => x.Miss).Count}\n";

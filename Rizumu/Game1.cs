@@ -9,6 +9,7 @@ using Rizumu.Objects;
 using System;
 using System.IO;
 using System.Linq;
+using Rizumu.Enums;
 
 namespace Rizumu
 {
@@ -115,11 +116,11 @@ namespace Rizumu
         {
 #if DEBUG
             // SAVE ME KEY
-            if (Keyboard.GetState().IsKeyDown(Microsoft.Xna.Framework.Input.Keys.F12))
+            if (Keyboard.GetState().IsKeyDown(Keys.F12))
                 Exit();
 #endif
 
-            if (GameData.Instance.CurrentScreen == "ingame" || GameData.Instance.CurrentScreen == "editor")
+            if (GameData.Instance.CurrentScreen == Screen.Ingame || GameData.Instance.CurrentScreen == Screen.Editor)
             {
                 //TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 500.0f);
             }
@@ -140,8 +141,8 @@ namespace Rizumu
             {
                 Click = false;
                 MouseState current = Mouse.GetState();
-                if (current.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed
-                    && OldMouseState.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released
+                if (current.LeftButton == ButtonState.Pressed
+                    && OldMouseState.LeftButton == ButtonState.Released
                     && IsActive)
                     Click = true;
                 OldMouseState = current;
@@ -156,12 +157,12 @@ namespace Rizumu
                 {
                     pos.X = (int)touchCollection[0].Position.X;
                     pos.Y = (int)touchCollection[0].Position.Y;
-                    Click = touchCollection[0].State == TouchLocationState.Pressed && oldtls == (TouchLocationState)0;
+                    Click = touchCollection[0].State == TouchLocationState.Pressed && oldtls == 0;
                     oldtls = touchCollection[0].State;
                 }
                 else
                 {
-                    oldtls = (TouchLocationState)0;
+                    oldtls = 0;
                 }
 
                 CursorLocation = new Rectangle(pos, new Point(1, 1));
