@@ -62,7 +62,6 @@ namespace Rizumu.GameObjects.Screens
         public int HighestCombo = 0;
         bool skippable = false;
         int firstnote = 0;
-        SpriteBatch sb;
 
         public Text ModCollection;
         public int ScreenWidth;
@@ -77,7 +76,6 @@ namespace Rizumu.GameObjects.Screens
         public bool up;
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
         {
-            sb = spriteBatch;
             Rotation = Timer * 0.005f;
             if (GameData.Instance.Mods.RotationMode)
                 Modrotation = Timer * 0.005f;
@@ -243,34 +241,34 @@ namespace Rizumu.GameObjects.Screens
                     {
                         if (Game1.Windows)
                         {
-                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Left))
+                            if (NewState.IsKeyDown(GameData.Instance.Options.Left) && !OldState.IsKeyDown(GameData.Instance.Options.Left))
                             {
                                 Recording.PressesLeft.Add(Timer);
                                 LeftPress = true;
                             }
-                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Up))
+                            if (NewState.IsKeyDown(GameData.Instance.Options.Up) && !OldState.IsKeyDown(GameData.Instance.Options.Up))
                             {
                                 Recording.PressesUp.Add(Timer);
                                 UpPress = true;
                             }
-                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Right))
+                            if (NewState.IsKeyDown(GameData.Instance.Options.Right) && !OldState.IsKeyDown(GameData.Instance.Options.Right))
                             {
                                 Recording.PressesRight.Add(Timer);
                                 RightPress = true;
                             }
-                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Down))
+                            if (NewState.IsKeyDown(GameData.Instance.Options.Down) && !OldState.IsKeyDown(GameData.Instance.Options.Down))
                             {
                                 Recording.PressesDown.Add(Timer);
                                 DownPress = true;
                             }
 
-                            LeftHold = NewState.IsKeyDown((Keys)GameData.Instance.Options.Left);
+                            LeftHold = NewState.IsKeyDown(GameData.Instance.Options.Left);
 
-                            UpHold = NewState.IsKeyDown((Keys)GameData.Instance.Options.Up);
+                            UpHold = NewState.IsKeyDown(GameData.Instance.Options.Up);
 
-                            RightHold = NewState.IsKeyDown((Keys)GameData.Instance.Options.Right);
+                            RightHold = NewState.IsKeyDown(GameData.Instance.Options.Right);
 
-                            DownHold = NewState.IsKeyDown((Keys)GameData.Instance.Options.Down);
+                            DownHold = NewState.IsKeyDown(GameData.Instance.Options.Down);
                         }
                         else
                         {
@@ -351,13 +349,13 @@ namespace Rizumu.GameObjects.Screens
                 {
                     if (Game1.Windows)
                     {
-                        LeftNote.Color = NewState.IsKeyDown((Keys)GameData.Instance.Options.Left) ? Color.DarkGray : Color.White;
+                        LeftNote.Color = NewState.IsKeyDown(GameData.Instance.Options.Left) ? Color.DarkGray : Color.White;
 
-                        UpNote.Color = NewState.IsKeyDown((Keys)GameData.Instance.Options.Up) ? Color.DarkGray : Color.White;
+                        UpNote.Color = NewState.IsKeyDown(GameData.Instance.Options.Up) ? Color.DarkGray : Color.White;
 
-                        RightNote.Color = NewState.IsKeyDown((Keys)GameData.Instance.Options.Right) ? Color.DarkGray : Color.White;
+                        RightNote.Color = NewState.IsKeyDown(GameData.Instance.Options.Right) ? Color.DarkGray : Color.White;
 
-                        DownNote.Color = NewState.IsKeyDown((Keys)GameData.Instance.Options.Down) ? Color.DarkGray : Color.White;
+                        DownNote.Color = NewState.IsKeyDown(GameData.Instance.Options.Down) ? Color.DarkGray : Color.White;
                     }
                     else
                     {
@@ -434,25 +432,15 @@ namespace Rizumu.GameObjects.Screens
                 RightNote.Rotation = Rotation;
                 DownNote.Rotation = Rotation;
 
-                if (updist != 0)
-                    VisionUp.Alpha = (updist / 2);
-                else
-                    VisionUp.Alpha = VisionUp.Alpha - 0.1f;
 
-                if (downdist != 0)
-                    VisionDown.Alpha = (downdist / 2);
-                else
-                    VisionDown.Alpha = VisionDown.Alpha - 0.1f;
+                VisionUp.Alpha = updist != 0 ? updist / 2 : VisionUp.Alpha - 0.1f;
 
-                if (leftdist != 0)
-                    VisionLeft.Alpha = (leftdist / 2);
-                else
-                    VisionLeft.Alpha = VisionLeft.Alpha - 0.1f;
+                VisionDown.Alpha = downdist != 0 ? downdist / 2 : VisionDown.Alpha - 0.1f;
 
-                if (rightdist != 0)
-                    VisionRight.Alpha = (rightdist / 2);
-                else
-                    VisionRight.Alpha = VisionRight.Alpha - 0.1f;
+                VisionLeft.Alpha = leftdist != 0 ? leftdist / 2 : VisionLeft.Alpha - 0.1f;
+
+                VisionRight.Alpha = rightdist != 0 ? rightdist / 2 : VisionRight.Alpha - 0.1f;
+
 
                 VisionUp.DrawScaled(Background.Width, Background.Height);
                 VisionDown.DrawScaled(Background.Width, Background.Height);
@@ -476,7 +464,7 @@ namespace Rizumu.GameObjects.Screens
                 var totaltime = TimeSpan.FromSeconds((lastnote + 1000) / 500);
                 var currenttime = TimeSpan.FromSeconds(Timer / 500);
 
-                TimerTex.Content = $"{currenttime.ToReadableString()} / {totaltime.ToReadableString()}";
+                TimerTex.Content = $"{ToReadableString(currenttime)} / {ToReadableString(totaltime)}";
                 TimerTex.Draw();
                 ComboText.Content = $"{CurrentCombo}";
                 ComboText.Draw();
@@ -581,56 +569,28 @@ namespace Rizumu.GameObjects.Screens
             }
         }
 
-        public int GetLastNote()
+        private int GetLastNote()
         {
-            int left = 0;
-            int up = 0;
-            int right = 0;
-            int down = 0;
-            foreach (Note n in NotesLeft)
+            return new[] 
             {
-                if (n.Time > left)
-                    left = n.Time;
-            }
-            foreach (Note n in NotesUp)
-            {
-                if (n.Time > up)
-                    up = n.Time;
-            }
-            foreach (Note n in NotesRight)
-            {
-                if (n.Time > right)
-                    right = n.Time;
-            }
-            foreach (Note n in NotesDown)
-            {
-                if (n.Time > down)
-                    down = n.Time;
-            }
-
-            return Math.Max(left, Math.Max(up, Math.Max(right, down)));
+                NotesLeft.Select(n => n.Time).Max(),
+                NotesUp.Select(n => n.Time).Max(),
+                NotesRight.Select(n => n.Time).Max(),
+                NotesDown.Select(n => n.Time).Max()
+            }.Max();
         }
 
-        public int GetFirstNote()
+        private int GetFirstNote()
         {
-            int left = 0;
-            int up = 0;
-            int right = 0;
-            int down = 0;
-            left = NotesLeft[0].Time;
-            up = NotesUp[0].Time;
-            right = NotesRight[0].Time;
-            down = NotesDown[0].Time;
-
-            return Math.Min(left, Math.Min(up, Math.Min(right, down)));
+            return new[]
+            {
+                NotesLeft[0].Time,
+                NotesUp[0].Time,
+                NotesRight[0].Time,
+                NotesDown[0].Time
+            }.Max();
         }
-
-
-    }
-
-    public static class tshelper
-    {
-        public static string ToReadableString(this TimeSpan span)
+        private static string ToReadableString(TimeSpan span)
         {
             string formatted = $"{span.Minutes:0}:{$"{span.Seconds:0}".PadLeft(2, '0')}";
 
