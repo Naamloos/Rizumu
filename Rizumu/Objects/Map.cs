@@ -77,8 +77,8 @@ namespace Rizumu.Objects
 #if !WINDOWS
             Game1.RegisterAndroidUri.Invoke(null, new EventArgs.RegisterAndroidUriArgs()
             {
-                path = System.IO.Path.Combine(Path, FileName),
-                song = song,
+                Path = System.IO.Path.Combine(Path, FileName),
+                Song = song,
                 SongType = songType
             });
 #endif

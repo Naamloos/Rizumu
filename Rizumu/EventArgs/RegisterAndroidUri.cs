@@ -9,8 +9,8 @@ namespace Rizumu.EventArgs
 {
     public class RegisterAndroidUriArgs
     {
-        public string path;
+        public string Path;
         public Type SongType;
-        public Song song;
+        public Song Song;
     }
 }

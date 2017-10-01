@@ -38,35 +38,35 @@ namespace Rizumu.GameObjects
             {
                 BaseX = -1 * tex.Width;
                 BaseY = (screenHeight / 2) - (tex.Height / 2);
-                NoteSprite = new Sprite(spriteBatch, BaseX, BaseY, GameData.Instance.CurrentSkin.SlideLeft, Color.White);
+                NoteSprite = new Sprite(BaseX, BaseY, GameData.Instance.CurrentSkin.SlideLeft, Color.White);
                 traveldistance = screenWidth / 2;
             }
             if (mode == NoteMode.up)
             {
                 BaseX = (screenWidth / 2) - (tex.Width / 2);
                 BaseY = -1 * tex.Height;
-                NoteSprite = new Sprite(spriteBatch, BaseX, BaseY, GameData.Instance.CurrentSkin.SlideUp, Color.White);
+                NoteSprite = new Sprite(BaseX, BaseY, GameData.Instance.CurrentSkin.SlideUp, Color.White);
                 traveldistance = screenHeight / 2;
             }
             if (mode == NoteMode.right)
             {
                 BaseX = screenWidth + tex.Width;
                 BaseY = (screenHeight / 2) - (tex.Height / 2);
-                NoteSprite = new Sprite(spriteBatch, BaseX, BaseY, GameData.Instance.CurrentSkin.SlideRight, Color.White);
+                NoteSprite = new Sprite(BaseX, BaseY, GameData.Instance.CurrentSkin.SlideRight, Color.White);
                 traveldistance = screenWidth / 2 + NoteSprite.Texture.Width;
             }
             if (mode == NoteMode.down)
             {
                 BaseX = (screenWidth / 2) - (tex.Width / 2);
                 BaseY = screenHeight + tex.Height;
-                NoteSprite = new Sprite(spriteBatch, BaseX, BaseY, GameData.Instance.CurrentSkin.SlideDown, Color.White);
+                NoteSprite = new Sprite(BaseX, BaseY, GameData.Instance.CurrentSkin.SlideDown, Color.White);
                 traveldistance = screenHeight / 2 + NoteSprite.Texture.Height;
             }
             Alpha = -50;
             NoteSprite.Scale = GameData.Instance.Mods.SizeMultiplier;
         }
 
-        public void Draw(ref bool KeyHold, bool Paused, bool Ready, float rotation, ref int CurrentCombo, ref float visiondist, int Timer, bool Auto)
+        public void Draw(SpriteBatch spriteBatch, ref bool KeyHold, bool Paused, bool Ready, float rotation, ref int CurrentCombo, ref float visiondist, int Timer, bool Auto)
         {
             if (!Paused && Ready)
             {
@@ -98,7 +98,7 @@ namespace Rizumu.GameObjects
             {
                 float vis = traveldistance - Position;
                 visiondist = vis / 1000;
-                NoteSprite.Draw(true);
+                NoteSprite.Draw(spriteBatch, true);
             }
             else if (!Miss && !Hit)
             {

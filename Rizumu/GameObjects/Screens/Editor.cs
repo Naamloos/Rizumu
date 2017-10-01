@@ -40,13 +40,13 @@ namespace Rizumu.GameObjects.Screens
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
         {
-            Instructions.Draw();
+            Instructions.Draw(spriteBatch);
         }
 
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
         {
             OldState = Keyboard.GetState();
-            Instructions = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "Press R to record and press keys to the music.\rBetter editor to be made soon-ish\nS to save.",
+            Instructions = new Text(GameData.Instance.CurrentSkin.FontSmall, "Press R to record and press keys to the music.\rBetter editor to be made soon-ish\nS to save.",
                 0, 15, Color.Chocolate);
             Instructions.X = (GameData.globalwidth / 2) - (Instructions.Width / 2);
         }

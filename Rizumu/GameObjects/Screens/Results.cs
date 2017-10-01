@@ -22,15 +22,15 @@ namespace Rizumu.GameObjects.Screens
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
         {
-            bg.Draw();
-            Back.Draw(cursor, clicked);
-            MapResults.Draw();
+            bg.Draw(spriteBatch);
+            Back.Draw(spriteBatch, cursor, clicked);
+            MapResults.Draw(spriteBatch);
         }
 
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
         {
-            bg = new Background(spriteBatch, GameData.Instance.CurrentSkin.MenuBackground, Color.White, GameData.globalwidth, GameData.globalheight);
-            Back = new Button(spriteBatch, 25, GameData.globalheight - GameData.Instance.CurrentSkin.Button.Height - 25,
+            bg = new Background(GameData.Instance.CurrentSkin.MenuBackground, GameData.globalwidth, GameData.globalheight);
+            Back = new Button(25, GameData.globalheight - GameData.Instance.CurrentSkin.Button.Height - 25,
                 GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Back");
             Back.OnClick += (sender, e) =>
             {
@@ -39,7 +39,7 @@ namespace Rizumu.GameObjects.Screens
                 ResultsPreloaded = false;
                 GameData.MusicManager.Restart();
             };
-            MapResults = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, "if you read this u suk", 5, 5, Color.Thistle);
+            MapResults = new Text(GameData.Instance.CurrentSkin.Font, "if you read this u suk", 5, 5, Color.Thistle);
         }
 
         public void Update(GameTime gameTime, Rectangle cursor, bool clicked)

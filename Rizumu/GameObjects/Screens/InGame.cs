@@ -62,7 +62,6 @@ namespace Rizumu.GameObjects.Screens
         public int HighestCombo = 0;
         bool skippable = false;
         int firstnote = 0;
-        SpriteBatch sb;
 
         public Text ModCollection;
         public int ScreenWidth;
@@ -77,7 +76,6 @@ namespace Rizumu.GameObjects.Screens
         public bool up;
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
         {
-            sb = spriteBatch;
             Rotation = Timer * 0.005f;
             if (GameData.Instance.Mods.RotationMode)
                 Modrotation = Timer * 0.005f;
@@ -104,7 +102,7 @@ namespace Rizumu.GameObjects.Screens
                 #region Standard notes
                 foreach (int n in Playing.NotesLeft)
                 {
-                    NotesLeft.Add(new Note(spriteBatch, NoteMode.left, Background.Width, Background.Height)
+                    NotesLeft.Add(new Note(NoteMode.left, Background.Width, Background.Height)
                     {
                         Hit = false,
                         Position = 0,
@@ -115,7 +113,7 @@ namespace Rizumu.GameObjects.Screens
 
                 foreach (int n in Playing.NotesUp)
                 {
-                    NotesUp.Add(new Note(spriteBatch, NoteMode.up, Background.Width, Background.Height)
+                    NotesUp.Add(new Note(NoteMode.up, Background.Width, Background.Height)
                     {
                         Hit = false,
                         Position = 0,
@@ -126,7 +124,7 @@ namespace Rizumu.GameObjects.Screens
 
                 foreach (int n in Playing.NotesRight)
                 {
-                    NotesRight.Add(new Note(spriteBatch, NoteMode.right, Background.Width, Background.Height)
+                    NotesRight.Add(new Note(NoteMode.right, Background.Width, Background.Height)
                     {
                         Hit = false,
                         Position = 0,
@@ -137,7 +135,7 @@ namespace Rizumu.GameObjects.Screens
 
                 foreach (int n in Playing.NotesDown)
                 {
-                    NotesDown.Add(new Note(spriteBatch, NoteMode.down, Background.Width, Background.Height)
+                    NotesDown.Add(new Note(NoteMode.down, Background.Width, Background.Height)
                     {
                         Hit = false,
                         Position = 0,
@@ -194,10 +192,10 @@ namespace Rizumu.GameObjects.Screens
                 #endregion
                 Background.Texture = Playing.Background;
 
-                VisionUp = new Sprite(spriteBatch, 0, 0, GameData.Instance.CurrentSkin.VisionUp, Color.White);
-                VisionDown = new Sprite(spriteBatch, 0, 0, GameData.Instance.CurrentSkin.VisionDown, Color.White);
-                VisionLeft = new Sprite(spriteBatch, 0, 0, GameData.Instance.CurrentSkin.VisionLeft, Color.White);
-                VisionRight = new Sprite(spriteBatch, 0, 0, GameData.Instance.CurrentSkin.VisionRight, Color.White);
+                VisionUp = new Sprite(0, 0, GameData.Instance.CurrentSkin.VisionUp, Color.White);
+                VisionDown = new Sprite(0, 0, GameData.Instance.CurrentSkin.VisionDown, Color.White);
+                VisionLeft = new Sprite(0, 0, GameData.Instance.CurrentSkin.VisionLeft, Color.White);
+                VisionRight = new Sprite(0, 0, GameData.Instance.CurrentSkin.VisionRight, Color.White);
                 VisionUp.Alpha = 0f;
                 VisionDown.Alpha = 0f;
                 VisionLeft.Alpha = 0f;
@@ -243,34 +241,34 @@ namespace Rizumu.GameObjects.Screens
                     {
                         if (Game1.Windows)
                         {
-                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Left) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Left))
+                            if (NewState.IsKeyDown(GameData.Instance.Options.Left) && !OldState.IsKeyDown(GameData.Instance.Options.Left))
                             {
                                 Recording.PressesLeft.Add(Timer);
                                 LeftPress = true;
                             }
-                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Up) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Up))
+                            if (NewState.IsKeyDown(GameData.Instance.Options.Up) && !OldState.IsKeyDown(GameData.Instance.Options.Up))
                             {
                                 Recording.PressesUp.Add(Timer);
                                 UpPress = true;
                             }
-                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Right) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Right))
+                            if (NewState.IsKeyDown(GameData.Instance.Options.Right) && !OldState.IsKeyDown(GameData.Instance.Options.Right))
                             {
                                 Recording.PressesRight.Add(Timer);
                                 RightPress = true;
                             }
-                            if (NewState.IsKeyDown((Keys)GameData.Instance.Options.Down) && !OldState.IsKeyDown((Keys)GameData.Instance.Options.Down))
+                            if (NewState.IsKeyDown(GameData.Instance.Options.Down) && !OldState.IsKeyDown(GameData.Instance.Options.Down))
                             {
                                 Recording.PressesDown.Add(Timer);
                                 DownPress = true;
                             }
 
-                            LeftHold = NewState.IsKeyDown((Keys)GameData.Instance.Options.Left);
+                            LeftHold = NewState.IsKeyDown(GameData.Instance.Options.Left);
 
-                            UpHold = NewState.IsKeyDown((Keys)GameData.Instance.Options.Up);
+                            UpHold = NewState.IsKeyDown(GameData.Instance.Options.Up);
 
-                            RightHold = NewState.IsKeyDown((Keys)GameData.Instance.Options.Right);
+                            RightHold = NewState.IsKeyDown(GameData.Instance.Options.Right);
 
-                            DownHold = NewState.IsKeyDown((Keys)GameData.Instance.Options.Down);
+                            DownHold = NewState.IsKeyDown(GameData.Instance.Options.Down);
                         }
                         else
                         {
@@ -351,13 +349,13 @@ namespace Rizumu.GameObjects.Screens
                 {
                     if (Game1.Windows)
                     {
-                        LeftNote.Color = NewState.IsKeyDown((Keys)GameData.Instance.Options.Left) ? Color.DarkGray : Color.White;
+                        LeftNote.Color = NewState.IsKeyDown(GameData.Instance.Options.Left) ? Color.DarkGray : Color.White;
 
-                        UpNote.Color = NewState.IsKeyDown((Keys)GameData.Instance.Options.Up) ? Color.DarkGray : Color.White;
+                        UpNote.Color = NewState.IsKeyDown(GameData.Instance.Options.Up) ? Color.DarkGray : Color.White;
 
-                        RightNote.Color = NewState.IsKeyDown((Keys)GameData.Instance.Options.Right) ? Color.DarkGray : Color.White;
+                        RightNote.Color = NewState.IsKeyDown(GameData.Instance.Options.Right) ? Color.DarkGray : Color.White;
 
-                        DownNote.Color = NewState.IsKeyDown((Keys)GameData.Instance.Options.Down) ? Color.DarkGray : Color.White;
+                        DownNote.Color = NewState.IsKeyDown(GameData.Instance.Options.Down) ? Color.DarkGray : Color.White;
                     }
                     else
                     {
@@ -381,7 +379,7 @@ namespace Rizumu.GameObjects.Screens
                     MapLoaded = false;
                 }
 
-                Background.Draw();
+                Background.Draw(spriteBatch);
 
                 #region Gameplay (yay!)
                 float leftdist = 0;
@@ -391,133 +389,123 @@ namespace Rizumu.GameObjects.Screens
                 foreach (Note n in NotesLeft)
                 {
                     if (n.Time - ((Background.Width / 2) + n.NoteSprite.Texture.Width) < Timer)
-                        n.Draw(ref LeftPress, Paused, ready, Rotation, ref CurrentCombo, ref leftdist, Timer, GameData.Instance.Mods.Automode);
+                        n.Draw(spriteBatch, ref LeftPress, Paused, ready, Rotation, ref CurrentCombo, ref leftdist, Timer, GameData.Instance.Mods.Automode);
                 }
                 foreach (Note n in NotesUp)
                 {
                     if (n.Time - ((Background.Height / 2) + n.NoteSprite.Texture.Height) < Timer)
-                        n.Draw(ref UpPress, Paused, ready, Rotation, ref CurrentCombo, ref updist, Timer, GameData.Instance.Mods.Automode);
+                        n.Draw(spriteBatch, ref UpPress, Paused, ready, Rotation, ref CurrentCombo, ref updist, Timer, GameData.Instance.Mods.Automode);
                 }
                 foreach (Note n in NotesRight)
                 {
                     if (n.Time - ((Background.Width / 2) + (n.NoteSprite.Texture.Width * 2)) < Timer)
-                        n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer, GameData.Instance.Mods.Automode);
+                        n.Draw(spriteBatch, ref RightPress, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer, GameData.Instance.Mods.Automode);
                 }
                 foreach (Note n in NotesDown)
                 {
                     if (n.Time - ((Background.Height / 2) + (n.NoteSprite.Texture.Height * 2)) < Timer)
-                        n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer, GameData.Instance.Mods.Automode);
+                        n.Draw(spriteBatch, ref DownPress, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer, GameData.Instance.Mods.Automode);
                 }
 
                 foreach (SNote n in SNotesLeft)
                 {
                     if (n.Time - ((Background.Width / 2) + n.NoteSprite.Texture.Width) < Timer)
-                        n.Draw(ref LeftHold, Paused, ready, Rotation, ref CurrentCombo, ref leftdist, Timer, GameData.Instance.Mods.Automode);
+                        n.Draw(spriteBatch, ref LeftHold, Paused, ready, Rotation, ref CurrentCombo, ref leftdist, Timer, GameData.Instance.Mods.Automode);
                 }
                 foreach (SNote n in SNotesUp)
                 {
                     if (n.Time - ((Background.Height / 2) + n.NoteSprite.Texture.Height) < Timer)
-                        n.Draw(ref UpHold, Paused, ready, Rotation, ref CurrentCombo, ref updist, Timer, GameData.Instance.Mods.Automode);
+                        n.Draw(spriteBatch, ref UpHold, Paused, ready, Rotation, ref CurrentCombo, ref updist, Timer, GameData.Instance.Mods.Automode);
                 }
                 foreach (SNote n in SNotesRight)
                 {
                     if (n.Time - ((Background.Width / 2) + (n.NoteSprite.Texture.Width * 2)) < Timer)
-                        n.Draw(ref RightHold, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer, GameData.Instance.Mods.Automode);
+                        n.Draw(spriteBatch, ref RightHold, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer, GameData.Instance.Mods.Automode);
                 }
                 foreach (SNote n in SNotesDown)
                 {
                     if (n.Time - ((Background.Height / 2) + (n.NoteSprite.Texture.Height * 2)) < Timer)
-                        n.Draw(ref DownHold, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer, GameData.Instance.Mods.Automode);
+                        n.Draw(spriteBatch, ref DownHold, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer, GameData.Instance.Mods.Automode);
                 }
                 LeftNote.Rotation = Rotation;
                 UpNote.Rotation = Rotation;
                 RightNote.Rotation = Rotation;
                 DownNote.Rotation = Rotation;
 
-                if (updist != 0)
-                    VisionUp.Alpha = (updist / 2);
-                else
-                    VisionUp.Alpha = VisionUp.Alpha - 0.1f;
 
-                if (downdist != 0)
-                    VisionDown.Alpha = (downdist / 2);
-                else
-                    VisionDown.Alpha = VisionDown.Alpha - 0.1f;
+                VisionUp.Alpha = updist != 0 ? updist / 2 : VisionUp.Alpha - 0.1f;
 
-                if (leftdist != 0)
-                    VisionLeft.Alpha = (leftdist / 2);
-                else
-                    VisionLeft.Alpha = VisionLeft.Alpha - 0.1f;
+                VisionDown.Alpha = downdist != 0 ? downdist / 2 : VisionDown.Alpha - 0.1f;
 
-                if (rightdist != 0)
-                    VisionRight.Alpha = (rightdist / 2);
-                else
-                    VisionRight.Alpha = VisionRight.Alpha - 0.1f;
+                VisionLeft.Alpha = leftdist != 0 ? leftdist / 2 : VisionLeft.Alpha - 0.1f;
 
-                VisionUp.DrawScaled(Background.Width, Background.Height);
-                VisionDown.DrawScaled(Background.Width, Background.Height);
-                VisionLeft.DrawScaled(Background.Width, Background.Height);
-                VisionRight.DrawScaled(Background.Width, Background.Height);
+                VisionRight.Alpha = rightdist != 0 ? rightdist / 2 : VisionRight.Alpha - 0.1f;
+
+
+                VisionUp.DrawScaled(spriteBatch, Background.Width, Background.Height);
+                VisionDown.DrawScaled(spriteBatch, Background.Width, Background.Height);
+                VisionLeft.DrawScaled(spriteBatch, Background.Width, Background.Height);
+                VisionRight.DrawScaled(spriteBatch, Background.Width, Background.Height);
                 #endregion
 
-                LeftNote.Draw(true);
-                UpNote.Draw(true);
-                RightNote.Draw(true);
-                DownNote.Draw(true);
+                LeftNote.Draw(spriteBatch, true);
+                UpNote.Draw(spriteBatch, true);
+                RightNote.Draw(spriteBatch, true);
+                DownNote.Draw(spriteBatch, true);
 
                 if (Paused)
                 {
                     ready = false;
-                    PauseOverlay.Draw();
-                    ResumeButton.Draw(cursor, clicked);
-                    ExitButton.Draw(cursor, clicked);
+                    PauseOverlay.Draw(spriteBatch);
+                    ResumeButton.Draw(spriteBatch, cursor, clicked);
+                    ExitButton.Draw(spriteBatch, cursor, clicked);
                 }
 
                 var totaltime = TimeSpan.FromSeconds((lastnote + 1000) / 500);
                 var currenttime = TimeSpan.FromSeconds(Timer / 500);
 
-                TimerTex.Content = $"{currenttime.ToReadableString()} / {totaltime.ToReadableString()}";
-                TimerTex.Draw();
+                TimerTex.Content = $"{ToReadableString(currenttime)} / {ToReadableString(totaltime)}";
+                TimerTex.Draw(spriteBatch);
                 ComboText.Content = $"{CurrentCombo}";
-                ComboText.Draw();
+                ComboText.Draw(spriteBatch);
                 ComboTextSmall.Content = $"{HighestCombo}";
-                ComboTextSmall.Draw();
+                ComboTextSmall.Draw(spriteBatch);
 
                 if (NewState.IsKeyDown(Keys.OemTilde))
                     MapLoaded = false;
             }
 
             if (!ready && !Paused)
-                new Background(spriteBatch, GameData.Instance.CurrentSkin.GetReady, Color.White, Background.Width, Background.Height).Draw();
+                new Background(GameData.Instance.CurrentSkin.GetReady, Background.Width, Background.Height).Draw(spriteBatch);
             if (up)
                 ready = true;
 
             ModCollection.Content = GameData.Instance.Mods.GetCollectionString();
             ModCollection.X = (ScreenWidth - ModCollection.Width) - 5;
-            ModCollection.Draw();
+            ModCollection.Draw(spriteBatch);
         }
 
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
         {
-            Background = new Background(spriteBatch, GameData.Instance.CurrentSkin.MenuBackground, Color.White, GameData.globalwidth, GameData.globalheight);
-            PauseOverlay = new Background(spriteBatch, GameData.Instance.CurrentSkin.PauseOverlay, Color.White, GameData.globalwidth, GameData.globalheight);
+            Background = new Background(GameData.Instance.CurrentSkin.MenuBackground, GameData.globalwidth, GameData.globalheight);
+            PauseOverlay = new Background(GameData.Instance.CurrentSkin.PauseOverlay, GameData.globalwidth, GameData.globalheight);
             var notetex = GameData.Instance.CurrentSkin.Note;
-            LeftNote = new Sprite(spriteBatch, (int)(Background.Width / 2 - notetex.Width * 1.5), (int)(Background.Height / 2 - notetex.Width * 0.5), notetex, Color.White);
-            UpNote = new Sprite(spriteBatch, (int)(Background.Width / 2 - notetex.Width * 0.5), (int)(Background.Height / 2 - notetex.Width * 1.5), notetex, Color.White);
-            RightNote = new Sprite(spriteBatch, (int)(Background.Width / 2 + notetex.Width * 0.5), (int)(Background.Height / 2 - notetex.Width * 0.5), notetex, Color.White);
-            DownNote = new Sprite(spriteBatch, (int)(Background.Width / 2 - notetex.Width * 0.5), (int)(Background.Height / 2 + notetex.Width * 0.5), notetex, Color.White);
-            TimerTex = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, $"{Timer}", 0, 0, Color.White);
+            LeftNote = new Sprite((int)(Background.Width / 2 - notetex.Width * 1.5), (int)(Background.Height / 2 - notetex.Width * 0.5), notetex, Color.White);
+            UpNote = new Sprite((int)(Background.Width / 2 - notetex.Width * 0.5), (int)(Background.Height / 2 - notetex.Width * 1.5), notetex, Color.White);
+            RightNote = new Sprite((int)(Background.Width / 2 + notetex.Width * 0.5), (int)(Background.Height / 2 - notetex.Width * 0.5), notetex, Color.White);
+            DownNote = new Sprite((int)(Background.Width / 2 - notetex.Width * 0.5), (int)(Background.Height / 2 + notetex.Width * 0.5), notetex, Color.White);
+            TimerTex = new Text(GameData.Instance.CurrentSkin.Font, $"{Timer}", 0, 0, Color.White);
 
-            ComboText = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontBig, "0", 15, 0, Color.White);
+            ComboText = new Text(GameData.Instance.CurrentSkin.FontBig, "0", 15, 0, Color.White);
             ComboText.Y = Background.Height - ComboText.Height - 15;
-            ComboTextSmall = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "0", 15, 0, Color.White);
+            ComboTextSmall = new Text(GameData.Instance.CurrentSkin.FontSmall, "0", 15, 0, Color.White);
             ComboTextSmall.Y = ((Background.Height - ComboText.Height - 15) - ComboTextSmall.Height) - 3;
             // Making sure OldState is not null
             OldState = Keyboard.GetState();
-            ResumeButton = new Button(spriteBatch, (GameData.globalwidth / 2) - (GameData.Instance.CurrentSkin.Button.Width / 2),
+            ResumeButton = new Button((GameData.globalwidth / 2) - (GameData.Instance.CurrentSkin.Button.Width / 2),
                 GameData.globalheight / 2 - (GameData.Instance.CurrentSkin.Button.Height) - 25, GameData.Instance.CurrentSkin.Button,
                 GameData.Instance.CurrentSkin.ButtonHover, "Resume");
-            ExitButton = new Button(spriteBatch, (GameData.globalwidth / 2) - (GameData.Instance.CurrentSkin.Button.Width / 2),
+            ExitButton = new Button((GameData.globalwidth / 2) - (GameData.Instance.CurrentSkin.Button.Width / 2),
                 GameData.globalheight / 2 + 25, GameData.Instance.CurrentSkin.Button,
                 GameData.Instance.CurrentSkin.ButtonHover, "Exit");
 
@@ -536,7 +524,7 @@ namespace Rizumu.GameObjects.Screens
                 GameData.MusicManager.Restart();
             };
 
-            ModCollection = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, "", GameData.globalwidth, 5, Color.Azure);
+            ModCollection = new Text(GameData.Instance.CurrentSkin.FontSmall, "", GameData.globalwidth, 5, Color.Azure);
             ScreenWidth = GameData.globalwidth;
         }
 
@@ -581,56 +569,28 @@ namespace Rizumu.GameObjects.Screens
             }
         }
 
-        public int GetLastNote()
+        private int GetLastNote()
         {
-            int left = 0;
-            int up = 0;
-            int right = 0;
-            int down = 0;
-            foreach (Note n in NotesLeft)
+            return new[] 
             {
-                if (n.Time > left)
-                    left = n.Time;
-            }
-            foreach (Note n in NotesUp)
-            {
-                if (n.Time > up)
-                    up = n.Time;
-            }
-            foreach (Note n in NotesRight)
-            {
-                if (n.Time > right)
-                    right = n.Time;
-            }
-            foreach (Note n in NotesDown)
-            {
-                if (n.Time > down)
-                    down = n.Time;
-            }
-
-            return Math.Max(left, Math.Max(up, Math.Max(right, down)));
+                NotesLeft.Select(n => n.Time).Max(),
+                NotesUp.Select(n => n.Time).Max(),
+                NotesRight.Select(n => n.Time).Max(),
+                NotesDown.Select(n => n.Time).Max()
+            }.Max();
         }
 
-        public int GetFirstNote()
+        private int GetFirstNote()
         {
-            int left = 0;
-            int up = 0;
-            int right = 0;
-            int down = 0;
-            left = NotesLeft[0].Time;
-            up = NotesUp[0].Time;
-            right = NotesRight[0].Time;
-            down = NotesDown[0].Time;
-
-            return Math.Min(left, Math.Min(up, Math.Min(right, down)));
+            return new[]
+            {
+                NotesLeft[0].Time,
+                NotesUp[0].Time,
+                NotesRight[0].Time,
+                NotesDown[0].Time
+            }.Max();
         }
-
-
-    }
-
-    public static class tshelper
-    {
-        public static string ToReadableString(this TimeSpan span)
+        private static string ToReadableString(TimeSpan span)
         {
             string formatted = $"{span.Minutes:0}:{$"{span.Seconds:0}".PadLeft(2, '0')}";
 

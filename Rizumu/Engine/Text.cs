@@ -10,36 +10,34 @@ namespace Rizumu.Engine
 {
     class Text
     {
-        public SpriteBatch SpriteBatch;
-        public SpriteFont Font;
-        public Color Color;
-        public string Content;
-        public int X;
-        public int Y;
-        public int Width => (int)Font.MeasureString(Content).X;
-        public int Height => (int)Font.MeasureString(Content).Y;
-        public float Opacity;
+        private readonly SpriteFont font;
+        private readonly Color color;
+        private readonly float opacity;
+        public string Content { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Width => (int)font.MeasureString(Content).X;
+        public int Height => (int)font.MeasureString(Content).Y;
 
-        public Text(SpriteBatch spriteBatch, SpriteFont font, string content, int x, int y, Color color, float opacity = 1f)
+        public Text(SpriteFont font, string content, int x, int y, Color color, float opacity = 1f)
         {
-            SpriteBatch = spriteBatch;
-            Font = font;
-            Content = content;
-            X = x;
-            Y = y;
-            Opacity = opacity;
-            Color = color;
+            this.font = font;
+            this.Content = content;
+            this.X = x;
+            this.Y = y;
+            this.opacity = opacity;
+            this.color = color;
         }
 
-        public void Draw()
+        public void Draw(SpriteBatch spriteBatch)
         {
-            Color black = new Color(Color.Black, Opacity);
-            Color main = new Color(Color, Opacity);
-            SpriteBatch.DrawString(Font, Content, new Vector2(X-1, Y-1), black);
-            SpriteBatch.DrawString(Font, Content, new Vector2(X+1, Y+1), black);
-            SpriteBatch.DrawString(Font, Content, new Vector2(X+1, Y-1), black);
-            SpriteBatch.DrawString(Font, Content, new Vector2(X-1, Y+1), black);
-            SpriteBatch.DrawString(Font, Content, new Vector2(X, Y), main);
+            Color black = new Color(Color.Black, opacity);
+            Color main = new Color(color, opacity);
+            spriteBatch.DrawString(font, Content, new Vector2(X-1, Y-1), black);
+            spriteBatch.DrawString(font, Content, new Vector2(X+1, Y+1), black);
+            spriteBatch.DrawString(font, Content, new Vector2(X+1, Y-1), black);
+            spriteBatch.DrawString(font, Content, new Vector2(X-1, Y+1), black);
+            spriteBatch.DrawString(font, Content, new Vector2(X, Y), main);
         }
     }
 }

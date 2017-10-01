@@ -14,22 +14,16 @@ namespace Rizumu
         {
             if (ks.IsKeyDown(key))
             {
-                if (Held.Contains(key))
-                    return false;
-                else
-                {
-                    Held.Add(key);
-                    return true;
-                }
+                if (Held.Contains(key)) return false;
+                    
+                Held.Add(key); 
+                return true;
             }
             if (Held.Contains(key))
                 Held.Remove(key);
             return false;
         }
 
-        public static void Toggle(this bool b)
-        {
-            b = !b;
-        }
+        public static bool Toggle(this bool b) => !b;
     }
 }

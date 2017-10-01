@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Input;
 
 namespace Rizumu.Objects
 {
@@ -14,16 +15,16 @@ namespace Rizumu.Objects
         public bool Fullscreen = false;
 
         [JsonProperty("leftkey")]
-        public int Left = 100;
+        public Keys Left = (Keys) 100;
 
         [JsonProperty("upkey")]
-        public int Up = 104;
+        public Keys Up = (Keys) 104;
 
         [JsonProperty("rightkey")]
-        public int Right = 102;
+        public Keys Right = (Keys) 102;
 
         [JsonProperty("downkey")]
-        public int Down = 98;
+        public Keys Down = (Keys) 98;
 
         [JsonProperty("volume")]
         public float Volume = 0.2f;

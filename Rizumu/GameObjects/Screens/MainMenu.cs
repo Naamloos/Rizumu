@@ -33,7 +33,7 @@ namespace Rizumu.GameObjects.Screens
             int buttonHeight = GameData.Instance.CurrentSkin.Button.Height;
 
             #region PlayBTN
-            PlayButton = new Button(spriteBatch, 50, 50, GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Play");
+            PlayButton = new Button(50, 50, GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Play");
             PlayButton.OnClick += (sender, e) =>
             {
                 GameData.Instance.CurrentScreen = Screen.Select;
@@ -41,7 +41,7 @@ namespace Rizumu.GameObjects.Screens
             #endregion
 
             #region OptionsBTN
-            OptionsButton = new Button(spriteBatch, 50, (buttonHeight * 1) + 75, GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Options");
+            OptionsButton = new Button(50, (buttonHeight * 1) + 75, GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Options");
             OptionsButton.OnClick += (sender, e) =>
             {
                 GameData.Instance.CurrentScreen = Screen.Options;
@@ -49,27 +49,27 @@ namespace Rizumu.GameObjects.Screens
             #endregion
 
             #region ExitBTN
-            ExitButton = new Button(spriteBatch, 50, (buttonHeight * 2) + 100, GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Exit");
+            ExitButton = new Button(50, (buttonHeight * 2) + 100, GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Exit");
             ExitButton.OnClick += (sender, e) =>
             {
                 GameData.Instance.Exiting = true;
             };
             #endregion
 
-            Background = new Background(spriteBatch, GameData.Instance.CurrentSkin.MenuBackground, Color.White, GameData.globalwidth, GameData.globalheight);
-            MenuOverlay = new Background(spriteBatch, GameData.Instance.CurrentSkin.FunctionOverlay, Color.White, GameData.globalwidth, GameData.globalheight);
+            Background = new Background(GameData.Instance.CurrentSkin.MenuBackground, GameData.globalwidth, GameData.globalheight);
+            MenuOverlay = new Background(GameData.Instance.CurrentSkin.FunctionOverlay, GameData.globalwidth, GameData.globalheight);
         }
         #endregion
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
         {
-            Background.Draw();
+            Background.Draw(spriteBatch);
 
-            PlayButton.Draw(cursor, clicked);
-            OptionsButton.Draw(cursor, clicked);
-            ExitButton.Draw(cursor, clicked);
+            PlayButton.Draw(spriteBatch, cursor, clicked);
+            OptionsButton.Draw(spriteBatch, cursor, clicked);
+            ExitButton.Draw(spriteBatch, cursor, clicked);
 
-            MenuOverlay.Draw();
+            MenuOverlay.Draw(spriteBatch);
         }
 
         public void Update(GameTime gameTime, Rectangle cursor, bool clicked)
