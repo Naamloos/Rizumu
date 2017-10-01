@@ -56,8 +56,8 @@ namespace Rizumu.GameObjects.Screens
             };
             #endregion
 
-            Background = new Background(GameData.Instance.CurrentSkin.MenuBackground, Color.White, GameData.globalwidth, GameData.globalheight);
-            MenuOverlay = new Background(GameData.Instance.CurrentSkin.FunctionOverlay, Color.White, GameData.globalwidth, GameData.globalheight);
+            Background = new Background(GameData.Instance.CurrentSkin.MenuBackground, GameData.globalwidth, GameData.globalheight);
+            MenuOverlay = new Background(GameData.Instance.CurrentSkin.FunctionOverlay, GameData.globalwidth, GameData.globalheight);
         }
         #endregion
 

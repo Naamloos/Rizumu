@@ -29,7 +29,7 @@ namespace Rizumu.GameObjects.Screens
 
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
         {
-            bg = new Background(GameData.Instance.CurrentSkin.MenuBackground, Color.White, GameData.globalwidth, GameData.globalheight);
+            bg = new Background(GameData.Instance.CurrentSkin.MenuBackground, GameData.globalwidth, GameData.globalheight);
             Back = new Button(25, GameData.globalheight - GameData.Instance.CurrentSkin.Button.Height - 25,
                 GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Back");
             Back.OnClick += (sender, e) =>

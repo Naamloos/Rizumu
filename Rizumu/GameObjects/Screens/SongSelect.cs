@@ -62,7 +62,7 @@ namespace Rizumu.GameObjects.Screens
 
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
         {
-            Background = new Background(GameData.Instance.CurrentSkin.MenuBackground, Color.White, GameData.globalwidth, GameData.globalheight);
+            Background = new Background(GameData.Instance.CurrentSkin.MenuBackground, GameData.globalwidth, GameData.globalheight);
             int BarWidth = GameData.Instance.CurrentSkin.SongBar.Width;
             int BarHeight = GameData.Instance.CurrentSkin.SongBar.Height;
             int index = new Random().Next(0, GameData.MapManager.Maps.Count - 1);

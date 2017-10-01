@@ -29,7 +29,7 @@ namespace Rizumu.GameObjects.Screens
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
         {
             DebugTextThing = new Text(GameData.Instance.CurrentSkin.Font, "This will be the options screen... someday..", 69, 69, Color.Green);
-            Background = new Background(GameData.Instance.CurrentSkin.MenuBackground, Color.White, GameData.globalwidth, GameData.globalheight);
+            Background = new Background(GameData.Instance.CurrentSkin.MenuBackground, GameData.globalwidth, GameData.globalheight);
             BackButton = new Button(25, GameData.globalheight - GameData.Instance.CurrentSkin.Button.Height - 25,
                 GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Back");
             BackButton.OnClick += (sender, e) =>

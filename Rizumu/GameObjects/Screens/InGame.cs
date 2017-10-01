@@ -476,7 +476,7 @@ namespace Rizumu.GameObjects.Screens
             }
 
             if (!ready && !Paused)
-                new Background(GameData.Instance.CurrentSkin.GetReady, Color.White, Background.Width, Background.Height).Draw(spriteBatch);
+                new Background(GameData.Instance.CurrentSkin.GetReady, Background.Width, Background.Height).Draw(spriteBatch);
             if (up)
                 ready = true;
 
@@ -487,8 +487,8 @@ namespace Rizumu.GameObjects.Screens
 
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
         {
-            Background = new Background(GameData.Instance.CurrentSkin.MenuBackground, Color.White, GameData.globalwidth, GameData.globalheight);
-            PauseOverlay = new Background(GameData.Instance.CurrentSkin.PauseOverlay, Color.White, GameData.globalwidth, GameData.globalheight);
+            Background = new Background(GameData.Instance.CurrentSkin.MenuBackground, GameData.globalwidth, GameData.globalheight);
+            PauseOverlay = new Background(GameData.Instance.CurrentSkin.PauseOverlay, GameData.globalwidth, GameData.globalheight);
             var notetex = GameData.Instance.CurrentSkin.Note;
             LeftNote = new Sprite((int)(Background.Width / 2 - notetex.Width * 1.5), (int)(Background.Height / 2 - notetex.Width * 0.5), notetex, Color.White);
             UpNote = new Sprite((int)(Background.Width / 2 - notetex.Width * 0.5), (int)(Background.Height / 2 - notetex.Width * 1.5), notetex, Color.White);
