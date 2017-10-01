@@ -23,25 +23,25 @@ namespace Rizumu.GuiObjects
         public Sprite MapPreview;
         public MusicManager msc => GameData.MusicManager;
 
-        public MapData(SpriteBatch spriteBatch, int x, int y, string name, string creator, bool selected, string MD5)
+        public MapData(int x, int y, string name, string creator, bool selected, string MD5)
         {
             MapMD5 = MD5;
             X = x;
             Y = y;
-            MapDataHolder = new Sprite(spriteBatch, x, y, GameData.Instance.CurrentSkin.SongBar, Color.White);
+            MapDataHolder = new Sprite(x, y, GameData.Instance.CurrentSkin.SongBar, Color.White);
             if (selected)
             {
                 MapDataHolder.Scale = 1.1f;
                 Selected = true;
             }
-            MapName = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, name, x + 5, y + 5, Color.White);
-            MapCreator = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontSmall, creator, MapName.X + MapName.Width + 5, MapName.Y + MapName.Height + 5, Color.White);
+            MapName = new Text(GameData.Instance.CurrentSkin.Font, name, x + 5, y + 5, Color.White);
+            MapCreator = new Text(GameData.Instance.CurrentSkin.FontSmall, creator, MapName.X + MapName.Width + 5, MapName.Y + MapName.Height + 5, Color.White);
             Map mm = GameData.MapManager.Maps.Find(xm => xm.MD5 == MD5);
             var pc = new Color(Color.White, 0.8f);
-            MapPreview = new Sprite(spriteBatch, X, Y, mm.Background, pc);
+            MapPreview = new Sprite(X, Y, mm.Background, pc);
         }
 
-        public void Draw()
+        public void Draw(SpriteBatch spriteBatch)
         {
             if (Selected)
             {
@@ -63,10 +63,10 @@ namespace Rizumu.GuiObjects
             MapPreview.Y = Y;
             MapPreview.X = X + (int)(MapDataHolder.Texture.Width * MapDataHolder.Scale) + 15;
 
-            MapDataHolder.Draw();
-            MapName.Draw();
-            MapCreator.Draw();
-            MapPreview.Draw();
+            MapDataHolder.Draw(spriteBatch);
+            MapName.Draw(spriteBatch);
+            MapCreator.Draw(spriteBatch);
+            MapPreview.Draw(spriteBatch);
         }
     }
 }

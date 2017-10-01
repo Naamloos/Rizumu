@@ -102,7 +102,7 @@ namespace Rizumu
             GameData.Instance.LoadScreens(spriteBatch, graphics);
             graphics.GraphicsDevice.PresentationParameters.PresentationInterval = PresentInterval.Immediate;
             graphics.GraphicsDevice.PresentationParameters.MultiSampleCount = 500;
-            Framerate = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, "0", 0, 0, Color.White);
+            Framerate = new Text(GameData.Instance.CurrentSkin.Font, "0", 0, 0, Color.White);
 
             RenderTarget = new RenderTarget2D(GraphicsDevice, GameData.globalwidth, GameData.globalheight);
 
@@ -188,7 +188,7 @@ namespace Rizumu
             Framerate.X = GameData.globalwidth - Framerate.Width;
             Framerate.Y = GameData.globalheight - Framerate.Height;
 
-            Framerate.Draw();
+            Framerate.Draw(spriteBatch);
             spriteBatch.End();
             GraphicsDevice.SetRenderTarget(null);
             spriteBatch.Begin(samplerState: SamplerState.LinearWrap);

@@ -18,22 +18,22 @@ namespace Rizumu.GuiObjects
         public event EventHandler<ButtonEventArgs> OnClick;
         public event EventHandler<ButtonEventArgs> OnMouseEnter;
 
-        public Button(SpriteBatch spriteBatch, int x, int y, Texture2D staticTexture, Texture2D hoverTexture, string text = "")
+        public Button(int x, int y, Texture2D staticTexture, Texture2D hoverTexture, string text = "")
         {
-            StaticSprite = new Sprite(spriteBatch, x, y, staticTexture, Color.White);
-            HoverSprite = new Sprite(spriteBatch, x, y, staticTexture, Color.Gray);
-            Text = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, text, x + 20,
+            StaticSprite = new Sprite(x, y, staticTexture, Color.White);
+            HoverSprite = new Sprite(x, y, staticTexture, Color.Gray);
+            Text = new Text(GameData.Instance.CurrentSkin.Font, text, x + 20,
                 y + staticTexture.Height / 2, Color.White);
 
             Text.Y = y + (staticTexture.Height / 2) - (Text.Height / 2);
         }
 
-        public void Draw(Rectangle cursorLocation, bool click)
+        public void Draw(SpriteBatch spriteBatch, Rectangle cursorLocation, bool click)
         {
             if (StaticSprite.Hitbox.Intersects(cursorLocation))
             {
-                HoverSprite.Draw();
-                Text.Draw();
+                HoverSprite.Draw(spriteBatch);
+                Text.Draw(spriteBatch);
                 if (click)
                 {
                     OnClick?.Invoke(null, new ButtonEventArgs());
@@ -49,8 +49,8 @@ namespace Rizumu.GuiObjects
             else
             {
                 MouseIsOver = false;
-                StaticSprite.Draw();
-                Text.Draw();
+                StaticSprite.Draw(spriteBatch);
+                Text.Draw(spriteBatch);
             }
         }
     }

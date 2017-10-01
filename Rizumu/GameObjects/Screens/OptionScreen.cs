@@ -21,16 +21,16 @@ namespace Rizumu.GameObjects.Screens
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
         {
-            Background.Draw();
-            DebugTextThing.Draw();
-            BackButton.Draw(cursor, clicked);
+            Background.Draw(spriteBatch);
+            DebugTextThing.Draw(spriteBatch);
+            BackButton.Draw(spriteBatch, cursor, clicked);
         }
 
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
         {
-            DebugTextThing = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, "This will be the options screen... someday..", 69, 69, Color.Green);
-            Background = new Background(spriteBatch, GameData.Instance.CurrentSkin.MenuBackground, Color.White, GameData.globalwidth, GameData.globalheight);
-            BackButton = new Button(spriteBatch, 25, GameData.globalheight - GameData.Instance.CurrentSkin.Button.Height - 25,
+            DebugTextThing = new Text(GameData.Instance.CurrentSkin.Font, "This will be the options screen... someday..", 69, 69, Color.Green);
+            Background = new Background(GameData.Instance.CurrentSkin.MenuBackground, Color.White, GameData.globalwidth, GameData.globalheight);
+            BackButton = new Button(25, GameData.globalheight - GameData.Instance.CurrentSkin.Button.Height - 25,
                 GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Back");
             BackButton.OnClick += (sender, e) =>
             {

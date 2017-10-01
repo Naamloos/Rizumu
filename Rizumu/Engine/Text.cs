@@ -10,7 +10,6 @@ namespace Rizumu.Engine
 {
     class Text
     {
-        public SpriteBatch SpriteBatch;
         public SpriteFont Font;
         public Color Color;
         public string Content;
@@ -20,9 +19,8 @@ namespace Rizumu.Engine
         public int Height => (int)Font.MeasureString(Content).Y;
         public float Opacity;
 
-        public Text(SpriteBatch spriteBatch, SpriteFont font, string content, int x, int y, Color color, float opacity = 1f)
+        public Text(SpriteFont font, string content, int x, int y, Color color, float opacity = 1f)
         {
-            SpriteBatch = spriteBatch;
             Font = font;
             Content = content;
             X = x;
@@ -31,15 +29,15 @@ namespace Rizumu.Engine
             Color = color;
         }
 
-        public void Draw()
+        public void Draw(SpriteBatch spriteBatch)
         {
             Color black = new Color(Color.Black, Opacity);
             Color main = new Color(Color, Opacity);
-            SpriteBatch.DrawString(Font, Content, new Vector2(X-1, Y-1), black);
-            SpriteBatch.DrawString(Font, Content, new Vector2(X+1, Y+1), black);
-            SpriteBatch.DrawString(Font, Content, new Vector2(X+1, Y-1), black);
-            SpriteBatch.DrawString(Font, Content, new Vector2(X-1, Y+1), black);
-            SpriteBatch.DrawString(Font, Content, new Vector2(X, Y), main);
+            spriteBatch.DrawString(Font, Content, new Vector2(X-1, Y-1), black);
+            spriteBatch.DrawString(Font, Content, new Vector2(X+1, Y+1), black);
+            spriteBatch.DrawString(Font, Content, new Vector2(X+1, Y-1), black);
+            spriteBatch.DrawString(Font, Content, new Vector2(X-1, Y+1), black);
+            spriteBatch.DrawString(Font, Content, new Vector2(X, Y), main);
         }
     }
 }

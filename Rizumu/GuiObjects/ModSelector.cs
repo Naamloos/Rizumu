@@ -31,32 +31,32 @@ namespace Rizumu.GuiObjects
 
         ModCollection mods = GameData.Instance.Mods;
 
-        public ModSelector(SpriteBatch sb, int screenwidth, int screenheight)
+        public ModSelector(int screenwidth, int screenheight)
         {
             var tex = GameData.Instance.CurrentSkin.SelectorBG;
             int x = screenwidth - 400;
-            Back = new Sprite(sb, x, 0, tex, Color.White);
+            Back = new Sprite(x, 0, tex, Color.White);
 
             var font = GameData.Instance.CurrentSkin.FontSmall;
             Textx = x + (int)font.MeasureString("+..").X;
             height = (int)(font.MeasureString("A").Y + 3f);
-            SpeedMultiplier = new Text(sb, font, $"Speed: {mods.SpeedMultiplier}", Textx, height * 1, Color.White);
-            HorizontalMirror = new Text(sb, font, $"Horizontal Mirror Mode: {mods.HorizontalMirror}", Textx, height * 2, Color.White);
-            VerticalMirror = new Text(sb, font, $"Vertical Mirror Mode: {mods.VerticalMirror}", Textx, height * 3, Color.White);
-            AutoMode = new Text(sb, font, $"AutoMode: {mods.Automode}", Textx, height * 4, Color.White);
-            SizeMultiplier = new Text(sb, font, $"Size: {mods.SizeMultiplier}", Textx, height * 5, Color.White);
-            FleshLight = new Text(sb, font, $"FlashLight: {mods.FleshLight}", Textx, height * 6, Color.White);
-            NoFail = new Text(sb, font, $"No Fail: {mods.NoFail}", Textx, height * 7, Color.White);
-            Instafail = new Text(sb, font, $"Insta Fail: {mods.Instafail}", Textx, height * 8, Color.White);
-            RotationMode = new Text(sb, font, $"Rotation Mode: {mods.RotationMode}", Textx, height * 9, Color.White);
-            Selector = new Text(sb, font, ">", x, height * SelectorIndex, Color.Green);
+            SpeedMultiplier = new Text(font, $"Speed: {mods.SpeedMultiplier}", Textx, height * 1, Color.White);
+            HorizontalMirror = new Text(font, $"Horizontal Mirror Mode: {mods.HorizontalMirror}", Textx, height * 2, Color.White);
+            VerticalMirror = new Text(font, $"Vertical Mirror Mode: {mods.VerticalMirror}", Textx, height * 3, Color.White);
+            AutoMode = new Text(font, $"AutoMode: {mods.Automode}", Textx, height * 4, Color.White);
+            SizeMultiplier = new Text(font, $"Size: {mods.SizeMultiplier}", Textx, height * 5, Color.White);
+            FleshLight = new Text(font, $"FlashLight: {mods.FleshLight}", Textx, height * 6, Color.White);
+            NoFail = new Text(font, $"No Fail: {mods.NoFail}", Textx, height * 7, Color.White);
+            Instafail = new Text(font, $"Insta Fail: {mods.Instafail}", Textx, height * 8, Color.White);
+            RotationMode = new Text(font, $"Rotation Mode: {mods.RotationMode}", Textx, height * 9, Color.White);
+            Selector = new Text(font, ">", x, height * SelectorIndex, Color.Green);
         }
 
-        public void Draw()
+        public void Draw(SpriteBatch spriteBatch)
         {
             var keyboard = Keyboard.GetState();
 
-            Back.Draw();
+            Back.Draw(spriteBatch);
             SpeedMultiplier.Content = $"Speed: {mods.SpeedMultiplier}";
             HorizontalMirror.Content = $"Horizontal Mirror Mode: {mods.HorizontalMirror}";
             VerticalMirror.Content = $"Vertical Mirror Mode: {mods.VerticalMirror}";
@@ -66,15 +66,15 @@ namespace Rizumu.GuiObjects
             NoFail.Content = $"No Fail: {mods.NoFail}";
             Instafail.Content = $"Insta Fail: {mods.Instafail}";
             RotationMode.Content = $"Rotation Mode: {mods.RotationMode}";
-            SpeedMultiplier.Draw();
-            HorizontalMirror.Draw();
-            VerticalMirror.Draw();
-            AutoMode.Draw();
-            SizeMultiplier.Draw();
-            FleshLight.Draw();
-            NoFail.Draw();
-            Instafail.Draw();
-            RotationMode.Draw();
+            SpeedMultiplier.Draw(spriteBatch);
+            HorizontalMirror.Draw(spriteBatch);
+            VerticalMirror.Draw(spriteBatch);
+            AutoMode.Draw(spriteBatch);
+            SizeMultiplier.Draw(spriteBatch);
+            FleshLight.Draw(spriteBatch);
+            NoFail.Draw(spriteBatch);
+            Instafail.Draw(spriteBatch);
+            RotationMode.Draw(spriteBatch);
             if (keyboard.IsKeyPress(Keys.Up) && SelectorIndex > 1)
             {
                 SelectorIndex--;
@@ -84,7 +84,7 @@ namespace Rizumu.GuiObjects
                 SelectorIndex++;
             }
             Selector.Y = height * SelectorIndex;
-            Selector.Draw();
+            Selector.Draw(spriteBatch);
 
             switch (SelectorIndex)
             {
