@@ -30,9 +30,10 @@ namespace Rizumu.GameObjects.Screens
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
         {
             int buttonHeight = GameData.Instance.CurrentSkin.Button.Height;
+            var BTN = GameData.Instance.CurrentSkin.Button;
 
             #region PlayBTN
-            PlayButton = new Button(spriteBatch, 50, 50, GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Play");
+            PlayButton = new Button(spriteBatch, GameData.globalwidth - BTN.Width - 50, 150, BTN, GameData.Instance.CurrentSkin.ButtonHover, "Play");
             PlayButton.OnClick += (sender, e) =>
             {
                 GameData.Instance.CurrentScreen = "select";
@@ -40,7 +41,7 @@ namespace Rizumu.GameObjects.Screens
             #endregion
 
             #region OptionsBTN
-            OptionsButton = new Button(spriteBatch, 50, (buttonHeight * 1) + 75, GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Options");
+            OptionsButton = new Button(spriteBatch, GameData.globalwidth - BTN.Width - 250, (buttonHeight * 1) + 175, BTN, GameData.Instance.CurrentSkin.ButtonHover, "Options");
             OptionsButton.OnClick += (sender, e) =>
             {
                 GameData.Instance.CurrentScreen = "options";
@@ -48,7 +49,7 @@ namespace Rizumu.GameObjects.Screens
             #endregion
 
             #region ExitBTN
-            ExitButton = new Button(spriteBatch, 50, (buttonHeight * 2) + 100, GameData.Instance.CurrentSkin.Button, GameData.Instance.CurrentSkin.ButtonHover, "Exit");
+            ExitButton = new Button(spriteBatch, GameData.globalwidth - BTN.Width - 50, (buttonHeight * 2) + 200, BTN, GameData.Instance.CurrentSkin.ButtonHover, "Exit");
             ExitButton.OnClick += (sender, e) =>
             {
                 GameData.Instance.Exiting = true;

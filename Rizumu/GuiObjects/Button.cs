@@ -21,11 +21,12 @@ namespace Rizumu.GuiObjects
         public Button(SpriteBatch spriteBatch, int x, int y, Texture2D staticTexture, Texture2D hoverTexture, string text = "")
         {
             StaticSprite = new Sprite(spriteBatch, x, y, staticTexture, Color.White);
-            HoverSprite = new Sprite(spriteBatch, x, y, staticTexture, Color.Gray);
-            Text = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, text, x + 20,
+            HoverSprite = new Sprite(spriteBatch, x, y, hoverTexture, Color.White);
+            Text = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, text, x + staticTexture.Width - 25,
                 y + staticTexture.Height / 2, Color.White);
 
-            Text.Y = y + (staticTexture.Height / 2) - (Text.Height / 2);
+            Text.X = x + staticTexture.Width - (Text.Width + 75);
+            Text.Y = y + staticTexture.Height - (Text.Height + 5);
         }
 
         public void Draw(Rectangle cursorLocation, bool click)

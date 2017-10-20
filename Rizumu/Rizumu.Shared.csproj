@@ -66,6 +66,7 @@
     <Compile Include="GuiObjects\Button.cs" />
     <Compile Include="GuiObjects\MapData.cs" />
     <Compile Include="GuiObjects\ModSelector.cs" />
+    <Compile Include="GuiObjects\UserData.cs" />
     <Compile Include="Helpers\MapManager.cs" />
     <Compile Include="Helpers\MusicManager.cs" />
     <Compile Include="Helpers\ShittyOsuConverter.cs" />

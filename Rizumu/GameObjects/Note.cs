@@ -25,13 +25,16 @@ namespace Rizumu.GameObjects
         public int BaseY;
         public int traveldistance;
         public int Alpha;
+        public float LocalSpeed;
+        public int jumpinoffset;
         int bgw = 0;
         int bgh = 0;
 
-        public Note(SpriteBatch spriteBatch, NoteMode mode, int screenWidth, int screenHeight)
+        public Note(SpriteBatch spriteBatch, NoteMode mode, int screenWidth, int screenHeight, float speed)
         {
             bgw = screenWidth;
             bgh = screenHeight;
+            LocalSpeed = speed;
             var tex = GameData.Instance.CurrentSkin.Note;
             Mode = mode;
             if (mode == NoteMode.left)
@@ -62,6 +65,10 @@ namespace Rizumu.GameObjects
                 NoteSprite = new Sprite(spriteBatch, BaseX, BaseY, tex, Color.White);
                 traveldistance = screenHeight / 2 + NoteSprite.Texture.Height;
             }
+            jumpinoffset = traveldistance;
+            traveldistance = (int)(traveldistance / speed);
+            jumpinoffset = traveldistance - jumpinoffset;
+            //Time = Time - noteoffset;
             Alpha = -50;
             NoteSprite.Scale = GameData.Instance.Mods.SizeMultiplier;
         }
@@ -77,25 +84,29 @@ namespace Rizumu.GameObjects
 
             if (Mode == NoteMode.left)
             {
-                Position = Timer - (Time - ((bgw / 2) + NoteSprite.Texture.Width));
+                Position = Timer - ((Time - jumpinoffset) - ((bgw / 2) + NoteSprite.Texture.Width));
+                Position = (int)(Position * LocalSpeed);
                 NoteSprite.X = BaseX + Position;
             }
             if (Mode == NoteMode.up)
             {
-                Position = Timer - (Time - ((bgh / 2) + NoteSprite.Texture.Height));
+                Position = Timer - ((Time - jumpinoffset) - ((bgh / 2) + NoteSprite.Texture.Height));
+                Position = (int)(Position * LocalSpeed);
                 NoteSprite.Y = BaseY + Position;
             }
             if (Mode == NoteMode.right)
             {
-                Position = Timer - (Time - ((bgw / 2) + NoteSprite.Texture.Width * 2));
+                Position = Timer - ((Time - jumpinoffset) - ((bgw / 2) + NoteSprite.Texture.Width * 2));
+                Position = (int)(Position * LocalSpeed);
                 NoteSprite.X = BaseX - Position;
             }
             if (Mode == NoteMode.down)
             {
-                Position = Timer - (Time - ((bgh / 2) + NoteSprite.Texture.Height * 2));
+                Position = Timer - ((Time - jumpinoffset) - ((bgh / 2) + NoteSprite.Texture.Height * 2));
+                Position = (int)(Position * LocalSpeed);
                 NoteSprite.Y = BaseY - Position;
             }
-            if (traveldistance + (NoteSprite.Texture.Width / 2) > Position && Hit == false)
+            if (traveldistance * LocalSpeed + (NoteSprite.Texture.Width / 2) > Position && Hit == false)
             {
                 float vis = traveldistance - Position;
                 visiondist = vis / 1000;
@@ -110,7 +121,7 @@ namespace Rizumu.GameObjects
 
             if (Auto)
             {
-                if (Position > traveldistance - NoteSprite.Texture.Width && !Miss)
+                if (Position > traveldistance * LocalSpeed - NoteSprite.Texture.Width && !Miss)
                 {
                     if (Hit == false)
                     {
@@ -124,7 +135,7 @@ namespace Rizumu.GameObjects
             }
             else
             {
-                if (Position > traveldistance - (NoteSprite.Texture.Width * 1.6f) && KeyPress && Miss == false)
+                if (Position > traveldistance * LocalSpeed - (NoteSprite.Texture.Width * 1.6f) && KeyPress && Miss == false)
                 {
                     if (Hit == false)
                     {

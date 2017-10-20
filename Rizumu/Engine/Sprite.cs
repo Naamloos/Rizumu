@@ -16,7 +16,7 @@ namespace Rizumu.Engine
         public int Y;
         public Color Color;
         internal Color WithAlpha { get { return new Color(Color, Alpha); } }
-        public float Alpha;
+        public float Alpha = 1f;
         public Rectangle Hitbox;
         public float Rotation;
         public float Scale;
@@ -45,9 +45,9 @@ namespace Rizumu.Engine
             Hitbox = new Rectangle((int)(X * GlobalScaleX), (int)(Y * GlobalScaleY), (int)(Texture.Width * GlobalScaleX), (int)(Texture.Height * GlobalScaleY));
 
             if (Note)
-                SpriteBatch.Draw(Texture, new Vector2(X + (Texture.Width / 2), Y + (Texture.Height / 2)), null, Color, Rotation, new Vector2(Texture.Width / 2, Texture.Height / 2), Scale, SpriteEffects.None, 1f);
+                SpriteBatch.Draw(Texture, new Vector2(X + (Texture.Width / 2), Y + (Texture.Height / 2)), null, WithAlpha, Rotation, new Vector2(Texture.Width / 2, Texture.Height / 2), Scale, SpriteEffects.None, 1f);
             else
-                SpriteBatch.Draw(Texture, new Vector2(X, Y), null, Color, Rotation, new Vector2(0,0), Scale, SpriteEffects.None, 1f);
+                SpriteBatch.Draw(Texture, new Vector2(X, Y), null, WithAlpha, Rotation, new Vector2(0,0), Scale, SpriteEffects.None, 1f);
         }
 
         public void DrawScaled(int width, int height)

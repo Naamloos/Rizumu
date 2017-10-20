@@ -16,7 +16,8 @@ namespace Rizumu.GameObjects
         public bool FleshLight = false; // :^) Shine a flashligt to the middle of the screen
         public bool NoFail = false; // You can't fail
         public bool Instafail = false; // One miss makes you fail
-        public bool RotationMode = false; // Screen keeps rotating, adds direction text to center
+        public bool RotationMode = false; // Screen keeps rotating, adds direction text to center,
+        public float BackgroundOpacity = 0f;
 
         public string GetCollectionString()
         {

@@ -37,6 +37,7 @@ namespace Rizumu.GameObjects.Screens
         public Sprite VisionDown;
         public Sprite VisionLeft;
         public Sprite VisionRight;
+        public Sprite OpacityOverlay;
         public Replay Recording;
         public bool Replaying = false;
         public bool ready;
@@ -89,6 +90,7 @@ namespace Rizumu.GameObjects.Screens
                 GameData.MusicManager.Stop();
                 Playing = GameData.MapManager.Current;
                 Timer = Playing.Offset;
+                OpacityOverlay.Alpha = GameData.Instance.Mods.BackgroundOpacity;
                 #region Preloading notes
                 NotesLeft = new List<Note>();
                 NotesUp = new List<Note>();
@@ -103,7 +105,8 @@ namespace Rizumu.GameObjects.Screens
                 #region Standard notes
                 foreach (int n in Playing.NotesLeft)
                 {
-                    NotesLeft.Add(new Note(spriteBatch, NoteMode.left, Background.Width, Background.Height)
+                    float sped = Playing.Speeds.Last(x => x.Time < n).NewSpeed * GameData.Instance.Mods.SpeedMultiplier;
+                    NotesLeft.Add(new Note(spriteBatch, NoteMode.left, Background.Width, Background.Height, sped)
                     {
                         Hit = false,
                         Position = 0,
@@ -114,7 +117,8 @@ namespace Rizumu.GameObjects.Screens
 
                 foreach (int n in Playing.NotesUp)
                 {
-                    NotesUp.Add(new Note(spriteBatch, NoteMode.up, Background.Width, Background.Height)
+                    float sped = Playing.Speeds.Last(x => x.Time < n).NewSpeed * GameData.Instance.Mods.SpeedMultiplier;
+                    NotesUp.Add(new Note(spriteBatch, NoteMode.up, Background.Width, Background.Height, sped)
                     {
                         Hit = false,
                         Position = 0,
@@ -125,7 +129,8 @@ namespace Rizumu.GameObjects.Screens
 
                 foreach (int n in Playing.NotesRight)
                 {
-                    NotesRight.Add(new Note(spriteBatch, NoteMode.right, Background.Width, Background.Height)
+                    float sped = Playing.Speeds.Last(x => x.Time < n).NewSpeed * GameData.Instance.Mods.SpeedMultiplier;
+                    NotesRight.Add(new Note(spriteBatch, NoteMode.right, Background.Width, Background.Height, sped)
                     {
                         Hit = false,
                         Position = 0,
@@ -136,7 +141,8 @@ namespace Rizumu.GameObjects.Screens
 
                 foreach (int n in Playing.NotesDown)
                 {
-                    NotesDown.Add(new Note(spriteBatch, NoteMode.down, Background.Width, Background.Height)
+                    float sped = Playing.Speeds.Last(x => x.Time < n).NewSpeed * GameData.Instance.Mods.SpeedMultiplier;
+                    NotesDown.Add(new Note(spriteBatch, NoteMode.down, Background.Width, Background.Height, sped)
                     {
                         Hit = false,
                         Position = 0,
@@ -290,7 +296,9 @@ namespace Rizumu.GameObjects.Screens
                             {
                                 float x = t.Position.X;
                                 float y = t.Position.Y;
-                                if (y > GameData.globalheight / 2)
+                                int gbh = GameData.globalheight;
+                                int gbw = GameData.globalwidth;
+                                if (y > gbh / 4 && y < (gbh / 4 * 3))
                                 {
                                     Recording.PressesDown.Add(Timer);
                                     DownHold = true;
@@ -420,6 +428,7 @@ namespace Rizumu.GameObjects.Screens
                 }
 
                 Background.Draw();
+                OpacityOverlay.Draw();
 
                 #region Gameplay (yay!)
                 float leftdist = 0;
@@ -428,22 +437,22 @@ namespace Rizumu.GameObjects.Screens
                 float downdist = 0;
                 foreach (Note n in NotesLeft)
                 {
-                    if (n.Time - ((Background.Width / 2) + n.NoteSprite.Texture.Width) < Timer)
+                    //if (n.Time - ((Background.Width / 2) + n.NoteSprite.Texture.Width) < Timer)
                         n.Draw(ref LeftPress, Paused, ready, Rotation, ref CurrentCombo, ref leftdist, Timer, GameData.Instance.Mods.Automode);
                 }
                 foreach (Note n in NotesUp)
                 {
-                    if (n.Time - ((Background.Height / 2) + n.NoteSprite.Texture.Height) < Timer)
+                    //if (n.Time - ((Background.Height / 2) + n.NoteSprite.Texture.Height) < Timer)
                         n.Draw(ref UpPress, Paused, ready, Rotation, ref CurrentCombo, ref updist, Timer, GameData.Instance.Mods.Automode);
                 }
                 foreach (Note n in NotesRight)
                 {
-                    if (n.Time - ((Background.Width / 2) + (n.NoteSprite.Texture.Width * 2)) < Timer)
+                    //if (n.Time - ((Background.Width / 2) + (n.NoteSprite.Texture.Width * 2)) < Timer)
                         n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer, GameData.Instance.Mods.Automode);
                 }
                 foreach (Note n in NotesDown)
                 {
-                    if (n.Time - ((Background.Height / 2) + (n.NoteSprite.Texture.Height * 2)) < Timer)
+                    //if (n.Time - ((Background.Height / 2) + (n.NoteSprite.Texture.Height * 2)) < Timer)
                         n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer, GameData.Instance.Mods.Automode);
                 }
 
@@ -545,6 +554,7 @@ namespace Rizumu.GameObjects.Screens
             RightNote = new Sprite(spriteBatch, (int)(Background.Width / 2 + notetex.Width * 0.5), (int)(Background.Height / 2 - notetex.Width * 0.5), notetex, Color.White);
             DownNote = new Sprite(spriteBatch, (int)(Background.Width / 2 - notetex.Width * 0.5), (int)(Background.Height / 2 + notetex.Width * 0.5), notetex, Color.White);
             TimerTex = new Text(spriteBatch, GameData.Instance.CurrentSkin.Font, "" + Timer, 0, 0, Color.White);
+            OpacityOverlay = new Sprite(spriteBatch, 0, 0, GameData.Instance.CurrentSkin.BgOverlay, Color.White);
 
             ComboText = new Text(spriteBatch, GameData.Instance.CurrentSkin.FontBig, "0", 15, 0, Color.White);
             ComboText.Y = Background.Height - ComboText.Height - 15;
@@ -583,7 +593,9 @@ namespace Rizumu.GameObjects.Screens
         public void Update(GameTime gameTime, Rectangle cursor, bool clicked)
         {
             if (MapLoaded && !Paused && ready)
+            {
                 Timer = (int)((MediaPlayer.PlayPosition.TotalMilliseconds * 500) / 1000) + GameData.MapManager.Current.Offset;
+            }
             if (ready && !IsRestarted)
             {
                 GameData.MusicManager.Restart();

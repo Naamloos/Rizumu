@@ -45,6 +45,7 @@ namespace Rizumu.Objects
         public Texture2D VisionLeft;
         public Texture2D VisionRight;
         public Texture2D FunctionOverlay;
+        public Texture2D BgOverlay;
 
         // Sounds
         public SoundEffect Hit;
@@ -95,10 +96,10 @@ namespace Rizumu.Objects
             skin.LetsGo = content.Load<SoundEffect>("SoundEffects/letsgo");
             skin.SelectorBG = content.Load<Texture2D>("Sprite/ModSelectorBG");
             skin.HitIns = skin.Hit.CreateInstance();
-            skin.SlideLeft = content.Load<Texture2D>("Sprite/slideleft");
-            skin.SlideUp = content.Load<Texture2D>("Sprite/slideup");
-            skin.SlideRight = content.Load<Texture2D>("Sprite/slideright");
-            skin.SlideDown = content.Load<Texture2D>("Sprite/slidedown");
+            skin.SlideLeft = content.Load<Texture2D>("Sprite/slide");
+            skin.SlideUp = content.Load<Texture2D>("Sprite/slide");
+            skin.SlideRight = content.Load<Texture2D>("Sprite/slide");
+            skin.SlideDown = content.Load<Texture2D>("Sprite/slide");
             skin.Slide = content.Load<SoundEffect>("SoundEffects/slide");
             skin.SlideIns = skin.Slide.CreateInstance();
 
@@ -149,12 +150,13 @@ namespace Rizumu.Objects
             skin.LetsGo = content.Load<SoundEffect>("SoundEffects/letsgo");
             skin.SelectorBG = content.Load<Texture2D>("Sprite/ModSelectorBG");
             skin.HitIns = skin.Hit.CreateInstance();
-            skin.SlideLeft = content.Load<Texture2D>("Sprite/slideleft");
-            skin.SlideUp = content.Load<Texture2D>("Sprite/slideup");
-            skin.SlideRight = content.Load<Texture2D>("Sprite/slideright");
-            skin.SlideDown = content.Load<Texture2D>("Sprite/slidedown");
+            skin.SlideLeft = content.Load<Texture2D>("Sprite/slide");
+            skin.SlideUp = content.Load<Texture2D>("Sprite/slide");
+            skin.SlideRight = content.Load<Texture2D>("Sprite/slide");
+            skin.SlideDown = content.Load<Texture2D>("Sprite/slide");
             skin.Slide = content.Load<SoundEffect>("SoundEffects/slide");
             skin.SlideIns = skin.Slide.CreateInstance();
+            skin.BgOverlay = content.Load<Texture2D>("Backgrounds/bgopacity");
             return skin;
         }
     }

@@ -25,6 +25,7 @@ namespace Rizumu.GuiObjects
         Text NoFail;
         Text Instafail;
         Text RotationMode;
+        Text BackgroundOpacity;
         Text Selector;
         int SelectorIndex = 1;
         int height = 0;
@@ -49,6 +50,7 @@ namespace Rizumu.GuiObjects
             NoFail = new Text(sb, font, $"No Fail: {mods.NoFail}", Textx, height * 7, Color.White);
             Instafail = new Text(sb, font, $"Insta Fail: {mods.Instafail}", Textx, height * 8, Color.White);
             RotationMode = new Text(sb, font, $"Rotation Mode: {mods.RotationMode}", Textx, height * 9, Color.White);
+            BackgroundOpacity = new Text(sb, font, $"Background Opacity: {mods.BackgroundOpacity}", Textx, height * 10, Color.White);
             Selector = new Text(sb, font, ">", x, height * SelectorIndex, Color.Green);
         }
 
@@ -66,6 +68,7 @@ namespace Rizumu.GuiObjects
             NoFail.Content = $"No Fail: {mods.NoFail}";
             Instafail.Content = $"Insta Fail: {mods.Instafail}";
             RotationMode.Content = $"Rotation Mode: {mods.RotationMode}";
+            BackgroundOpacity.Content = $"Background Opacity: {mods.BackgroundOpacity}";
             SpeedMultiplier.Draw();
             HorizontalMirror.Draw();
             VerticalMirror.Draw();
@@ -75,11 +78,12 @@ namespace Rizumu.GuiObjects
             NoFail.Draw();
             Instafail.Draw();
             RotationMode.Draw();
+            BackgroundOpacity.Draw();
             if (keyboard.IsKeyPress(Keys.Up) && SelectorIndex > 1)
             {
                 SelectorIndex--;
             }
-            if (keyboard.IsKeyPress(Keys.Down) && SelectorIndex < 9)
+            if (keyboard.IsKeyPress(Keys.Down) && SelectorIndex < 10)
             {
                 SelectorIndex++;
             }
@@ -122,6 +126,14 @@ namespace Rizumu.GuiObjects
                     break;
                 case 9 when keyboard.IsKeyPress(Keys.Left) || keyboard.IsKeyPress(Keys.Right):
                     mods.RotationMode = !mods.RotationMode;
+                    break;
+                case 10 when keyboard.IsKeyPress(Keys.Left):
+                    if (mods.BackgroundOpacity > 0.0f)
+                        mods.BackgroundOpacity -= 0.1f;
+                    break;
+                case 10 when keyboard.IsKeyPress(Keys.Right):
+                    if (mods.BackgroundOpacity < 1.0f)
+                        mods.BackgroundOpacity += 0.1f;
                     break;
             }
             GameData.Instance.Mods = mods;

@@ -56,6 +56,9 @@ namespace Rizumu.Objects
         [JsonProperty("events")]
         public List<MapEvent> Events = new List<MapEvent>();
 
+        [JsonProperty("speeds")]
+        public List<RizumuSpeedMods> Speeds = new List<RizumuSpeedMods>(){ new RizumuSpeedMods(){NewSpeed = 1f, Time = 0 } };
+
         [JsonIgnore]
         public string Path;
 
@@ -92,7 +95,16 @@ namespace Rizumu.Objects
         public string filename = "file.png";
 
         [JsonProperty("states")]
-        public List<EventState> States;
+        public List<EventState> States = new List<EventState>();
+    }
+
+    class RizumuSpeedMods
+    {
+        [JsonProperty("time")]
+        public int Time = 0;
+
+        [JsonProperty("speed")]
+        public float NewSpeed = 1.0f;
     }
 
     class EventState
