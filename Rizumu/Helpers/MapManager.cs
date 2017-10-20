@@ -43,9 +43,7 @@ namespace Rizumu.Helpers
                     Maps.Add(m);
                 }
             }
-            if (Maps.Count < 1)
-                return false;
-            return true;
+            return Maps.Any();
         }
 
         public void PreloadSongs()
@@ -75,7 +73,7 @@ namespace Rizumu.Helpers
             foreach (string folder in Directory.GetDirectories("songs"))
             {
                 bool HasOsu = false;
-                if (Directory.GetFiles(folder).Where(x => x.EndsWith(".osu")).Count() > 0)
+                if (Directory.GetFiles(folder).Any(x => x.EndsWith(".osu")))
                 {
                     int heck = 0;
                     foreach (string file in Directory.GetFiles(folder))
@@ -89,13 +87,13 @@ namespace Rizumu.Helpers
                             m.Creator = "OsuGame";
 
                             var images = Directory.GetFiles(folder).Where(x => x.EndsWith(".png") || x.EndsWith(".jpg") || x.EndsWith(".jpeg"));
-                            if (images.Count() > 0)
+                            if (images.Any())
                             {
                                 m.BackgroundFile = images.First().Substring(images.First().LastIndexOf('\\') + 1);
                             }
 
                             var mp3s = Directory.GetFiles(folder).Where(x => x.EndsWith(".mp3"));
-                            if (mp3s.Count() > 0)
+                            if (mp3s.Any())
                             {
                                 m.FileName = mp3s.First().Substring(mp3s.First().LastIndexOf('\\') + 1);
                             }

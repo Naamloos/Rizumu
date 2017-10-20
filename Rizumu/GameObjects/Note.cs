@@ -112,7 +112,7 @@ namespace Rizumu.GameObjects
                 visiondist = vis / 1000;
                 NoteSprite.Draw(true);
             }
-            else if (Miss == false && Hit == false)
+            else if (!Miss && !Hit)
             {
                 GameData.Instance.CurrentSkin.Miss.Play();
                 CurrentCombo = 0;
@@ -123,7 +123,7 @@ namespace Rizumu.GameObjects
             {
                 if (Position > traveldistance * LocalSpeed - NoteSprite.Texture.Width && !Miss)
                 {
-                    if (Hit == false)
+                    if (!Hit)
                     {
                         KeyPress = false;
                         if (Game1.Windows)
@@ -137,7 +137,7 @@ namespace Rizumu.GameObjects
             {
                 if (Position > traveldistance * LocalSpeed - (NoteSprite.Texture.Width * 1.6f) && KeyPress && Miss == false)
                 {
-                    if (Hit == false)
+                    if (!Hit)
                     {
                         KeyPress = false;
                         if (Game1.Windows)

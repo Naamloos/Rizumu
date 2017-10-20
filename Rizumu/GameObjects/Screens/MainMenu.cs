@@ -10,6 +10,7 @@ using Rizumu.GuiObjects;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using Rizumu.Enums;
 
 namespace Rizumu.GameObjects.Screens
 {
@@ -24,7 +25,7 @@ namespace Rizumu.GameObjects.Screens
         public Background Background;
         public Background MenuOverlay;
 
-        public string Name { get => "main"; }
+        public Screen Name => Screen.Main;
 
         #region Preloading
         public void Preload(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics)
@@ -36,7 +37,7 @@ namespace Rizumu.GameObjects.Screens
             PlayButton = new Button(spriteBatch, GameData.globalwidth - BTN.Width - 50, 150, BTN, GameData.Instance.CurrentSkin.ButtonHover, "Play");
             PlayButton.OnClick += (sender, e) =>
             {
-                GameData.Instance.CurrentScreen = "select";
+                GameData.Instance.CurrentScreen = Screen.Select;
             };
             #endregion
 
@@ -44,7 +45,7 @@ namespace Rizumu.GameObjects.Screens
             OptionsButton = new Button(spriteBatch, GameData.globalwidth - BTN.Width - 250, (buttonHeight * 1) + 175, BTN, GameData.Instance.CurrentSkin.ButtonHover, "Options");
             OptionsButton.OnClick += (sender, e) =>
             {
-                GameData.Instance.CurrentScreen = "options";
+                GameData.Instance.CurrentScreen = Screen.Options;
             };
             #endregion
 
@@ -75,7 +76,7 @@ namespace Rizumu.GameObjects.Screens
         public void Update(GameTime gameTime, Rectangle cursor, bool clicked)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.F1))
-                GameData.Instance.CurrentScreen = "editor";
+                GameData.Instance.CurrentScreen = Screen.Editor;
             /* TODO: Implement platform specific Open File code
             if (Keyboard.GetState().IsKeyDown(Keys.F2))
             {

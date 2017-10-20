@@ -50,6 +50,7 @@
     <Compile Include="Engine\IScreen.cs" />
     <Compile Include="Engine\Sprite.cs" />
     <Compile Include="Engine\Text.cs" />
+    <Compile Include="Enums\ScreensTypes.cs" />
     <Compile Include="EventArgs\RegisterAndroidUri.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Game1.cs" />

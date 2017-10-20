@@ -77,7 +77,7 @@ namespace Rizumu.Objects
             var song = Microsoft.Xna.Framework.Media.Song.FromUri(System.IO.Path.Combine(Path, FileName), uri);
             var songType = song.GetType();
 
-#if WINDOWS == false
+#if !WINDOWS
             Game1.RegisterAndroidUri.Invoke(null, new EventArgs.RegisterAndroidUriArgs()
             {
                 path = System.IO.Path.Combine(Path, FileName),
