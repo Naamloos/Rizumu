@@ -70,6 +70,9 @@ namespace Rizumu.Helpers
 
         public void ConvertOsuMaps()
         {
+            List<string> bgImgExt = new List<string>() { ".png", ".jpg", ".jpeg" };
+            List<string> songExt = new List<string>() { ".mp3" };
+
             foreach (string folder in Directory.GetDirectories("songs"))
             {
                 bool HasOsu = false;
@@ -78,26 +81,26 @@ namespace Rizumu.Helpers
                     int heck = 0;
                     foreach (string file in Directory.GetFiles(folder))
                     {
-                        if (file.EndsWith(".osu"))
+                        if (file.EndsWith(".osu", StringComparison.OrdinalIgnoreCase))
                         {
                             Map m = new Map();
 
                             m = ShittyOsuConverter.FromBeatmap(file);
-                            m.Name = file.Substring(file.LastIndexOf('\\') + 1).Replace(".osu", "");
+                            m.Name = Path.GetFileNameWithoutExtension(file);
                             m.Creator = "OsuGame";
 
-                            var images = Directory.GetFiles(folder).Where(x => x.EndsWith(".png") || x.EndsWith(".jpg") || x.EndsWith(".jpeg"));
+                            var images = Directory.GetFiles(folder).Where(x => bgImgExt.Contains(Path.GetExtension(x), StringComparer.OrdinalIgnoreCase));
                             if (images.Any())
                             {
                                 m.BackgroundFile = images.First().Substring(images.First().LastIndexOf('\\') + 1);
                             }
 
-                            var mp3s = Directory.GetFiles(folder).Where(x => x.EndsWith(".mp3"));
+                            var mp3s = Directory.GetFiles(folder).Where(x => songExt.Contains(Path.GetExtension(x), StringComparer.OrdinalIgnoreCase));
                             if (mp3s.Any())
                             {
                                 m.FileName = mp3s.First().Substring(mp3s.First().LastIndexOf('\\') + 1);
                             }
-                            string fn = file.Substring(file.LastIndexOf('\\') + 1).Replace(".osu", "");
+                            string fn = Path.GetFileNameWithoutExtension(file);
                             string newpath = Path.Combine("songs", fn);
                             Directory.CreateDirectory(newpath);
                             if (m.FileName != "empty")
