@@ -76,6 +76,10 @@ namespace Rizumu.GameObjects.Screens
         public Screen Name => Screen.Ingame;
 
         public bool up;
+        public TimeSpan LeftVisTS = TimeSpan.FromSeconds(0);
+        public TimeSpan UpVisTS = TimeSpan.FromSeconds(0);
+        public TimeSpan RightVisTS = TimeSpan.FromSeconds(0);
+        public TimeSpan DownVisTS = TimeSpan.FromSeconds(0);
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, Rectangle cursor, bool clicked, GraphicsDevice g)
         {
             sb = spriteBatch;
@@ -291,28 +295,28 @@ namespace Rizumu.GameObjects.Screens
                                 {
                                     Recording.PressesDown.Add(Timer);
                                     DownHold = true;
-                                    if(!olddown)
+                                    if (!olddown)
                                         DownPress = true;
                                 }
                                 else
                                 {
                                     Recording.PressesUp.Add(Timer);
                                     UpHold = true;
-                                    if(!oldup)
+                                    if (!oldup)
                                         UpPress = true;
                                 }
                                 if (x > GameData.globalwidth / 2)
                                 {
                                     Recording.PressesRight.Add(Timer);
                                     RightHold = true;
-                                    if(!oldright)
+                                    if (!oldright)
                                         RightPress = true;
                                 }
                                 else
                                 {
                                     Recording.PressesLeft.Add(Timer);
                                     DownHold = true;
-                                    if(!oldleft)
+                                    if (!oldleft)
                                         LeftPress = true;
                                 }
                                 olddown = DownPress;
@@ -393,75 +397,52 @@ namespace Rizumu.GameObjects.Screens
                 OpacityOverlay.Draw();
 
                 #region Gameplay (yay!)
-                float leftdist = 0;
-                float updist = 0;
-                float rightdist = 0;
-                float downdist = 0;
+                float leftdist = VisionLeft.Alpha;
+                float updist = VisionUp.Alpha;
+                float rightdist = VisionRight.Alpha;
+                float downdist = VisionDown.Alpha;
                 foreach (Note n in NotesLeft)
                 {
                     //if (n.Time - ((Background.Width / 2) + n.NoteSprite.Texture.Width) < Timer)
-                        n.Draw(ref LeftPress, Paused, ready, Rotation, ref CurrentCombo, ref leftdist, Timer, GameData.Instance.Mods.Automode);
+                    n.Draw(ref LeftPress, Paused, ready, Rotation, ref CurrentCombo, ref leftdist, Timer, GameData.Instance.Mods.Automode);
                 }
                 foreach (Note n in NotesUp)
                 {
                     //if (n.Time - ((Background.Height / 2) + n.NoteSprite.Texture.Height) < Timer)
-                        n.Draw(ref UpPress, Paused, ready, Rotation, ref CurrentCombo, ref updist, Timer, GameData.Instance.Mods.Automode);
+                    n.Draw(ref UpPress, Paused, ready, Rotation, ref CurrentCombo, ref updist, Timer, GameData.Instance.Mods.Automode);
                 }
                 foreach (Note n in NotesRight)
                 {
                     //if (n.Time - ((Background.Width / 2) + (n.NoteSprite.Texture.Width * 2)) < Timer)
-                        n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer, GameData.Instance.Mods.Automode);
+                    n.Draw(ref RightPress, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer, GameData.Instance.Mods.Automode);
                 }
                 foreach (Note n in NotesDown)
                 {
                     //if (n.Time - ((Background.Height / 2) + (n.NoteSprite.Texture.Height * 2)) < Timer)
-                        n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer, GameData.Instance.Mods.Automode);
+                    n.Draw(ref DownPress, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer, GameData.Instance.Mods.Automode);
                 }
 
-                foreach (SNote n in SNotesLeft)
-                {
-                    if (n.Time - ((Background.Width / 2) + n.NoteSprite.Texture.Width) < Timer)
-                        n.Draw(ref LeftHold, Paused, ready, Rotation, ref CurrentCombo, ref leftdist, Timer, GameData.Instance.Mods.Automode);
-                }
-                foreach (SNote n in SNotesUp)
-                {
-                    if (n.Time - ((Background.Height / 2) + n.NoteSprite.Texture.Height) < Timer)
-                        n.Draw(ref UpHold, Paused, ready, Rotation, ref CurrentCombo, ref updist, Timer, GameData.Instance.Mods.Automode);
-                }
-                foreach (SNote n in SNotesRight)
-                {
-                    if (n.Time - ((Background.Width / 2) + (n.NoteSprite.Texture.Width * 2)) < Timer)
-                        n.Draw(ref RightHold, Paused, ready, Rotation, ref CurrentCombo, ref rightdist, Timer, GameData.Instance.Mods.Automode);
-                }
-                foreach (SNote n in SNotesDown)
-                {
-                    if (n.Time - ((Background.Height / 2) + (n.NoteSprite.Texture.Height * 2)) < Timer)
-                        n.Draw(ref DownHold, Paused, ready, Rotation, ref CurrentCombo, ref downdist, Timer, GameData.Instance.Mods.Automode);
-                }
                 LeftNote.Rotation = Rotation;
                 UpNote.Rotation = Rotation;
                 RightNote.Rotation = Rotation;
                 DownNote.Rotation = Rotation;
 
-                if (updist != 0)
-                    VisionUp.Alpha = (updist / 2);
-                else
-                    VisionUp.Alpha = VisionUp.Alpha - 0.1f;
+                if (leftdist == 0.4f)
+                    LeftVisTS = MediaPlayer.PlayPosition;
+                if (updist == 0.4f)
+                    UpVisTS = MediaPlayer.PlayPosition;
+                if (rightdist == 0.4f)
+                    RightVisTS = MediaPlayer.PlayPosition;
+                if (downdist == 0.4f)
+                    DownVisTS = MediaPlayer.PlayPosition;
 
-                if (downdist != 0)
-                    VisionDown.Alpha = (downdist / 2);
-                else
-                    VisionDown.Alpha = VisionDown.Alpha - 0.1f;
+                VisionUp.Alpha = updist - (float)((MediaPlayer.PlayPosition - UpVisTS).TotalMilliseconds / 20000);
 
-                if (leftdist != 0)
-                    VisionLeft.Alpha = (leftdist / 2);
-                else
-                    VisionLeft.Alpha = VisionLeft.Alpha - 0.1f;
+                VisionDown.Alpha = downdist - (float)((MediaPlayer.PlayPosition - DownVisTS).TotalMilliseconds / 20000);
 
-                if (rightdist != 0)
-                    VisionRight.Alpha = (rightdist / 2);
-                else
-                    VisionRight.Alpha = VisionRight.Alpha - 0.1f;
+                VisionLeft.Alpha = leftdist - (float)((MediaPlayer.PlayPosition - LeftVisTS).TotalMilliseconds / 20000);
+
+                VisionRight.Alpha = rightdist - (float)((MediaPlayer.PlayPosition - RightVisTS).TotalMilliseconds / 20000);
 
                 VisionUp.DrawScaled(Background.Width, Background.Height);
                 VisionDown.DrawScaled(Background.Width, Background.Height);

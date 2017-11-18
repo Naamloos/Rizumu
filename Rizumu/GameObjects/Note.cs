@@ -108,8 +108,6 @@ namespace Rizumu.GameObjects
             }
             if (traveldistance * LocalSpeed + (NoteSprite.Texture.Width / 2) > Position && Hit == false)
             {
-                float vis = traveldistance - Position;
-                visiondist = vis / 1000;
                 NoteSprite.Draw(true);
             }
             else if (!Miss && !Hit)
@@ -127,8 +125,11 @@ namespace Rizumu.GameObjects
                     {
                         KeyPress = false;
                         if (Game1.Windows)
+                        {
                             GameData.Instance.CurrentSkin.Hit.Play();
+                        }
                         CurrentCombo++;
+                        visiondist = 0.4f;
                     }
                     Hit = true;
                 }
@@ -143,6 +144,7 @@ namespace Rizumu.GameObjects
                         if (Game1.Windows)
                             GameData.Instance.CurrentSkin.Hit.Play();
                         CurrentCombo++;
+                        visiondist = 0.4f;
                     }
                     Hit = true;
                 }

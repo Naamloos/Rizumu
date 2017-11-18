@@ -43,6 +43,10 @@ namespace Rizumu.Helpers
                     Maps.Add(m);
                 }
             }
+            Maps.Sort(delegate (Map X, Map Y)
+            {
+                return X.Name.CompareTo(Y.Name);
+            });
             return Maps.Any();
         }
 
