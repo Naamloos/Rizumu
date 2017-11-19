@@ -14,7 +14,7 @@ namespace Rizumu.GL
         [STAThread]
         static void Main()
         {
-            using (var game = new RizumuGame())
+            using (var game = new RizumuGame("OpenGL"))
                 game.Run();
         }
     }

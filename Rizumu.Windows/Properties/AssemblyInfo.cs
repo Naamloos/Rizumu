@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Rizumu")]
-[assembly: AssemblyProduct("Rizumu")]
+[assembly: AssemblyTitle("Rizumu.DX")]
+[assembly: AssemblyProduct("Rizumu.DX")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyDescription("Rizumu is licensed under the GNU General Public License v3.0")]
 [assembly: AssemblyCompany("")]

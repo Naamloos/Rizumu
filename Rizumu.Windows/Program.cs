@@ -15,7 +15,7 @@ namespace Rizumu.Windows
         [STAThread]
         static void Main()
         {
-            using (var game = new RizumuGame())
+            using (var game = new RizumuGame("DirectX"))
                 game.Run();
         }
     }
