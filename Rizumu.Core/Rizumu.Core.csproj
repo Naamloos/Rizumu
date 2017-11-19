@@ -44,6 +44,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Engine\Entities\Sprite.cs" />
+    <Compile Include="Engine\TextureManager.cs" />
     <Compile Include="RizumuGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
