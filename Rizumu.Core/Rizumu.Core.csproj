@@ -45,6 +45,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Engine\Entities\Sprite.cs" />
+    <Compile Include="Engine\GUI\GuiBuilder.cs" />
+    <Compile Include="Engine\GUI\GuiItem.cs" />
+    <Compile Include="Engine\MouseValues.cs" />
     <Compile Include="Engine\TextureManager.cs" />
     <Compile Include="RizumuGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

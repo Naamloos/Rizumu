@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Rizumu.Core.Engine;
 using Rizumu.Core.Engine.Entities;
 
 namespace Rizumu.Core
@@ -10,12 +11,13 @@ namespace Rizumu.Core
     /// </summary>
     public class RizumuGame : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        GraphicsDeviceManager Graphics;
+        SpriteBatch SpriteBatch;
+        MouseValues MouseValues;
         
         public RizumuGame(string platform)
         {
-            graphics = new GraphicsDeviceManager(this);
+            Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
@@ -26,7 +28,7 @@ namespace Rizumu.Core
 
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
         protected override void UnloadContent()
@@ -35,6 +37,8 @@ namespace Rizumu.Core
 
         protected override void Update(GameTime gameTime)
         {
+            MouseValues.Update(Mouse.GetState());
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             base.Update(gameTime);
