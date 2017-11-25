@@ -15,14 +15,14 @@ namespace Rizumu.Core.GameLogic
     {
         private GameScreenReturns _startvalues { get; set; }
 
-        Sprite test;
+        Gui GUI;
 
         public void Initialize(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics, GameScreenReturns values)
         {
             this._startvalues = values;
-            var guib = new GuiBuilder();
-            // do gui.. building...!
-            test = "test";
+            GUI = new GuiBuilder()
+                .AddButton(5,5, "frank", "test", "test")
+                .Build();
         }
 
         public GameScreenReturns Unload(GameScreenType NewScreen)
@@ -33,14 +33,14 @@ namespace Rizumu.Core.GameLogic
             };
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, MouseValues mouseValues)
         {
             
         }
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues)
         {
-            test.Draw(spriteBatch);
+            GUI.Draw(spriteBatch, mouseValues);
         }
     }
 }

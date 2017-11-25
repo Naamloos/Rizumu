@@ -53,14 +53,14 @@ namespace Rizumu.Core
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             base.Update(gameTime);
-            GameScreenManager.UpdateCurrent(gameTime);
+            GameScreenManager.UpdateCurrent(gameTime, MouseValues);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             SpriteBatch.Begin();
-            GameScreenManager.DrawCurrent(SpriteBatch, gameTime);
+            GameScreenManager.DrawCurrent(SpriteBatch, gameTime, MouseValues);
             SpriteBatch.End();
 
             base.Draw(gameTime);
