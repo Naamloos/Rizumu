@@ -15,14 +15,9 @@ namespace Rizumu.Core.GameLogic
     {
         private GameScreenReturns _startvalues { get; set; }
 
-        Gui GUI;
-
         public void Initialize(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics, GameScreenReturns values)
         {
             this._startvalues = values;
-            GUI = new GuiBuilder()
-                .AddButton(5,5, "frank", "test", "test")
-                .Build();
         }
 
         public GameScreenReturns Unload(GameScreenType NewScreen)
@@ -40,7 +35,7 @@ namespace Rizumu.Core.GameLogic
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues)
         {
-            GUI.Draw(spriteBatch, mouseValues);
+
         }
     }
 }

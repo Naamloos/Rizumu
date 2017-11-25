@@ -16,14 +16,17 @@ namespace Rizumu.Core.Engine.Entities
         internal int Y { get { return Location.Y; } set { Location.Y = value; } }
         internal Rectangle Hitbox { get { return new Rectangle(Location.X, Location.Y, Texture2D.Width, Texture2D.Height); } }
 
-        public void Draw(SpriteBatch sb, int? X = null, int? Y = null)
+        public void Draw(SpriteBatch sb, int? X = null, int? Y = null, int? Width = null, int? Height = null)
         {
             if (!(X == null))
                 this.X = (int)X;
             if (!(Y == null))
                 this.Y = (int)Y;
 
-            sb.Draw(Texture2D, Hitbox, Color.White);
+            if (Width == null && Height == null)
+                sb.Draw(Texture2D, Hitbox, Color.White);
+            else
+                sb.Draw(Texture2D, new Rectangle(this.X, this.Y, Width ?? Texture2D.Width, Height ?? Texture2D.Height), Color.White);
         }
 
         public static implicit operator Sprite(string texture)

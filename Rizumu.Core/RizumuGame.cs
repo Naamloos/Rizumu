@@ -12,7 +12,9 @@ namespace Rizumu.Core
     /// </summary>
     public class RizumuGame : Game
     {
+        public static SpriteFont Font;
         GraphicsDeviceManager Graphics;
+        RenderTarget2D RT;
         SpriteBatch SpriteBatch;
         MouseValues MouseValues = new MouseValues();
         
@@ -26,11 +28,16 @@ namespace Rizumu.Core
         {
             base.Initialize();
             this.IsMouseVisible = true;
+            this.Graphics.PreferredBackBufferHeight = 540;
+            this.Graphics.PreferredBackBufferWidth = 960;
+            RT = new RenderTarget2D(SpriteBatch.GraphicsDevice, 1920, 1080);
         }
 
         protected override void LoadContent()
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
+            Font = Content.Load<SpriteFont>("fonts/default");
+
             TextureManager.LoadTexture(Content, "testing/texture", "test");
             GameScreenManager.ChangeScreen(GameScreenType.MainMenu, SpriteBatch, Graphics);
         }
@@ -56,9 +63,15 @@ namespace Rizumu.Core
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            SpriteBatch.GraphicsDevice.SetRenderTarget(RT);
             SpriteBatch.Begin();
+            GraphicsDevice.Clear(Color.CornflowerBlue);
             GameScreenManager.DrawCurrent(SpriteBatch, gameTime, MouseValues);
+            SpriteBatch.End();
+
+            SpriteBatch.GraphicsDevice.SetRenderTarget(null);
+            SpriteBatch.Begin();
+            SpriteBatch.Draw(RT, new Rectangle(0, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), Color.White);
             SpriteBatch.End();
 
             base.Draw(gameTime);

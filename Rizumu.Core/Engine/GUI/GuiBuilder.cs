@@ -16,21 +16,21 @@ namespace Rizumu.Core.Engine.GUI
             Items = new List<GuiItem>();
         }
 
-        public GuiBuilder AddButton(int x, int y, string id, string texture, string hovertexture)
+        public GuiBuilder AddButton(int x, int y, string id, string texture, string hovertexture, string text = "", GuiTextOrigin TextOrigin = GuiTextOrigin.TopLeft)
         {
-            Items.Add(new GuiItem(id, texture, hovertexture, GuiItemType.Button, x, y));
+            Items.Add(new GuiItem(id, texture, hovertexture, GuiItemType.Button, x, y, text, TextOrigin));
             return this;
         }
 
-        public GuiBuilder AddCheckbox(int x, int y ,string id, string texture, string hovertexture)
+        public GuiBuilder AddCheckbox(int x, int y ,string id, string texture, string hovertexture, string text = "")
         {
-            Items.Add(new GuiItem(id, texture, hovertexture, GuiItemType.Checkbox, x, y));
+            Items.Add(new GuiItem(id, texture, hovertexture, GuiItemType.Checkbox, x, y, text));
             return this;
         }
 
-        public GuiBuilder AddSprite(int x, int y, string id, string texture, string hovertexture = null)
+        public GuiBuilder AddSprite(int x, int y, string id, string texture, string hovertexture = null, string text = "", GuiTextOrigin TextOrigin = GuiTextOrigin.TopLeft)
         {
-            Items.Add(new GuiItem(id, texture, string.IsNullOrEmpty(hovertexture) ? texture : hovertexture, GuiItemType.Sprite, x, y));
+            Items.Add(new GuiItem(id, texture, string.IsNullOrEmpty(hovertexture) ? texture : hovertexture, GuiItemType.Sprite, x, y, text, TextOrigin));
             return this;
         }
 
