@@ -18,10 +18,14 @@ namespace Rizumu.Core.Engine.GUI
         public bool Value;
         public GuiItemType Type;
 
-        public GuiItem(string ItemId, string TextureId, string HoverId, GuiItemType Type)
+        public GuiItem(string ItemId, string TextureId, string HoverId, GuiItemType Type, int x, int y)
         {
             this.Texture = TextureId;
             this.TextureHover = HoverId;
+            this.Texture.X = x;
+            this.Texture.Y = y;
+            this.TextureHover.X = x;
+            this.TextureHover.Y = y;
             this.ItemId = ItemId;
             this.Type = Type;
         }
@@ -42,6 +46,9 @@ namespace Rizumu.Core.Engine.GUI
                         if (mouse.Clicked)
                             Value = !Value;
                     break;
+                default:
+                case GuiItemType.Sprite:
+                    break;
             }
 
             if (Value)
@@ -54,7 +61,8 @@ namespace Rizumu.Core.Engine.GUI
     internal enum GuiItemType
     {
         Button,
-        Checkbox
+        Checkbox,
+        Sprite
     }
 
     internal class GuiEventArgs : EventArgs
