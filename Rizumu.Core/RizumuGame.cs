@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Rizumu.Core.Engine;
 using Rizumu.Core.Engine.Entities;
+using System;
 
 namespace Rizumu.Core
 {
@@ -13,7 +14,8 @@ namespace Rizumu.Core
     {
         GraphicsDeviceManager Graphics;
         SpriteBatch SpriteBatch;
-        MouseValues MouseValues;
+        MouseValues MouseValues = new MouseValues();
+        Sprite Test;
         
         public RizumuGame(string platform)
         {
@@ -29,24 +31,38 @@ namespace Rizumu.Core
         protected override void LoadContent()
         {
             SpriteBatch = new SpriteBatch(GraphicsDevice);
+            TextureManager.LoadTexture(Content, "testing/texture", "test");
+            GameScreenManager.ChangeScreen(GameScreenType.MainMenu, SpriteBatch, Graphics);
         }
 
         protected override void UnloadContent()
         {
         }
 
+        double _oldms = 0;
         protected override void Update(GameTime gameTime)
         {
             MouseValues.Update(Mouse.GetState());
+            if(_oldms < gameTime.ElapsedGameTime.TotalMilliseconds)
+            {
+                // millisecond based updates here
+                AnimationManager.UpdateValues();
+            }
+            _oldms = gameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             base.Update(gameTime);
+            GameScreenManager.UpdateCurrent(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            SpriteBatch.Begin();
+            GameScreenManager.DrawCurrent(SpriteBatch, gameTime);
+            SpriteBatch.End();
+
             base.Draw(gameTime);
         }
     }

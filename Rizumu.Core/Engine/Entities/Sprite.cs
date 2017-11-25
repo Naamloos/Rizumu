@@ -14,7 +14,7 @@ namespace Rizumu.Core.Engine.Entities
         internal Point Location;
         internal int X { get { return Location.X; } set { Location.X = value; } }
         internal int Y { get { return Location.Y; } set { Location.Y = value; } }
-        internal Rectangle Hitbox { get { return new Rectangle(Location, new Point(Texture2D.Width, Texture2D.Height)); } }
+        internal Rectangle Hitbox { get { return new Rectangle(Location.X, Location.Y, Texture2D.Width, Texture2D.Height); } }
 
         public void Draw(SpriteBatch sb, int? X = null, int? Y = null)
         {

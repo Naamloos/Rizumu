@@ -11,13 +11,16 @@ namespace Rizumu.Core.Engine
     internal class MouseValues
     {
         public bool Clicked = false;
-        public int X;
-        public int Y;
+        public int X = 0;
+        public int Y = 0;
         public Rectangle Hitbox { get { return new Rectangle(X, Y, 1, 1); } }
-        private bool _previousclick;
+        private bool _previousclick = false;
 
         public void Update(MouseState ms)
         {
+            if (ms == null)
+                return;
+
             this.X = ms.X;
             this.Y = ms.Y;
 

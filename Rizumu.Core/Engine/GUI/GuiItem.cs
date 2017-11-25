@@ -59,8 +59,8 @@ namespace Rizumu.Core.Engine.GUI
 
     internal class GuiEventArgs : EventArgs
     {
-        public GuiItem Item;
-        public GuiItemType Type;
-        public string ID;
+        public GuiItem Item = null;
+        public GuiItemType Type = GuiItemType.Button;
+        public string Id = "";
     }
 }
