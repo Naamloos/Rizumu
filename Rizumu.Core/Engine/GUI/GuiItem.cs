@@ -13,8 +13,8 @@ namespace Rizumu.Core.Engine.GUI
         private Sprite Texture;
         private Sprite TextureHover;
         private string ItemId;
-        public EventHandler<GuiEventArgs> OnClick;
-        public EventHandler<GuiEventArgs> OnHover;
+        public event EventHandler<GuiEventArgs> OnClick;
+        public event EventHandler<GuiEventArgs> OnHover;
         public bool Value;
         public GuiItemType Type;
 
@@ -36,15 +36,46 @@ namespace Rizumu.Core.Engine.GUI
             {
                 case GuiItemType.Button:
                     if (mouse.Hitbox.Intersects(this.Texture.Hitbox))
+                    {
                         Value = true;
+                        if (mouse.Clicked)
+                            OnClick?.Invoke(this, new GuiEventArgs()
+                            {
+                                Id = ItemId,
+                                Item = this,
+                                Type = Type
+                            });
+                        OnHover?.Invoke(this, new GuiEventArgs()
+                        {
+                            Id = ItemId,
+                            Item = this,
+                            Type = Type
+                        });
+                    }
                     else
                         Value = false;
                     break;
 
                 case GuiItemType.Checkbox:
                     if (mouse.Hitbox.Intersects(this.Texture.Hitbox))
+                    {
                         if (mouse.Clicked)
+                        {
+                            OnClick?.Invoke(this, new GuiEventArgs()
+                            {
+                                Id = ItemId,
+                                Item = this,
+                                Type = Type
+                            });
                             Value = !Value;
+                        }
+                        OnHover?.Invoke(this, new GuiEventArgs()
+                        {
+                            Id = ItemId,
+                            Item = this,
+                            Type = Type
+                        });
+                    }
                     break;
                 default:
                 case GuiItemType.Sprite:

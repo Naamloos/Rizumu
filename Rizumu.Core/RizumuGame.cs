@@ -15,7 +15,6 @@ namespace Rizumu.Core
         GraphicsDeviceManager Graphics;
         SpriteBatch SpriteBatch;
         MouseValues MouseValues = new MouseValues();
-        Sprite Test;
         
         public RizumuGame(string platform)
         {
@@ -26,6 +25,7 @@ namespace Rizumu.Core
         protected override void Initialize()
         {
             base.Initialize();
+            this.IsMouseVisible = true;
         }
 
         protected override void LoadContent()
@@ -50,8 +50,6 @@ namespace Rizumu.Core
             }
             _oldms = gameTime.ElapsedGameTime.TotalMilliseconds;
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
             base.Update(gameTime);
             GameScreenManager.UpdateCurrent(gameTime, MouseValues);
         }

@@ -43,10 +43,17 @@ namespace Rizumu.Core.Engine.GUI
     internal class Gui
     {
         private List<GuiItem> Items;
+        public event EventHandler<GuiEventArgs> OnClick;
+        public event EventHandler<GuiEventArgs> OnHover;
 
         internal Gui(List<GuiItem> items)
         {
             Items = items;
+            foreach(var i in Items)
+            {
+                i.OnClick += (sender, e) => OnClick?.Invoke(sender, e);
+                i.OnHover += (sender, e) => OnHover?.Invoke(sender, e);
+            }
         }
 
         public void Draw(SpriteBatch sb, MouseValues mv)
