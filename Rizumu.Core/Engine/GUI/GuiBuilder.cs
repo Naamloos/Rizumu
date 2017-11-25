@@ -34,6 +34,12 @@ namespace Rizumu.Core.Engine.GUI
             return this;
         }
 
+        public GuiBuilder AddBackground(string texture)
+        {
+            Items.Add(new GuiItem("", texture, "", GuiItemType.Background, 0, 0));
+            return this;
+        }
+
         public Gui Build()
         {
             return new Gui(Items);

@@ -39,6 +39,9 @@ namespace Rizumu.Core
             Font = Content.Load<SpriteFont>("fonts/default");
 
             TextureManager.LoadTexture(Content, "testing/texture", "test");
+            TextureManager.LoadTexture(Content, "backgrounds/menuscreen", "menu");
+            TextureManager.LoadTexture(Content, "gui/button", "button");
+            TextureManager.LoadTexture(Content, "gui/buttonhover", "buttonhover");
             GameScreenManager.ChangeScreen(GameScreenType.MainMenu, SpriteBatch, Graphics);
         }
 
@@ -49,7 +52,7 @@ namespace Rizumu.Core
         double _oldms = 0;
         protected override void Update(GameTime gameTime)
         {
-            MouseValues.Update(Mouse.GetState());
+            MouseValues.Update(Mouse.GetState(), this.Graphics.PreferredBackBufferWidth, this.Graphics.PreferredBackBufferHeight);
             if(_oldms < gameTime.ElapsedGameTime.TotalMilliseconds)
             {
                 // millisecond based updates here

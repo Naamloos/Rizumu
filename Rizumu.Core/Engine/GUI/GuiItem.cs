@@ -23,7 +23,7 @@ namespace Rizumu.Core.Engine.GUI
         public GuiItem(string ItemId, string TextureId, string HoverId, GuiItemType Type, int x, int y, string text = "", GuiTextOrigin TextOrigin = GuiTextOrigin.TopLeft)
         {
             this.Texture = TextureId;
-            this.TextureHover = HoverId;
+            this.TextureHover = string.IsNullOrEmpty(HoverId)? TextureId : HoverId;
             this.Texture.X = x;
             this.Texture.Y = y;
             this.TextureHover.X = x;
