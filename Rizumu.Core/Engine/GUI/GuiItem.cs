@@ -1,13 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Rizumu.Core.Engine.Entities;
+using Rizumu;
+using Rizumu.Engine.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rizumu.Core.Engine.GUI
+namespace Rizumu.Engine.GUI
 {
     internal class GuiItem
     {

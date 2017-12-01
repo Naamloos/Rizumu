@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rizumu.Core", "Rizumu.Core\Rizumu.Core.csproj", "{5A2467EE-F269-45ED-BBAF-668044E1148C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rizumu", "Rizumu.Core\Rizumu.csproj", "{5A2467EE-F269-45ED-BBAF-668044E1148C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,13 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Rizumu.Core.GameLogic;
+using Rizumu.GameLogic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rizumu.Core.Engine
+namespace Rizumu.Engine
 {
     internal class GameScreenManager
     {

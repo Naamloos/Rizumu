@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rizumu.Core.Engine.GUI
+namespace Rizumu.Engine.GUI
 {
     internal class GuiBuilder
     {

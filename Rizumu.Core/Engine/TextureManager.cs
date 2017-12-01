@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Rizumu.Core.Engine
+namespace Rizumu.Engine
 {
     internal class TextureManager
     {

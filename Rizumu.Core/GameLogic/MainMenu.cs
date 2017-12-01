@@ -1,4 +1,4 @@
-﻿using Rizumu.Core.Engine;
+﻿using Rizumu.Engine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Rizumu.Core.Engine.GUI;
-using Rizumu.Core.Engine.Entities;
+using Rizumu.Engine.GUI;
+using Rizumu.Engine.Entities;
 
-namespace Rizumu.Core.GameLogic
+namespace Rizumu.GameLogic
 {
     internal class MainMenu : IGameScreen
     {

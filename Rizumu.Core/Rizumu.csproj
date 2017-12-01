@@ -9,8 +9,8 @@
     <ProjectGuid>{5A2467EE-F269-45ED-BBAF-668044E1148C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rizumu.Core</RootNamespace>
-    <AssemblyName>Rizumu.Core</AssemblyName>
+    <RootNamespace>Rizumu</RootNamespace>
+    <AssemblyName>Rizumu</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>DesktopGL</MonoGamePlatform>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
@@ -42,7 +42,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
-    <StartupObject>Rizumu.Core.Entry</StartupObject>
+    <StartupObject>Rizumu.Entry</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Engine\AnimationManager.cs" />
