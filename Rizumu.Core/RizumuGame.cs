@@ -7,6 +7,17 @@ using System;
 
 namespace Rizumu.Core
 {
+    public class Entry
+    {
+        static void Main()
+        {
+            using (var game = new RizumuGame(Environment.OSVersion.Platform.ToString()))
+            {
+                game.Run();
+            }
+        }
+    }
+
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
