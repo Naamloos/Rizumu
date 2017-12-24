@@ -15,23 +15,50 @@ namespace Rizumu.Engine.GUI
         private Sprite Texture;
         private Sprite TextureHover;
         private string ItemId;
+        private GuiOrigin Origin;
         public event EventHandler<GuiEventArgs> OnClick;
         public event EventHandler<GuiEventArgs> OnHover;
         public bool Value;
         public GuiItemType Type;
         public GuiItemText Text;
 
-        public GuiItem(string ItemId, string TextureId, string HoverId, GuiItemType Type, int x, int y, string text = "", GuiTextOrigin TextOrigin = GuiTextOrigin.TopLeft)
+        public GuiItem(string ItemId, string TextureId, string HoverId, GuiItemType Type, int x, int y, GuiOrigin Origin,
+            string text = "", GuiOrigin TextOrigin = GuiOrigin.TopLeft)
         {
             this.Texture = TextureId;
             this.TextureHover = string.IsNullOrEmpty(HoverId)? TextureId : HoverId;
-            this.Texture.X = x;
-            this.Texture.Y = y;
-            this.TextureHover.X = x;
-            this.TextureHover.Y = y;
             this.ItemId = ItemId;
             this.Type = Type;
+            this.Origin = Origin;
             this.Text = new GuiItemText(text, TextOrigin, 2, 2);
+
+            int locx = 0;
+            int locy = 0;
+
+            switch (Origin)
+            {
+                case GuiOrigin.TopLeft:
+                    locx = x;
+                    locy = y;
+                    break;
+                case GuiOrigin.TopRight:
+                    locx = (1920 - this.Texture.Hitbox.Width) - x;
+                    locy = y;
+                    break;
+                case GuiOrigin.BottomLeft:
+                    locx = x;
+                    locy = (1080 - this.Texture.Hitbox.Height) - y;
+                    break;
+                case GuiOrigin.BottomRight:
+                    locx = (1920 - this.Texture.Hitbox.Width) - x;
+                    locy = (1080 - this.Texture.Hitbox.Height) - y;
+                    break;
+            }
+
+            this.Texture.X = locx;
+            this.Texture.Y = locy;
+            this.TextureHover.X = locx;
+            this.TextureHover.Y = locy;
         }
 
         public void Draw(SpriteBatch sb, MouseValues mouse)
@@ -99,9 +126,9 @@ namespace Rizumu.Engine.GUI
         public bool hastext { get { return text == ""; } }
         public SpriteFont font;
         public Vector2 Offset;
-        public GuiTextOrigin Origin;
+        public GuiOrigin Origin;
 
-        public GuiItemText(string text, GuiTextOrigin Origin, int offx = 0, int offy = 0)
+        public GuiItemText(string text, GuiOrigin Origin, int offx = 0, int offy = 0)
         {
             this.text = text;
             this.Origin = Origin;
@@ -114,19 +141,19 @@ namespace Rizumu.Engine.GUI
             var str = RizumuGame.Font.MeasureString(text);
             switch (Origin)
             {
-                case GuiTextOrigin.TopLeft:
+                case GuiOrigin.TopLeft:
                     loc.Y = ParentY + Offset.Y;
                     loc.X = ParentX + Offset.X;
                     break;
-                case GuiTextOrigin.BottomLeft:
+                case GuiOrigin.BottomLeft:
                     loc.Y = ((ParentY + ParentHeight) - str.Y) - Offset.Y;
                     loc.X = ParentX + Offset.X;
                     break;
-                case GuiTextOrigin.TopRight:
+                case GuiOrigin.TopRight:
                     loc.Y = ParentY + Offset.Y;
                     loc.X = ((ParentX + ParentWidth) - str.X) - Offset.X;
                     break;
-                case GuiTextOrigin.BottomRight:
+                case GuiOrigin.BottomRight:
                     loc.Y = ((ParentY + ParentHeight) - str.Y) - Offset.Y;
                     loc.X = ((ParentX + ParentWidth) - str.X) - Offset.X;
                     break;
@@ -136,7 +163,7 @@ namespace Rizumu.Engine.GUI
         }
     }
 
-    internal enum GuiTextOrigin
+    internal enum GuiOrigin
     {
         TopLeft,
         TopRight,

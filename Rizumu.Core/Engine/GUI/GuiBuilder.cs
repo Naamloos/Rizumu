@@ -16,27 +16,28 @@ namespace Rizumu.Engine.GUI
             Items = new List<GuiItem>();
         }
 
-        public GuiBuilder AddButton(int x, int y, string id, string texture, string hovertexture, string text = "", GuiTextOrigin TextOrigin = GuiTextOrigin.TopLeft)
+        public GuiBuilder AddButton(int x, int y, string id, string texture, string hovertexture, GuiOrigin Origin, string text = "", GuiOrigin TextOrigin = GuiOrigin.TopLeft)
         {
-            Items.Add(new GuiItem(id, texture, hovertexture, GuiItemType.Button, x, y, text, TextOrigin));
+            Items.Add(new GuiItem(id, texture, hovertexture, GuiItemType.Button, x, y, Origin, text, TextOrigin));
             return this;
         }
 
-        public GuiBuilder AddCheckbox(int x, int y ,string id, string texture, string hovertexture, string text = "")
+        public GuiBuilder AddCheckbox(int x, int y ,string id, string texture, string hovertexture, GuiOrigin Origin, string text = "")
         {
-            Items.Add(new GuiItem(id, texture, hovertexture, GuiItemType.Checkbox, x, y, text));
+            Items.Add(new GuiItem(id, texture, hovertexture, GuiItemType.Checkbox, x, y, Origin, text));
             return this;
         }
 
-        public GuiBuilder AddSprite(int x, int y, string id, string texture, string hovertexture = null, string text = "", GuiTextOrigin TextOrigin = GuiTextOrigin.TopLeft)
+        public GuiBuilder AddSprite(int x, int y, string id, string texture, string hovertexture = null, 
+            GuiOrigin Origin = GuiOrigin.TopLeft, string text = "", GuiOrigin TextOrigin = GuiOrigin.TopLeft)
         {
-            Items.Add(new GuiItem(id, texture, string.IsNullOrEmpty(hovertexture) ? texture : hovertexture, GuiItemType.Sprite, x, y, text, TextOrigin));
+            Items.Add(new GuiItem(id, texture, string.IsNullOrEmpty(hovertexture) ? texture : hovertexture, GuiItemType.Sprite, x, y, Origin, text, TextOrigin));
             return this;
         }
 
         public GuiBuilder AddBackground(string texture)
         {
-            Items.Add(new GuiItem("", texture, "", GuiItemType.Background, 0, 0));
+            Items.Add(new GuiItem("", texture, "", GuiItemType.Background, 0, 0, GuiOrigin.TopLeft));
             return this;
         }
 
