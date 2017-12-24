@@ -59,28 +59,6 @@ namespace Rizumu.Engine.GUI
                     else
                         Value = false;
                     break;
-
-                case GuiItemType.Checkbox:
-                    if (mouse.Hitbox.Intersects(this.Texture.Hitbox))
-                    {
-                        if (mouse.Clicked)
-                        {
-                            OnClick?.Invoke(this, new GuiEventArgs()
-                            {
-                                Id = ItemId,
-                                Item = this,
-                                Type = Type
-                            });
-                            Value = !Value;
-                        }
-                        OnHover?.Invoke(this, new GuiEventArgs()
-                        {
-                            Id = ItemId,
-                            Item = this,
-                            Type = Type
-                        });
-                    }
-                    break;
                 default:
                 case GuiItemType.Sprite:
                     break;

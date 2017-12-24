@@ -63,7 +63,7 @@ namespace Rizumu
         double _oldms = 0;
         protected override void Update(GameTime gameTime)
         {
-            MouseValues.Update(Mouse.GetState(), this.Graphics.PreferredBackBufferWidth, this.Graphics.PreferredBackBufferHeight);
+            MouseValues.Update(Mouse.GetState(Window), this.Window.ClientBounds.Width, this.Window.ClientBounds.Height);
             if(_oldms < gameTime.ElapsedGameTime.TotalMilliseconds)
             {
                 // millisecond based updates here

@@ -20,9 +20,10 @@ namespace Rizumu.Engine
         {
             if (ms == null)
                 return;
-
-            this.X = (int)((((float)ms.X) / (float)SW) * 1920);
-            this.Y = (int)((((float)ms.Y + 5) / (float)SH) * 1080);
+            float xscale = 1920f / SW;
+            float yscale = 1080f / SH;
+            this.X = (int)(ms.X * xscale);
+            this.Y = (int)(ms.Y * yscale);
 
             if (!_previousclick && ms.LeftButton == ButtonState.Pressed)
                 Clicked = true;

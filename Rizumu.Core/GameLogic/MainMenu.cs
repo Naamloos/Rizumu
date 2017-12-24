@@ -23,6 +23,13 @@ namespace Rizumu.GameLogic
                 .AddBackground("menu")
                 .AddButton(50, 80, "exit", "button", "buttonhover", "Exit", GuiTextOrigin.BottomRight)
                 .Build();
+            Menu.OnClick += (sender, e) =>
+            {
+                if(e.Id == "exit")
+                {
+                    System.Windows.Forms.MessageBox.Show("Test");
+                }
+            };
         }
 
         public GameScreenReturns Unload(GameScreenType NewScreen)
