@@ -70,7 +70,7 @@ namespace Rizumu.Engine.GUI
             }
             else
             {
-                if (Value)
+                if (!Value)
                 {
                     Texture.Draw(sb);
                     Text.Draw(sb, this.Texture.X, this.Texture.Y, this.Texture.Hitbox.Height, this.Texture.Hitbox.Width);

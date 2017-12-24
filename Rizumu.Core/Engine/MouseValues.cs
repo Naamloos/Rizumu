@@ -16,7 +16,7 @@ namespace Rizumu.Engine
         public Rectangle Hitbox { get { return new Rectangle(X, Y, 1, 1); } }
         private bool _previousclick = false;
 
-        public void Update(MouseState ms, int SW, int SH)
+        public void Update(MouseState ms, int SW, int SH, bool focused)
         {
             if (ms == null)
                 return;
@@ -25,7 +25,7 @@ namespace Rizumu.Engine
             this.X = (int)(ms.X * xscale);
             this.Y = (int)(ms.Y * yscale);
 
-            if (!_previousclick && ms.LeftButton == ButtonState.Pressed)
+            if (!_previousclick && ms.LeftButton == ButtonState.Pressed && focused)
                 Clicked = true;
             else
                 Clicked = false;

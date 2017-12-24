@@ -25,7 +25,7 @@ namespace Rizumu.GameLogic
                 .Build();
             Menu.OnClick += (sender, e) =>
             {
-                if(e.Id == "exit")
+                if (e.Id == "exit")
                 {
                     System.Windows.Forms.MessageBox.Show("Test");
                 }
@@ -42,7 +42,7 @@ namespace Rizumu.GameLogic
 
         public void Update(GameTime gameTime, MouseValues mouseValues)
         {
-            
+
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues)
