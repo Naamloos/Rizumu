@@ -30,14 +30,14 @@ namespace Rizumu.Engine
             _screen.Initialize(sb, gdm, returns);
         }
 
-        public static void UpdateCurrent(GameTime gt, MouseValues mv)
+        public static void UpdateCurrent(GameTime gt)
         {
-            _screen.Update(gt, mv);
+            _screen.Update(gt);
         }
 
-        public static void DrawCurrent(SpriteBatch sb, GameTime gt, MouseValues mv)
+        public static void DrawCurrent(SpriteBatch sb, GameTime gt)
         {
-            _screen.Draw(sb, gt, mv);
+            _screen.Draw(sb, gt);
         }
     }
 
@@ -61,8 +61,8 @@ namespace Rizumu.Engine
 
     internal interface IGameScreen
     {
-        void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues);
-        void Update(GameTime gameTime, MouseValues mouseValues);
+        void Draw(SpriteBatch spriteBatch, GameTime gameTime);
+        void Update(GameTime gameTime);
         void Initialize(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics, GameScreenReturns values);
         GameScreenReturns Unload(GameScreenType NewScreen);
     }

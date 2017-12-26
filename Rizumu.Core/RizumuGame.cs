@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Rizumu.Engine;
 using Rizumu.Engine.Entities;
 using System;
+using MyGameEngine.Engine.Input;
 
 namespace Rizumu
 {
@@ -27,7 +28,6 @@ namespace Rizumu
         GraphicsDeviceManager Graphics;
         RenderTarget2D RT;
         SpriteBatch SpriteBatch;
-        MouseValues MouseValues = new MouseValues();
         
         public RizumuGame(string platform)
         {
@@ -63,7 +63,8 @@ namespace Rizumu
         double _oldms = 0;
         protected override void Update(GameTime gameTime)
         {
-            MouseValues.Update(Mouse.GetState(Window), this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, this.IsActive);
+            KeyboardInput.Update();
+            MouseInput.Update(this.Window.ClientBounds.Width, this.Window.ClientBounds.Height);
             if(_oldms < gameTime.ElapsedGameTime.TotalMilliseconds)
             {
                 // millisecond based updates here
@@ -72,7 +73,7 @@ namespace Rizumu
             _oldms = gameTime.ElapsedGameTime.TotalMilliseconds;
 
             base.Update(gameTime);
-            GameScreenManager.UpdateCurrent(gameTime, MouseValues);
+            GameScreenManager.UpdateCurrent(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -80,7 +81,7 @@ namespace Rizumu
             SpriteBatch.GraphicsDevice.SetRenderTarget(RT);
             SpriteBatch.Begin();
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            GameScreenManager.DrawCurrent(SpriteBatch, gameTime, MouseValues);
+            GameScreenManager.DrawCurrent(SpriteBatch, gameTime);
             SpriteBatch.End();
 
             SpriteBatch.GraphicsDevice.SetRenderTarget(null);

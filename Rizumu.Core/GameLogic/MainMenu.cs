@@ -33,14 +33,14 @@ namespace Rizumu.GameLogic
             };
         }
 
-        public void Update(GameTime gameTime, MouseValues mouseValues)
+        public void Update(GameTime gameTime)
         {
 
         }
 
-        public void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues)
+        public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            Menu.Draw(spriteBatch, mouseValues);
+            Menu.Draw(spriteBatch);
         }
     }
 }

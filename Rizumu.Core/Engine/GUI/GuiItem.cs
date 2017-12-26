@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MyGameEngine.Engine.Input;
 
 namespace Rizumu.Engine.GUI
 {
@@ -61,15 +62,15 @@ namespace Rizumu.Engine.GUI
             this.TextureHover.Y = locy;
         }
 
-        public void Draw(SpriteBatch sb, MouseValues mouse)
+        public void Draw(SpriteBatch sb)
         {
             switch (this.Type)
             {
                 case GuiItemType.Button:
-                    if (mouse.Hitbox.Intersects(this.Texture.Hitbox))
+                    if (MouseInput.HitBox.Intersects(this.Texture.Hitbox))
                     {
                         Value = true;
-                        if (mouse.Clicked)
+                        if (MouseInput.IsButtonPressed(MouseButtons.LeftButton))
                             OnClick?.Invoke(this, new GuiEventArgs()
                             {
                                 Id = ItemId,

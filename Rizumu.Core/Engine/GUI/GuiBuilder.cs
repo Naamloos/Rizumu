@@ -63,11 +63,11 @@ namespace Rizumu.Engine.GUI
             }
         }
 
-        public void Draw(SpriteBatch sb, MouseValues mv)
+        public void Draw(SpriteBatch sb)
         {
             foreach (var i in Items)
             {
-                i.Draw(sb, mv);
+                i.Draw(sb);
             }
         }
     }
