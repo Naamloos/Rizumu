@@ -24,5 +24,10 @@ namespace Rizumu.Engine
                 throw new Exception($"No texture with ID {id} has been registered!");
             return _textures[id];
         }
+
+        public static void UnloadAll()
+        {
+            _textures.Clear();
+        }
     }
 }

@@ -21,9 +21,11 @@ namespace Rizumu.Engine.GUI
         public bool Value;
         public GuiItemType Type;
         public GuiItemText Text;
+        public int CustomHeight = -1;
+        public int CustomWidth = -1;
 
         public GuiItem(string ItemId, string TextureId, string HoverId, GuiItemType Type, int x, int y, GuiOrigin Origin,
-            string text = "", GuiOrigin TextOrigin = GuiOrigin.TopLeft)
+            string text = "", GuiOrigin TextOrigin = GuiOrigin.TopLeft, int heightoverride = -1, int widthoverride = -1)
         {
             this.Texture = TextureId;
             this.TextureHover = string.IsNullOrEmpty(HoverId)? TextureId : HoverId;
@@ -31,6 +33,8 @@ namespace Rizumu.Engine.GUI
             this.Type = Type;
             this.Origin = Origin;
             this.Text = new GuiItemText(text, TextOrigin, 2, 2);
+            this.CustomHeight = heightoverride;
+            this.CustomWidth = widthoverride;
 
             int locx = 0;
             int locy = 0;
@@ -99,12 +103,12 @@ namespace Rizumu.Engine.GUI
             {
                 if (!Value)
                 {
-                    Texture.Draw(sb);
+                    Texture.Draw(sb, Width: CustomWidth == -1? (int?)null : CustomWidth, Height: CustomHeight == -1 ? (int?)null : CustomHeight);
                     Text.Draw(sb, this.Texture.X, this.Texture.Y, this.Texture.Hitbox.Height, this.Texture.Hitbox.Width);
                 }
                 else
                 {
-                    TextureHover.Draw(sb);
+                    TextureHover.Draw(sb, Width: CustomWidth == -1 ? (int?)null : CustomWidth, Height: CustomHeight == -1 ? (int?)null : CustomHeight);
                     Text.Draw(sb, this.TextureHover.X, this.TextureHover.Y, this.TextureHover.Hitbox.Height, this.TextureHover.Hitbox.Width);
                 }
             }

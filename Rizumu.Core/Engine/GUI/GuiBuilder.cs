@@ -29,9 +29,9 @@ namespace Rizumu.Engine.GUI
         }
 
         public GuiBuilder AddSprite(int x, int y, string id, string texture, string hovertexture = null, 
-            GuiOrigin Origin = GuiOrigin.TopLeft, string text = "", GuiOrigin TextOrigin = GuiOrigin.TopLeft)
+            GuiOrigin Origin = GuiOrigin.TopLeft, string text = "", GuiOrigin TextOrigin = GuiOrigin.TopLeft, int widthoverride = -1, int heightoverride = -1)
         {
-            Items.Add(new GuiItem(id, texture, string.IsNullOrEmpty(hovertexture) ? texture : hovertexture, GuiItemType.Sprite, x, y, Origin, text, TextOrigin));
+            Items.Add(new GuiItem(id, texture, string.IsNullOrEmpty(hovertexture) ? texture : hovertexture, GuiItemType.Sprite, x, y, Origin, text, TextOrigin, heightoverride, widthoverride));
             return this;
         }
 

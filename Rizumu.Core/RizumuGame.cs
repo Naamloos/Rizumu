@@ -28,7 +28,7 @@ namespace Rizumu
         RenderTarget2D RT;
         SpriteBatch SpriteBatch;
         MouseValues MouseValues = new MouseValues();
-        
+
         public RizumuGame(string platform)
         {
             Graphics = new GraphicsDeviceManager(this);
@@ -39,8 +39,9 @@ namespace Rizumu
         {
             base.Initialize();
             this.IsMouseVisible = true;
-            this.Graphics.PreferredBackBufferHeight = 540;
-            this.Graphics.PreferredBackBufferWidth = 960;
+            this.Graphics.PreferredBackBufferHeight = 720;
+            this.Graphics.PreferredBackBufferWidth = 1280;
+            this.Graphics.ApplyChanges();
             RT = new RenderTarget2D(SpriteBatch.GraphicsDevice, 1920, 1080);
         }
 
@@ -53,7 +54,8 @@ namespace Rizumu
             TextureManager.LoadTexture(Content, "backgrounds/main_bg", "menu");
             TextureManager.LoadTexture(Content, "gui/button", "button");
             TextureManager.LoadTexture(Content, "gui/buttonhover", "buttonhover");
-            GameScreenManager.ChangeScreen(GameScreenType.MainMenu, SpriteBatch, Graphics);
+            TextureManager.LoadTexture(Content, "gui/logo", "logo");
+            GameScreenManager.ChangeScreen(GameScreenType.MainMenu, this);
         }
 
         protected override void UnloadContent()
@@ -64,7 +66,7 @@ namespace Rizumu
         protected override void Update(GameTime gameTime)
         {
             MouseValues.Update(Mouse.GetState(Window), this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, this.IsActive);
-            if(_oldms < gameTime.ElapsedGameTime.TotalMilliseconds)
+            if (_oldms < gameTime.ElapsedGameTime.TotalMilliseconds)
             {
                 // millisecond based updates here
                 AnimationManager.UpdateValues();
@@ -89,6 +91,13 @@ namespace Rizumu
             SpriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public void ExitUnload()
+        {
+            GameScreenManager.UnloadCurrent();
+            TextureManager.UnloadAll();
+            this.Exit();
         }
     }
 }

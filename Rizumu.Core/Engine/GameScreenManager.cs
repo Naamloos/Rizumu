@@ -13,7 +13,7 @@ namespace Rizumu.Engine
     {
         private static IGameScreen _screen = null;
 
-        public static void ChangeScreen(GameScreenType screen, SpriteBatch sb, GraphicsDeviceManager gdm)
+        public static void ChangeScreen(GameScreenType screen, RizumuGame game)
         {
             var returns = GameScreenReturns.Empty();
             if(_screen != null)
@@ -22,28 +22,41 @@ namespace Rizumu.Engine
             switch (screen)
             {
                 default:
+                    // unknown screen, throw error
+                    _screen = new ErrorScreen();
+                    returns.Message = "You came across a game screen that does not (yet) exist!";
+                    break;
                 case GameScreenType.MainMenu:
                     // do main menu
                     _screen = new MainMenu();
                     break;
             }
-            _screen.Initialize(sb, gdm, returns);
+            _screen.Initialize(returns, game);
+        }
+
+        public static void UnloadCurrent()
+        {
+            _screen.Unload(GameScreenType.None);
         }
 
         public static void UpdateCurrent(GameTime gt, MouseValues mv)
         {
-            _screen.Update(gt, mv);
+            if(_screen != null)
+                _screen.Update(gt, mv);
         }
 
         public static void DrawCurrent(SpriteBatch sb, GameTime gt, MouseValues mv)
         {
-            _screen.Draw(sb, gt, mv);
+            if (_screen != null)
+                _screen.Draw(sb, gt, mv);
         }
     }
 
     internal class GameScreenReturns
     {
         public GameScreenType PreviousScreen;
+        public string Message = "";
+
         public static GameScreenReturns Empty()
         {
             return new GameScreenReturns();
@@ -56,14 +69,15 @@ namespace Rizumu.Engine
         SongSelect,
         Options,
         InGame,
-        Results
+        Results,
+        None
     }
 
     internal interface IGameScreen
     {
         void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues);
         void Update(GameTime gameTime, MouseValues mouseValues);
-        void Initialize(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics, GameScreenReturns values);
+        void Initialize(GameScreenReturns values, RizumuGame game);
         GameScreenReturns Unload(GameScreenType NewScreen);
     }
 }

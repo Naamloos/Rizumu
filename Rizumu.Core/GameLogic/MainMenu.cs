@@ -14,15 +14,45 @@ namespace Rizumu.GameLogic
     internal class MainMenu : IGameScreen
     {
         private GameScreenReturns _startvalues { get; set; }
+        private RizumuGame _game { get; set; }
         private Gui Menu;
 
-        public void Initialize(SpriteBatch spriteBatch, GraphicsDeviceManager Graphics, GameScreenReturns values)
+        public void Initialize(GameScreenReturns values, RizumuGame game)
         {
             this._startvalues = values;
+            this._game = game;
+            // Build GUI
             this.Menu = new GuiBuilder()
                 .AddBackground("menu")
-                .AddButton(50, 80, "exit", "button", "buttonhover", GuiOrigin.BottomRight, "Exit", GuiOrigin.BottomRight)
+                .AddButton(15, 125, "play", "button", "buttonhover", GuiOrigin.TopRight, "Play", GuiOrigin.BottomLeft)
+                .AddButton(115, 275, "settings", "button", "buttonhover", GuiOrigin.TopRight, "Settings", GuiOrigin.BottomLeft)
+                .AddButton(15, 425, "exit", "button", "buttonhover", GuiOrigin.TopRight, "Exit", GuiOrigin.BottomLeft)
+                .AddSprite(-100, -100, "logo", "logo", Origin: GuiOrigin.BottomRight, widthoverride: 300, heightoverride: 300)
                 .Build();
+
+            // Set GUI events to handler methods
+            this.Menu.OnClick += Menu_OnClick;
+        }
+
+        private void Menu_OnClick(object sender, GuiEventArgs e)
+        {
+            /*
+             * The GUI events are just generic events that relay events sent by GUI Items.
+             * The ID value held by the GuiEventArgs tells us what item we've received events from.
+             */
+
+            switch (e.Id)
+            {
+                case "exit":
+                    this._game.ExitUnload();
+                    break;
+                case "play":
+                    GameScreenManager.ChangeScreen(GameScreenType.SongSelect, this._game);
+                    break;
+                case "settings":
+                    GameScreenManager.ChangeScreen(GameScreenType.Options, this._game);
+                    break;
+            }
         }
 
         public GameScreenReturns Unload(GameScreenType NewScreen)
@@ -35,12 +65,11 @@ namespace Rizumu.GameLogic
 
         public void Update(GameTime gameTime, MouseValues mouseValues)
         {
-
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues)
         {
-            Menu.Draw(spriteBatch, mouseValues);
+            this.Menu.Draw(spriteBatch, mouseValues);
         }
     }
 }
