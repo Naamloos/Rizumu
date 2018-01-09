@@ -7,22 +7,10 @@ using System.Threading.Tasks;
 
 namespace Rizumu.GameLogic.Entities
 {
-    class RizumuMap
+    public class RizumuMap
     {
-        [JsonProperty("name")]
-        public string Name = "empty";
-
-        [JsonProperty("desc")]
-        public string Description = "empty";
-
-        [JsonProperty("creator")]
-        public string Creator = "empty";
-
-        [JsonProperty("songfile")]
-        public string FileName = "empty";
-
-        [JsonProperty("backgroundfile")]
-        public string BackgroundFile = "empty";
+        [JsonProperty("difficulty")]
+        public int Difficulty = 1;
 
         [JsonProperty("leftnotes")]
         public List<int> NotesLeft = new List<int>();
@@ -36,7 +24,31 @@ namespace Rizumu.GameLogic.Entities
         [JsonProperty("downnotes")]
         public List<int> NotesDown = new List<int>();
 
-        [JsonProperty("offset")]
+        [JsonProperty("songoffset")]
         public int Offset = 0;
+    }
+
+    public class RizumuMetadata
+    {
+        [JsonProperty("name")]
+        public string Name = "";
+
+        [JsonProperty("artist")]
+        public string Artist = "";
+
+        [JsonProperty("author")]
+        public string Author = "";
+
+        [JsonProperty("songpath")]
+        public string SongPath = "";
+
+        [JsonProperty("previewpath")]
+        public string PreviewPath = "";
+
+        [JsonProperty("backgroundpath")]
+        public string BackgroundPath = "";
+
+        [JsonProperty("thumbnailpath")]
+        public string ThumbnailPath = "";
     }
 }
