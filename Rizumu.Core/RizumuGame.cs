@@ -55,6 +55,7 @@ namespace Rizumu
             TextureManager.LoadTexture(Content, "gui/button", "button");
             TextureManager.LoadTexture(Content, "gui/buttonhover", "buttonhover");
             TextureManager.LoadTexture(Content, "gui/logo", "logo");
+            TextureManager.LoadTexture(Content, "gui/sad", "sad");
             GameScreenManager.ChangeScreen(GameScreenType.MainMenu, this);
         }
 
@@ -81,7 +82,7 @@ namespace Rizumu
         {
             SpriteBatch.GraphicsDevice.SetRenderTarget(RT);
             SpriteBatch.Begin();
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
             GameScreenManager.DrawCurrent(SpriteBatch, gameTime, MouseValues);
             SpriteBatch.End();
 

@@ -32,6 +32,7 @@ namespace Rizumu.GameLogic
             this._game = game;
             _data = new GuiBuilder()
                 .AddSprite(200, 200, "message", "", text: $"Whope something went wrong!\n\nError: {values.Message}\n\nExiting in 10 seconds...")
+                .AddSprite(-500, -500, "sad", "sad", Origin: GuiOrigin.BottomRight, widthoverride: 500, heightoverride: 500)
                 .Build();
         }
 
