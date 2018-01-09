@@ -50,7 +50,7 @@ namespace Rizumu
             Font = Content.Load<SpriteFont>("fonts/default");
 
             TextureManager.LoadTexture(Content, "testing/texture", "test");
-            TextureManager.LoadTexture(Content, "backgrounds/menuscreen", "menu");
+            TextureManager.LoadTexture(Content, "backgrounds/main_bg", "menu");
             TextureManager.LoadTexture(Content, "gui/button", "button");
             TextureManager.LoadTexture(Content, "gui/buttonhover", "buttonhover");
             GameScreenManager.ChangeScreen(GameScreenType.MainMenu, SpriteBatch, Graphics);
