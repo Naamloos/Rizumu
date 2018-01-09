@@ -22,6 +22,7 @@ namespace Rizumu.Engine
             switch (screen)
             {
                 default:
+                case GameScreenType.None:
                     // unknown screen, throw error
                     _screen = new ErrorScreen();
                     returns.Message = "You came across a game screen that does not (yet) exist!";
@@ -29,6 +30,9 @@ namespace Rizumu.Engine
                 case GameScreenType.MainMenu:
                     // do main menu
                     _screen = new MainMenu();
+                    break;
+                case GameScreenType.SongSelect:
+                    _screen = new SongSelect();
                     break;
             }
             _screen.Initialize(returns, game);

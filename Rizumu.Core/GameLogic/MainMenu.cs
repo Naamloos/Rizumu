@@ -15,14 +15,14 @@ namespace Rizumu.GameLogic
     {
         private GameScreenReturns _startvalues { get; set; }
         private RizumuGame _game { get; set; }
-        private Gui Menu;
+        private Gui _menu;
 
         public void Initialize(GameScreenReturns values, RizumuGame game)
         {
             this._startvalues = values;
             this._game = game;
             // Build GUI
-            this.Menu = new GuiBuilder()
+            this._menu = new GuiBuilder()
                 .AddBackground("menu")
                 .AddButton(15, 125, "play", "button", "buttonhover", GuiOrigin.TopRight, "Play", GuiOrigin.BottomLeft)
                 .AddButton(115, 275, "settings", "button", "buttonhover", GuiOrigin.TopRight, "Settings", GuiOrigin.BottomLeft)
@@ -31,7 +31,7 @@ namespace Rizumu.GameLogic
                 .Build();
 
             // Set GUI events to handler methods
-            this.Menu.OnClick += Menu_OnClick;
+            this._menu.OnClick += Menu_OnClick;
         }
 
         private void Menu_OnClick(object sender, GuiEventArgs e)
@@ -69,7 +69,7 @@ namespace Rizumu.GameLogic
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues)
         {
-            this.Menu.Draw(spriteBatch, mouseValues);
+            this._menu.Draw(spriteBatch, mouseValues);
         }
     }
 }

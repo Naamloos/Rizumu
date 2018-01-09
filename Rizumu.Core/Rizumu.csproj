@@ -55,6 +55,7 @@
     <Compile Include="GameLogic\Entities\RizumuMap.cs" />
     <Compile Include="GameLogic\ErrorScreen.cs" />
     <Compile Include="GameLogic\MainMenu.cs" />
+    <Compile Include="GameLogic\SongSelect.cs" />
     <Compile Include="RizumuGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
