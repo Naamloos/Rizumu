@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Rizumu.Engine.GUI;
 using Rizumu.Engine.Entities;
+using Microsoft.Xna.Framework.Input;
 
 namespace Rizumu.GameLogic
 {
@@ -65,6 +66,8 @@ namespace Rizumu.GameLogic
 
         public void Update(GameTime gameTime, MouseValues mouseValues)
         {
+            if (Keyboard.GetState().IsKeyDown(Keys.Pause))
+                GameScreenManager.CatchError("Do u kno de wae", this._game);
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues)

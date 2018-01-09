@@ -25,7 +25,7 @@ namespace Rizumu.Engine
                 case GameScreenType.None:
                     // unknown screen, throw error
                     _screen = new ErrorScreen();
-                    returns.Message = "You came across a game screen that does not (yet) exist!";
+                    returns.Message = "You came across a game screen that does not (yet) exist! You silly goose!";
                     break;
                 case GameScreenType.MainMenu:
                     // do main menu
@@ -35,6 +35,16 @@ namespace Rizumu.Engine
                     _screen = new SongSelect();
                     break;
             }
+            _screen.Initialize(returns, game);
+        }
+
+        public static void CatchError(string error, RizumuGame game)
+        {
+            if (_screen != null)
+                _screen.Unload(GameScreenType.None);
+            _screen = new ErrorScreen();
+            var returns = GameScreenReturns.Empty();
+            returns.Message = error;
             _screen.Initialize(returns, game);
         }
 
