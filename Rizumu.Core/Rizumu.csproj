@@ -50,6 +50,7 @@
     <Compile Include="Engine\GameScreenManager.cs" />
     <Compile Include="Engine\GUI\GuiBuilder.cs" />
     <Compile Include="Engine\GUI\GuiItem.cs" />
+    <Compile Include="Engine\GUI\SongSelector.cs" />
     <Compile Include="Engine\MouseValues.cs" />
     <Compile Include="Engine\TextureManager.cs" />
     <Compile Include="GameLogic\Entities\RizumuMap.cs" />

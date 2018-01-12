@@ -25,7 +25,7 @@ namespace Rizumu.Engine.GUI
         public int CustomWidth = -1;
 
         public GuiItem(string ItemId, string TextureId, string HoverId, GuiItemType Type, int x, int y, GuiOrigin Origin,
-            string text = "", GuiOrigin TextOrigin = GuiOrigin.TopLeft, int heightoverride = -1, int widthoverride = -1)
+            string text = "", GuiOrigin TextOrigin = GuiOrigin.TopLeft, int heightoverride = -1, int widthoverride = -1, Vector2? textoffset = null)
         {
             this.Texture = TextureId;
             this.TextureHover = string.IsNullOrEmpty(HoverId)? TextureId : HoverId;
@@ -33,6 +33,8 @@ namespace Rizumu.Engine.GUI
             this.Type = Type;
             this.Origin = Origin;
             this.Text = new GuiItemText(text, TextOrigin, 2, 2);
+            if (textoffset != null)
+                this.Text.Offset = (Vector2)textoffset;
             this.CustomHeight = heightoverride;
             this.CustomWidth = widthoverride;
 

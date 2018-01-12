@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Rizumu.Engine;
 using Rizumu.Engine.Entities;
 using System;
+using System.IO;
 
 namespace Rizumu
 {
@@ -11,6 +12,10 @@ namespace Rizumu
     {
         static void Main()
         {
+            // Check folder prerequisites
+            if (!Directory.Exists("songs"))
+                Directory.CreateDirectory("songs");
+
             using (var game = new RizumuGame(Environment.OSVersion.Platform.ToString()))
             {
                 game.Run();
@@ -56,6 +61,7 @@ namespace Rizumu
             TextureManager.LoadTexture(Content, "gui/buttonhover", "buttonhover");
             TextureManager.LoadTexture(Content, "gui/logo", "logo");
             TextureManager.LoadTexture(Content, "gui/sad", "sad");
+            TextureManager.LoadTexture(Content, "gui/selectorbox", "selectorbox");
             GameScreenManager.ChangeScreen(GameScreenType.MainMenu, this);
         }
 

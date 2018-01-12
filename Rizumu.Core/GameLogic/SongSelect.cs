@@ -14,17 +14,21 @@ namespace Rizumu.GameLogic
     class SongSelect : IGameScreen
     {
         private Gui _select;
+        private SongSelector _selector;
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues)
         {
-            _select.Draw(spriteBatch, mouseValues);
+            this._select.Draw(spriteBatch, mouseValues);
+            this._selector.Draw(spriteBatch, gameTime, mouseValues);
         }
 
         public void Initialize(GameScreenReturns values, RizumuGame game)
         {
+            this._selector = new SongSelector(game.GraphicsDevice);
             this._select = new GuiBuilder()
                 .AddBackground("menu")
-                .AddSprite(300, 300, "logo", "logo", Origin: GuiOrigin.TopLeft)
+                .AddButton(15, 25, "back", "button", "buttonhover", GuiOrigin.BottomLeft, "Back", GuiOrigin.BottomRight)
+                .AddButton(15, 25, "mods", "button", "buttonhover", GuiOrigin.BottomRight, "Mods", GuiOrigin.BottomLeft)
                 .Build();
         }
 

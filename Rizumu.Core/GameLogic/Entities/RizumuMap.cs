@@ -38,17 +38,5 @@ namespace Rizumu.GameLogic.Entities
 
         [JsonProperty("author")]
         public string Author = "";
-
-        [JsonProperty("songpath")]
-        public string SongPath = "";
-
-        [JsonProperty("previewpath")]
-        public string PreviewPath = "";
-
-        [JsonProperty("backgroundpath")]
-        public string BackgroundPath = "";
-
-        [JsonProperty("thumbnailpath")]
-        public string ThumbnailPath = "";
     }
 }
