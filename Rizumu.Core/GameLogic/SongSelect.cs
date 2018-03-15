@@ -15,6 +15,7 @@ namespace Rizumu.GameLogic
     {
         private Gui _select;
         private SongSelector _selector;
+        private RizumuGame _game { get; set; }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues)
         {
@@ -24,12 +25,21 @@ namespace Rizumu.GameLogic
 
         public void Initialize(GameScreenReturns values, RizumuGame game)
         {
+            this._game = game;
             this._selector = new SongSelector(game.GraphicsDevice);
             this._select = new GuiBuilder()
                 .AddBackground("menu")
                 .AddButton(15, 25, "back", "button", "buttonhover", GuiOrigin.BottomLeft, "Back", GuiOrigin.BottomRight)
                 .AddButton(15, 25, "mods", "button", "buttonhover", GuiOrigin.BottomRight, "Mods", GuiOrigin.BottomLeft)
                 .Build();
+
+            _select.OnClick += _select_OnClick;
+        }
+
+        private void _select_OnClick(object sender, GuiEventArgs e)
+        {
+            if (e.Id == "back")
+                GameScreenManager.ChangeScreen(GameScreenType.MainMenu, this._game);
         }
 
         public GameScreenReturns Unload(GameScreenType NewScreen)

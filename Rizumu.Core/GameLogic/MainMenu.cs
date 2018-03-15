@@ -67,7 +67,7 @@ namespace Rizumu.GameLogic
         public void Update(GameTime gameTime, MouseValues mouseValues)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Pause))
-                GameScreenManager.CatchError("Do u kno de wae", this._game);
+                GameScreenManager.CatchError("slob on my know like corn on da cob", this._game);
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues)
