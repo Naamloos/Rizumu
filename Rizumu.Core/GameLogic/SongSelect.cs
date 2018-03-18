@@ -29,8 +29,8 @@ namespace Rizumu.GameLogic
             this._selector = new SongSelector(game.GraphicsDevice);
             this._select = new GuiBuilder()
                 .AddBackground("menu")
-                .AddButton(15, 25, "back", "button", "buttonhover", GuiOrigin.BottomLeft, "Back", GuiOrigin.BottomRight)
-                .AddButton(15, 25, "mods", "button", "buttonhover", GuiOrigin.BottomRight, "Mods", GuiOrigin.BottomLeft)
+                .AddButton(15, 25, "back", "button", "buttonhover", GuiOrigin.BottomLeft, "Back", GuiOrigin.BottomRight, new Vector2(55, 0))
+                .AddButton(15, 25, "mods", "button", "buttonhover", GuiOrigin.BottomRight, "Mods", GuiOrigin.BottomLeft, new Vector2(30, 0))
                 .Build();
 
             _select.OnClick += _select_OnClick;

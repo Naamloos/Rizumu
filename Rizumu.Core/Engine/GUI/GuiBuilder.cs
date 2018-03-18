@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,9 @@ namespace Rizumu.Engine.GUI
             Items = new List<GuiItem>();
         }
 
-        public GuiBuilder AddButton(int x, int y, string id, string texture, string hovertexture, GuiOrigin Origin, string text = "", GuiOrigin TextOrigin = GuiOrigin.TopLeft)
+        public GuiBuilder AddButton(int x, int y, string id, string texture, string hovertexture, GuiOrigin Origin, string text = "", GuiOrigin TextOrigin = GuiOrigin.TopLeft, Vector2? TextOffset = null)
         {
-            Items.Add(new GuiItem(id, texture, hovertexture, GuiItemType.Button, x, y, Origin, text, TextOrigin));
+            Items.Add(new GuiItem(id, texture, hovertexture, GuiItemType.Button, x, y, Origin, text, TextOrigin, textoffset: TextOffset));
             return this;
         }
 

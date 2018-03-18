@@ -69,24 +69,24 @@ namespace Rizumu.Engine.GUI
             {
                 // do map selector rendering shite here
                 spriteBatch.Draw(_maps[_index].Thumbnail, new Rectangle(40, 232, 400, 220), Color.White);
-                spriteBatch.DrawString(RizumuGame.Font, _maps[_index].Metadata.Name, new Vector2(60, 490), Color.White);
-                spriteBatch.DrawString(RizumuGame.Font, _maps[_index].Metadata.Artist, new Vector2(60, 570), Color.White);
-                spriteBatch.DrawString(RizumuGame.Font, _maps[_index].Metadata.Author, new Vector2(60, 655), Color.White);
+                spriteBatch.DrawString(RizumuGame.Font, _maps[_index].Metadata.Name, new Vector2(60, 495), Color.White);
+                spriteBatch.DrawString(RizumuGame.Font, _maps[_index].Metadata.Artist, new Vector2(60, 575), Color.White);
+                spriteBatch.DrawString(RizumuGame.Font, _maps[_index].Metadata.Author, new Vector2(60, 660), Color.White);
 
                 spriteBatch.Draw(_maps[_index + 1].Thumbnail, new Rectangle(520, 232, 400, 220), Color.White);
-                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 1].Metadata.Name, new Vector2(540, 490), Color.White);
-                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 1].Metadata.Artist, new Vector2(540, 570), Color.White);
-                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 1].Metadata.Author, new Vector2(540, 655), Color.White);
+                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 1].Metadata.Name, new Vector2(540, 495), Color.White);
+                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 1].Metadata.Artist, new Vector2(540, 575), Color.White);
+                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 1].Metadata.Author, new Vector2(540, 660), Color.White);
 
                 spriteBatch.Draw(_maps[_index + 2].Thumbnail, new Rectangle(1000, 232, 400, 220), Color.White);
-                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 2].Metadata.Name, new Vector2(1020, 490), Color.White);
-                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 2].Metadata.Artist, new Vector2(1020, 570), Color.White);
-                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 2].Metadata.Author, new Vector2(1020, 655), Color.White);
+                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 2].Metadata.Name, new Vector2(1020, 495), Color.White);
+                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 2].Metadata.Artist, new Vector2(1020, 575), Color.White);
+                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 2].Metadata.Author, new Vector2(1020, 660), Color.White);
 
                 spriteBatch.Draw(_maps[_index + 3].Thumbnail, new Rectangle(1480, 232, 400, 220), Color.White);
-                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 3].Metadata.Name, new Vector2(1500, 490), Color.White);
-                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 3].Metadata.Artist, new Vector2(1500, 570), Color.White);
-                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 3].Metadata.Author, new Vector2(1500, 655), Color.White);
+                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 3].Metadata.Name, new Vector2(1500, 495), Color.White);
+                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 3].Metadata.Artist, new Vector2(1500, 575), Color.White);
+                spriteBatch.DrawString(RizumuGame.Font, _maps[_index + 3].Metadata.Author, new Vector2(1500, 660), Color.White);
             }
         }
 

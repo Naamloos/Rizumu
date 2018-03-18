@@ -25,9 +25,9 @@ namespace Rizumu.GameLogic
             // Build GUI
             this._menu = new GuiBuilder()
                 .AddBackground("menu")
-                .AddButton(15, 125, "play", "button", "buttonhover", GuiOrigin.TopRight, "Play", GuiOrigin.BottomLeft)
-                .AddButton(115, 275, "settings", "button", "buttonhover", GuiOrigin.TopRight, "Settings", GuiOrigin.BottomLeft)
-                .AddButton(15, 425, "exit", "button", "buttonhover", GuiOrigin.TopRight, "Exit", GuiOrigin.BottomLeft)
+                .AddButton(15, 125, "play", "button", "buttonhover", GuiOrigin.TopRight, "Play", GuiOrigin.BottomLeft, new Vector2(30, 0))
+                .AddButton(115, 275, "settings", "button", "buttonhover", GuiOrigin.TopRight, "Settings", GuiOrigin.BottomLeft, new Vector2(30, 0))
+                .AddButton(15, 425, "exit", "button", "buttonhover", GuiOrigin.TopRight, "Exit", GuiOrigin.BottomLeft, new Vector2(30, 0))
                 .AddSprite(-100, -100, "logo", "logo", Origin: GuiOrigin.BottomRight, widthoverride: 300, heightoverride: 300)
                 .Build();
 
