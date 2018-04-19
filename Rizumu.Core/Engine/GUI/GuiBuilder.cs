@@ -71,5 +71,12 @@ namespace Rizumu.Engine.GUI
                 i.Draw(sb, mv);
             }
         }
+
+		public void Draw(SpriteBatch sb, MouseValues mv, RenderTarget2D rt)
+		{
+			sb.GraphicsDevice.SetRenderTarget(rt);
+			Draw(sb, mv);
+			sb.GraphicsDevice.SetRenderTarget(null);
+		}
     }
 }

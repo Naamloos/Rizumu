@@ -14,19 +14,16 @@ namespace Rizumu.GameLogic
     class SongSelect : IGameScreen
     {
         private Gui _select;
-        private SongSelector _selector;
         private RizumuGame _game { get; set; }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues)
         {
             this._select.Draw(spriteBatch, mouseValues);
-            this._selector.Draw(spriteBatch, gameTime, mouseValues);
         }
 
         public void Initialize(GameScreenReturns values, RizumuGame game)
         {
             this._game = game;
-            this._selector = new SongSelector(game.GraphicsDevice);
             this._select = new GuiBuilder()
                 .AddBackground("menu")
                 .AddButton(15, 25, "back", "button", "buttonhover", GuiOrigin.BottomLeft, "Back", GuiOrigin.BottomRight, new Vector2(55, 0))
