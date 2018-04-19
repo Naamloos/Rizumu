@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Rizumu.Engine.GUI
 {
+	/// <summary>
+	/// a GuiScrollable *should* provide an endless X or Y axis that can be scrolled until the last item is hit.
+	/// </summary>
 	internal class GuiScrollable
 	{
 		public Gui Items;
