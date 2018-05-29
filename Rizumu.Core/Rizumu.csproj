@@ -7,7 +7,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{5A2467EE-F269-45ED-BBAF-668044E1148C}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Rizumu</RootNamespace>
     <AssemblyName>Rizumu</AssemblyName>
@@ -54,22 +54,20 @@
     <Compile Include="Engine\MouseValues.cs" />
     <Compile Include="Engine\TextureManager.cs" />
     <Compile Include="GameLogic\Entities\RizumuMap.cs" />
-    <Compile Include="GameLogic\ErrorScreen.cs" />
-    <Compile Include="GameLogic\MainMenu.cs" />
-    <Compile Include="GameLogic\SongSelect.cs" />
+    <Compile Include="GameLogic\Screens\ErrorScreen.cs" />
+    <Compile Include="GameLogic\Screens\MainMenu.cs" />
+    <Compile Include="GameLogic\MapManager.cs" />
+    <Compile Include="GameLogic\Screens\SongSelect.cs" />
     <Compile Include="RizumuGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="CSCore, Version=1.2.1.2, Culture=neutral, PublicKeyToken=5a08f2b6f4415dea, processorArchitecture=MSIL">
-      <HintPath>..\packages\CSCore.1.2.1.2\lib\net35-client\CSCore.dll</HintPath>
-    </Reference>
     <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MonoGame.Framework.WindowsDX.3.6.0.1625\lib\net40\MonoGame.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Windows.Forms" />

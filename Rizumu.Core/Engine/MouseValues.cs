@@ -15,6 +15,9 @@ namespace Rizumu.Engine
         public int Y = 0;
         public Rectangle Hitbox { get { return new Rectangle(X, Y, 1, 1); } }
         private bool _previousclick = false;
+		public int ScrollDelta { get; private set; }
+
+		private static int OldScroll = 0;
 
         public void Update(MouseState ms, int SW, int SH, bool focused)
         {
@@ -31,6 +34,8 @@ namespace Rizumu.Engine
                 Clicked = false;
 
             _previousclick = ms.LeftButton == ButtonState.Pressed;
+			ScrollDelta = ms.ScrollWheelValue - OldScroll;
+			OldScroll = ms.ScrollWheelValue;
         }
     }
 }

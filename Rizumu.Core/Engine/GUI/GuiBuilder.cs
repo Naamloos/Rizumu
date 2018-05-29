@@ -50,11 +50,13 @@ namespace Rizumu.Engine.GUI
 
     internal class Gui
     {
-        private List<GuiItem> Items;
+        internal List<GuiItem> Items;
         public event EventHandler<GuiEventArgs> OnClick;
         public event EventHandler<GuiEventArgs> OnHover;
+		public int Height => Items.Select(x => x.Texture.Y).Max() + Items.Select(x => x.Texture.Hitbox.Height).Max();
+		public int Width => Items.Select(x => x.Texture.X).Max() + Items.Select(x => x.Texture.Hitbox.Width).Max();
 
-        internal Gui(List<GuiItem> items)
+		internal Gui(List<GuiItem> items)
         {
             Items = items;
             foreach(var i in Items)
@@ -64,19 +66,12 @@ namespace Rizumu.Engine.GUI
             }
         }
 
-        public void Draw(SpriteBatch sb, MouseValues mv)
+        public void Draw(SpriteBatch sb, MouseValues mv, Vector2? offset = null)
         {
             foreach (var i in Items)
             {
-                i.Draw(sb, mv);
+                i.Draw(sb, mv, offset);
             }
         }
-
-		public void Draw(SpriteBatch sb, MouseValues mv, RenderTarget2D rt)
-		{
-			sb.GraphicsDevice.SetRenderTarget(rt);
-			Draw(sb, mv);
-			sb.GraphicsDevice.SetRenderTarget(null);
-		}
     }
 }
