@@ -10,6 +10,8 @@ using Rizumu.Engine.GUI;
 using Rizumu.Engine.Entities;
 using Microsoft.Xna.Framework.Media;
 
+// TODO: find out what causes only 2 items to show up on song select
+
 namespace Rizumu.GameLogic
 {
 	class SongSelect : IGameScreen
