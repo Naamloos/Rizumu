@@ -55,6 +55,7 @@
     <Compile Include="Engine\TextureManager.cs" />
     <Compile Include="GameLogic\Entities\LegacyRizumuMap.cs" />
     <Compile Include="GameLogic\Entities\RizumuMap.cs" />
+    <Compile Include="GameLogic\LegacyMapConverter.cs" />
     <Compile Include="GameLogic\Screens\ErrorScreen.cs" />
     <Compile Include="GameLogic\Screens\MainMenu.cs" />
     <Compile Include="GameLogic\MapManager.cs" />
