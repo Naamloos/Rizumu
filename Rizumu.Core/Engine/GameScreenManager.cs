@@ -70,6 +70,8 @@ namespace Rizumu.Engine
     {
         public GameScreenType PreviousScreen;
         public string Message = "";
+		public int SelectedMap = 1;
+		public bool firstload = true;
 
         public static GameScreenReturns Empty()
         {

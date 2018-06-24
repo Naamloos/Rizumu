@@ -53,6 +53,7 @@
     <Compile Include="Engine\GUI\GuiScrollable.cs" />
     <Compile Include="Engine\MouseValues.cs" />
     <Compile Include="Engine\TextureManager.cs" />
+    <Compile Include="GameLogic\Entities\LegacyRizumuMap.cs" />
     <Compile Include="GameLogic\Entities\RizumuMap.cs" />
     <Compile Include="GameLogic\Screens\ErrorScreen.cs" />
     <Compile Include="GameLogic\Screens\MainMenu.cs" />
