@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Rizumu.GameLogic.Entities;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,18 @@ namespace Rizumu.GameLogic
 			{
 				if (File.Exists(Path.Combine(dir, "map.json")))
 				{
-					var m = JsonConvert.DeserializeObject<RizumuMap>(File.ReadAllText(Path.Combine(dir, "map.json")));
+					string map = File.ReadAllText(Path.Combine(dir, "map.json"));
+
+					// Convert if legacy!!
+					if (LegacyMapConverter.CheckMapLegacy(JObject.Parse(map)))
+					{
+						var lgc = JsonConvert.DeserializeObject<LegacyRizumuMap>(map);
+						var mdr = LegacyMapConverter.ConvertLegacy(lgc);
+						File.WriteAllText(Path.Combine(dir, "map.json"), JsonConvert.SerializeObject(mdr));
+						map = File.ReadAllText(Path.Combine(dir, "map.json"));
+					}
+
+					var m = JsonConvert.DeserializeObject<RizumuMap>(map);
 					m.Path = dir;
 					m.LoadContent(gr);
 					LoadedMaps.Add(i, m);
