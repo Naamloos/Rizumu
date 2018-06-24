@@ -51,10 +51,20 @@ namespace Rizumu.GameLogic.Entities
 
 		public void LoadContent(GraphicsDevice gr)
 		{
-			if(File.Exists(System.IO.Path.Combine(Path, ThumbnailFile)))
-				Thumbnail = Texture2D.FromStream(gr, new FileStream(System.IO.Path.Combine(Path, ThumbnailFile), FileMode.Open));
+			if (File.Exists(System.IO.Path.Combine(Path, ThumbnailFile)))
+			{
+				using (var fs = new FileStream(System.IO.Path.Combine(Path, ThumbnailFile), FileMode.Open))
+				{
+					Thumbnail = Texture2D.FromStream(gr, fs);
+				}
+			}
 			if (File.Exists(System.IO.Path.Combine(Path, BackgroundFile)))
-				Background = Texture2D.FromStream(gr, new FileStream(System.IO.Path.Combine(Path, BackgroundFile), FileMode.Open));
+			{
+				using (var fs = new FileStream(System.IO.Path.Combine(Path, BackgroundFile), FileMode.Open))
+				{
+					Background = Texture2D.FromStream(gr, fs);
+				}
+			}
 			Console.WriteLine(System.IO.Path.Combine(Path, Filename));
 			if (File.Exists(System.IO.Path.Combine(Path, Filename)))
 			{

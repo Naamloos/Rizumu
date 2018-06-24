@@ -7,7 +7,7 @@ namespace Rizumu.GameLogic
 	public class LegacyMapConverter
 	{
 		// Legacy maps only have one baked in difficulty level.
-		public static bool CheckMapLegacy(JObject loaded) => loaded["difficulties"].Count() > 0;
+		public static bool CheckMapLegacy(JObject loaded) => loaded["difficulties"] == null;
 
 		public static RizumuMap ConvertLegacy(LegacyRizumuMap legacy)
 		{
@@ -27,7 +27,7 @@ namespace Rizumu.GameLogic
 				NotesLeft = legacy.NotesLeft,
 				NotesRight = legacy.NotesRight,
 				NotesUp = legacy.NotesUp,
-				Name = "Normal",
+				Name = "Legacy",
 				Offset = legacy.Offset
 			};
 
