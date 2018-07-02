@@ -17,7 +17,7 @@ with.
     Size is a float value, measured in points. Modify this value to change
     the size of the font.
     -->
-    <Size>30</Size>
+    <Size>18</Size>
 
     <!--
     Spacing is a float value, measured in pixels. Modify this value to change
@@ -51,18 +51,10 @@ with.
     See the documentation for more information.
     -->
     <CharacterRegions>
-      <!-- Ideographic Symbols and Punctuation -->
-	<CharacterRegion><Start>&#x3000;</Start><End>&#x303F;</End></CharacterRegion>
-	<!-- Hiragana -->
-	<CharacterRegion><Start>&#x3040;</Start><End>&#x309F;</End></CharacterRegion>  
-	<!-- Katakana -->
-	<CharacterRegion><Start>&#x30A0;</Start><End>&#x30FF;</End></CharacterRegion>  
-	<!-- Fullwidth Latin -->
-	<CharacterRegion><Start>&#xFF01;</Start><End>&#xFFE6;</End></CharacterRegion>  
-	<!-- and/or the standard Latin set... -->
-	<CharacterRegion><Start>&#32;</Start><End>&#126;</End></CharacterRegion>
-	
-	
+      <CharacterRegion>
+        <Start>&#32;</Start>
+        <End>&#126;</End>
+      </CharacterRegion>
     </CharacterRegions>
   </Asset>
 </XnaContent>

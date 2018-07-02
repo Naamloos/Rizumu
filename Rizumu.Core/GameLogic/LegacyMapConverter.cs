@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Rizumu.GameLogic.Entities;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Rizumu.GameLogic
@@ -11,13 +12,32 @@ namespace Rizumu.GameLogic
 
 		public static RizumuMap ConvertLegacy(LegacyRizumuMap legacy)
 		{
+			string artist = "";
+			string songname = "";
+			if (legacy.Name.Contains('-'))
+			{
+				var s = new List<string>();
+				s.AddRange(legacy.Name.Split('-'));
+				artist = s[0];
+				s.RemoveAt(0);
+				songname = string.Join("-", s);
+				if (songname.StartsWith(" "))
+					songname = songname.Substring(1);
+				if (artist.EndsWith(" "))
+					artist = artist.Remove(artist.Length - 1);
+			}
+			else
+			{
+				songname = legacy.Name;
+			}
+
 			var converted = new RizumuMap
 			{
-				ArtistName = "",
+				ArtistName = artist,
 				Author = legacy.Creator,
 				BackgroundFile = legacy.BackgroundFile,
 				Filename = legacy.FileName,
-				SongName = legacy.Name,
+				SongName = songname,
 				ThumbnailFile = legacy.BackgroundFile,
 			};
 

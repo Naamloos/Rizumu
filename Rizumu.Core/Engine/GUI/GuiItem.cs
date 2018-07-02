@@ -23,6 +23,7 @@ namespace Rizumu.Engine.GUI
 		public GuiItemText Text;
 		public int CustomHeight = -1;
 		public int CustomWidth = -1;
+		public GuiItemText SongSelectArtist;
 
 		public GuiItem(string ItemId, string TextureId, string HoverId, GuiItemType Type, int x, int y, GuiOrigin Origin,
 			string text = "", GuiOrigin TextOrigin = GuiOrigin.TopLeft, int heightoverride = -1, int widthoverride = -1, Vector2? textoffset = null)
@@ -118,11 +119,15 @@ namespace Rizumu.Engine.GUI
 				{
 					Texture.Draw(sb, loc.X, loc.Y, CustomWidth == -1 ? (int?)null : CustomWidth, CustomHeight == -1 ? (int?)null : CustomHeight);
 					Text.Draw(sb, loc.X, loc.Y, this.Texture.Hitbox.Height, this.Texture.Hitbox.Width);
+					if (this.SongSelectArtist != null)
+						SongSelectArtist.Draw(sb, loc.X, loc.Y, this.Texture.Hitbox.Height, this.Texture.Hitbox.Width);
 				}
 				else
 				{
 					TextureHover.Draw(sb, loc.X, loc.Y, CustomWidth == -1 ? (int?)null : CustomWidth, CustomHeight == -1 ? (int?)null : CustomHeight);
 					Text.Draw(sb, loc.X, loc.Y, this.TextureHover.Hitbox.Height, this.TextureHover.Hitbox.Width);
+					if (this.SongSelectArtist != null)
+						SongSelectArtist.Draw(sb, loc.X, loc.Y, this.Texture.Hitbox.Height, this.Texture.Hitbox.Width);
 				}
 			}
 		}
@@ -134,7 +139,8 @@ namespace Rizumu.Engine.GUI
 		Checkbox,
 		Sprite,
 		Text,
-		Background
+		Background,
+		SongButton,
 	}
 
 	internal class GuiItemText
@@ -144,18 +150,20 @@ namespace Rizumu.Engine.GUI
 		public SpriteFont font;
 		public Vector2 Offset;
 		public GuiOrigin Origin;
+		public Color Color = Color.White;
 
 		public GuiItemText(string text, GuiOrigin Origin, int offx = 0, int offy = 0)
 		{
 			this.text = text;
 			this.Origin = Origin;
 			this.Offset = new Vector2(offx, offy);
+			this.font = RizumuGame.Font;
 		}
 
 		public void Draw(SpriteBatch sb, int ParentX, int ParentY, int ParentHeight, int ParentWidth)
 		{
 			var loc = new Vector2(0, 0);
-			var str = RizumuGame.Font.MeasureString(text);
+			var str = font.MeasureString(text);
 			switch (Origin)
 			{
 				case GuiOrigin.TopLeft:
@@ -176,7 +184,7 @@ namespace Rizumu.Engine.GUI
 					break;
 			}
 
-			sb.DrawString(RizumuGame.Font, this.text, loc, Color.White);
+			sb.DrawString(font, this.text, loc, Color);
 		}
 	}
 

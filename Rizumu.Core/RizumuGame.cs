@@ -53,6 +53,7 @@ namespace Rizumu
 	public class RizumuGame : Game
 	{
 		public static SpriteFont Font;
+		public static SpriteFont MetaFont;
 		GraphicsDeviceManager Graphics;
 		public static RenderTarget2D RT;
 		SpriteBatch SpriteBatch;
@@ -78,6 +79,7 @@ namespace Rizumu
 		{
 			SpriteBatch = new SpriteBatch(GraphicsDevice);
 			Font = Content.Load<SpriteFont>("fonts/default");
+			MetaFont = Content.Load<SpriteFont>("fonts/Metadata");
 
 			TextureManager.LoadTexture(Content, "testing/texture", "test");
 			TextureManager.LoadTexture(Content, "backgrounds/main_bg", "menu");
@@ -86,6 +88,7 @@ namespace Rizumu
 			TextureManager.LoadTexture(Content, "gui/logo", "logo");
 			TextureManager.LoadTexture(Content, "gui/sad", "sad");
 			TextureManager.LoadTexture(Content, "gui/selectorbox", "selectorbox");
+			TextureManager.LoadTexture(Content, "gui/songselect_overlay", "selectoverlay");
 			MapManager.LoadMaps(GraphicsDevice);
 			GameScreenManager.ChangeScreen(GameScreenType.MainMenu, this);
 		}

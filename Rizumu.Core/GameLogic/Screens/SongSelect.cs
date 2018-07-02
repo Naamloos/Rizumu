@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Rizumu.Engine.GUI;
 using Rizumu.Engine.Entities;
 using Microsoft.Xna.Framework.Media;
+using Rizumu.GameLogic.Entities;
 
 // TODO: find out what causes only 2 items to show up on song select
 
@@ -24,16 +25,19 @@ namespace Rizumu.GameLogic
 		private int _selectedmapid = 1;
 		private int _previoustickmap = 0;
 		private GameScreenReturns values;
+		private Sprite _selectoverlay;
+		private RizumuMap _selectedmap = null;
 
 		public void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues)
 		{
 			this._select.Draw(spriteBatch, mouseValues);
 			this._scroller.Draw(_songs, spriteBatch, mouseValues);
-			spriteBatch.DrawString(RizumuGame.Font, $"Current selected map: {MapManager.LoadedMaps[_selectedmapid].ArtistName} - {MapManager.LoadedMaps[_selectedmapid].SongName}",
-				new Vector2(3, 3), Color.Crimson);
+			//spriteBatch.DrawString(RizumuGame.Font, $"Current selected map: {MapManager.LoadedMaps[_selectedmapid].ArtistName} - {MapManager.LoadedMaps[_selectedmapid].SongName}",
+			//	new Vector2(3, 3), Color.Crimson);
 
 			if (_previoustickmap != _selectedmapid)
 			{
+				_selectedmap = MapManager.LoadedMaps[_selectedmapid];
 				Thumbnail.Texture2D = MapManager.LoadedMaps[_selectedmapid]?.Thumbnail;
 				Thumbnail.Empty = Thumbnail.Texture2D == null;
 				MediaPlayer.Stop();
@@ -43,6 +47,23 @@ namespace Rizumu.GameLogic
 			}
 
 			Thumbnail.Draw(spriteBatch, Width: 400, Height: 225);
+
+			_selectoverlay.Draw(spriteBatch, 0, 0);
+
+			var height = RizumuGame.Font.MeasureString("Mate I only need the height").Y + 2;
+
+			if (_selectedmap.Enabled)
+			{
+				spriteBatch.DrawString(RizumuGame.Font, $"Artist:", new Vector2(30, 300), Color.Gray);
+				spriteBatch.DrawString(RizumuGame.MetaFont, $"{(_selectedmap.ArtistName.Length > 0 ? _selectedmap.ArtistName : "Unknown")}", new Vector2(30, 305 + height), Color.White);
+				spriteBatch.DrawString(RizumuGame.Font, $"Song name:", new Vector2(30, 300 + height * 2), Color.Gray);
+				spriteBatch.DrawString(RizumuGame.MetaFont, $"{_selectedmap.SongName}", new Vector2(30, 305 + height * 3), Color.White);
+				spriteBatch.DrawString(RizumuGame.Font, $"Creator:", new Vector2(30, 300 + height * 4), Color.Gray);
+				spriteBatch.DrawString(RizumuGame.MetaFont, $"{_selectedmap.Author}", new Vector2(30, 305 + height * 5), Color.White);
+				spriteBatch.DrawString(RizumuGame.Font, $"ID in memory:", new Vector2(30, 300 + height * 6), Color.Gray);
+				spriteBatch.DrawString(RizumuGame.MetaFont, $"{_selectedmapid}", new Vector2(30, 305 + height * 7), Color.White);
+			}
+
 			_previoustickmap = _selectedmapid;
 		}
 
@@ -61,8 +82,9 @@ namespace Rizumu.GameLogic
 			{
 				if (m.Value.Enabled)
 				{
-					sngs.AddButton(0, i * 110, $"map{m.Key}", "button", "buttonhover", GuiOrigin.TopLeft, $"{m.Value.SongName}\n{m.Value.ArtistName}",
-						GuiOrigin.BottomLeft, new Vector2(55, 0));
+					string artist = m.Value.ArtistName.Length > 0 ? $"by {m.Value.ArtistName}" : "";
+					sngs.AddSongButton(0, i * 110, $"map{m.Key}", "button", "buttonhover", GuiOrigin.TopLeft, $"{m.Value.SongName}", artist,
+						GuiOrigin.TopLeft, new Vector2(55, 25));
 					i++;
 				}
 			}
@@ -76,6 +98,7 @@ namespace Rizumu.GameLogic
 
 			Thumbnail = "";
 			Thumbnail.Location = new Point(25, 50);
+			_selectoverlay = "selectoverlay";
 			_selectedmapid = values.SelectedMap;
 			this.values = values;
 		}

@@ -47,7 +47,7 @@ namespace Rizumu.GameLogic.Entities
 		public Song MapSong;
 
 		[JsonIgnore]
-		public bool Enabled = true;
+		public bool Enabled = false;
 
 		public void LoadContent(GraphicsDevice gr)
 		{
@@ -69,6 +69,7 @@ namespace Rizumu.GameLogic.Entities
 			if (File.Exists(System.IO.Path.Combine(Path, Filename)))
 			{
 				MapSong = Song.FromUri(System.IO.Path.Combine(Path, Filename), new Uri(System.IO.Path.Combine(Path, Filename), UriKind.Relative));
+				Enabled = true;
 			}
 			else
 			{
