@@ -65,7 +65,7 @@ namespace Rizumu.GameLogic.Entities
 					Background = Texture2D.FromStream(gr, fs);
 				}
 			}
-			Console.WriteLine(System.IO.Path.Combine(Path, Filename));
+			Logger.Log($"Checking mapfile: {System.IO.Path.Combine(Path, Filename)}");
 			if (File.Exists(System.IO.Path.Combine(Path, Filename)))
 			{
 				MapSong = Song.FromUri(System.IO.Path.Combine(Path, Filename), new Uri(System.IO.Path.Combine(Path, Filename), UriKind.Relative));
@@ -76,8 +76,8 @@ namespace Rizumu.GameLogic.Entities
 				Enabled = false;
 			}
 
-			Console.WriteLine($"Loaded map with data:\n{SongName} - {ArtistName}\nPath {Path}\nDiffs: {string.Join(", ", Difficulties.Select(x => x.Name))}" +
-				$"\n{(Enabled ? "and it's enabled" : "but it wasn't enabled because no songfile was found!!")}\n");
+			Logger.Log($"Loaded map with data: {SongName} - {ArtistName}." +
+				$"{(Enabled ? "" : " disabled- No song file found")}");
 		}
     }
 

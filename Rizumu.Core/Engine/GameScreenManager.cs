@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Rizumu.GameLogic;
+using Rizumu.GameLogic.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace Rizumu.Engine
                 case GameScreenType.None:
                     // unknown screen, throw error
                     _screen = new ErrorScreen();
-                    returns.Message = "You came across a game screen that does not (yet) exist! You silly goose!";
+                    returns.Message = "Sorry Mario, but the princess is in another castle!\nOr, err.. I mean this game screen isn't here..";
                     break;
                 case GameScreenType.MainMenu:
                     // do main menu
@@ -35,7 +36,9 @@ namespace Rizumu.Engine
                     _screen = new SongSelect();
                     break;
             }
-            _screen.Initialize(returns, game);
+			Logger.Log($"Switched to gamescreen with type {_screen.GetType().ToString()}");
+
+			_screen.Initialize(returns, game);
         }
 
         public static void CatchError(string error, RizumuGame game)
@@ -72,6 +75,7 @@ namespace Rizumu.Engine
         public string Message = "";
 		public int SelectedMap = 1;
 		public bool firstload = true;
+		public RizumuScoreData Score;
 
         public static GameScreenReturns Empty()
         {

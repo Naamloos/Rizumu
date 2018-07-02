@@ -38,7 +38,7 @@ namespace Rizumu.Engine.GUI
 			int Scrolled = _scrolled / 5;
 			if (Hitbox.Intersects(mv.Hitbox))
 			{
-				if(Scrolled > 1080 - Items.Height && mv.ScrollDelta < 0 || Scrolled < 0 && mv.ScrollDelta > 0)
+				if (Scrolled > 1080 - Items.Height && mv.ScrollDelta < 0 || Scrolled < 0 && mv.ScrollDelta > 0)
 				{
 					_scrolled += mv.ScrollDelta;
 				}

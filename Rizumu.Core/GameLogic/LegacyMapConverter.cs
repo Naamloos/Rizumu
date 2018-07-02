@@ -53,6 +53,7 @@ namespace Rizumu.GameLogic
 
 			converted.Difficulties.Add(diff);
 
+			Logger.Log($"Converted legacy map: {songname} by {artist}");
 			return converted;
 		}
 	}

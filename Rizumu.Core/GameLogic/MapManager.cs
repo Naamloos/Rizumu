@@ -17,6 +17,7 @@ namespace Rizumu.GameLogic
 
 		public static void LoadMaps(GraphicsDevice gr)
 		{
+			Logger.Log("Loading all maps!");
 			int i = 1;
 			foreach (var dir in Directory.GetDirectories("songs"))
 			{

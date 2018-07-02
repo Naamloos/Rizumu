@@ -64,6 +64,7 @@ namespace Rizumu.Engine.GUI
 
 		public Gui Build()
 		{
+			Logger.Log($"Built new GUI with {this.Items.Count()} items");
 			return new Gui(Items);
 		}
 	}

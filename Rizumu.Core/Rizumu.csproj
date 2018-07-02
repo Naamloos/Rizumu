@@ -55,11 +55,15 @@
     <Compile Include="Engine\TextureManager.cs" />
     <Compile Include="GameLogic\Entities\LegacyRizumuMap.cs" />
     <Compile Include="GameLogic\Entities\RizumuMap.cs" />
+    <Compile Include="GameLogic\Entities\RizumuScoreData.cs" />
+    <Compile Include="GameLogic\Entities\UserData.cs" />
     <Compile Include="GameLogic\LegacyMapConverter.cs" />
     <Compile Include="GameLogic\Screens\ErrorScreen.cs" />
+    <Compile Include="GameLogic\Screens\InGame.cs" />
     <Compile Include="GameLogic\Screens\MainMenu.cs" />
     <Compile Include="GameLogic\MapManager.cs" />
     <Compile Include="GameLogic\Screens\SongSelect.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="RizumuGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

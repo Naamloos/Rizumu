@@ -16,6 +16,7 @@ namespace Rizumu
 	{
 		static void Main()
 		{
+			Logger.Log("Checking folder prerequisites");
 			// Check folder prerequisites
 			if (!Directory.Exists("songs"))
 			{
@@ -40,10 +41,15 @@ namespace Rizumu
 				File.WriteAllText("songs/mock/map.json", JsonConvert.SerializeObject(m, Formatting.Indented));
 			}
 #endif
+			Logger.Log("Starting game");
 			using (var game = new RizumuGame(Environment.OSVersion.Platform.ToString()))
 			{
 				game.Run();
 			}
+
+#if DEBUG
+			Console.ReadKey();
+#endif
 		}
 	}
 
@@ -67,6 +73,7 @@ namespace Rizumu
 
 		protected override void Initialize()
 		{
+			Logger.Log("Initializing game");
 			base.Initialize();
 			this.IsMouseVisible = true;
 			this.Graphics.PreferredBackBufferHeight = 720;
@@ -77,10 +84,12 @@ namespace Rizumu
 
 		protected override void LoadContent()
 		{
+			Logger.Log("Loading various contents");
 			SpriteBatch = new SpriteBatch(GraphicsDevice);
 			Font = Content.Load<SpriteFont>("fonts/default");
 			MetaFont = Content.Load<SpriteFont>("fonts/Metadata");
 
+			Logger.Log("Loading textures");
 			TextureManager.LoadTexture(Content, "testing/texture", "test");
 			TextureManager.LoadTexture(Content, "backgrounds/main_bg", "menu");
 			TextureManager.LoadTexture(Content, "gui/button", "button");
@@ -89,7 +98,10 @@ namespace Rizumu
 			TextureManager.LoadTexture(Content, "gui/sad", "sad");
 			TextureManager.LoadTexture(Content, "gui/selectorbox", "selectorbox");
 			TextureManager.LoadTexture(Content, "gui/songselect_overlay", "selectoverlay");
+
+			Logger.Log("Loading maps");
 			MapManager.LoadMaps(GraphicsDevice);
+
 			GameScreenManager.ChangeScreen(GameScreenType.MainMenu, this);
 		}
 
@@ -127,8 +139,10 @@ namespace Rizumu
 
 		public void ExitUnload()
 		{
+			Logger.Log("Exiting and unloading game");
 			GameScreenManager.UnloadCurrent();
 			TextureManager.UnloadAll();
+			Logger.Log("Bye bye!");
 			this.Exit();
 		}
 	}
