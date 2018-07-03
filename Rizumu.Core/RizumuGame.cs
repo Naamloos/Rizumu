@@ -16,12 +16,13 @@ namespace Rizumu
 	{
 		static void Main()
 		{
+			Logger.EnableLoggerDump();
 			Logger.Log("Checking folder prerequisites");
 			// Check folder prerequisites
 			if (!Directory.Exists("songs"))
-			{
 				Directory.CreateDirectory("songs");
-			}
+			if (!Directory.Exists("logs"))
+				Directory.CreateDirectory("logs");
 #if DEBUG
 			if (!Directory.Exists("songs/mock"))
 			{
@@ -143,6 +144,7 @@ namespace Rizumu
 			GameScreenManager.UnloadCurrent();
 			TextureManager.UnloadAll();
 			Logger.Log("Bye bye!");
+			Logger.UnloadAndDispose();
 			this.Exit();
 		}
 	}
