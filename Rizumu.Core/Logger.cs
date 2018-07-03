@@ -11,13 +11,15 @@ namespace Rizumu
 	{
 		private static FileStream fs = null;
 		private static StreamWriter sw = null;
+		private static string filename = "";
 
 		public static void EnableLoggerDump()
 		{
 			if (!Directory.Exists("logs"))
 				Directory.CreateDirectory("logs");
 			var now = DateTime.UtcNow;
-			fs = File.Create($"logs/{now.DayOfYear}-{now.Year}-{new Random().Next()}.txt");
+			filename = $"{now.DayOfYear}-{now.Year}-{new Random().Next()}.txt";
+			fs = File.Create($"logs/{filename}");
 			sw = new StreamWriter(fs);
 		}
 
@@ -27,6 +29,9 @@ namespace Rizumu
 			fs.Close();
 			sw.Dispose();
 			fs.Dispose();
+			sw = null;
+			fs = null;
+			Log($"Dumped log to {filename}");
 		}
 
 		public static void Log(string message)
