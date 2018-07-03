@@ -14,6 +14,8 @@ namespace Rizumu
 
 		public static void EnableLoggerDump()
 		{
+			if (!Directory.Exists("logs"))
+				Directory.CreateDirectory("logs");
 			var now = DateTime.UtcNow;
 			fs = File.Create($"logs/{now.DayOfYear}-{now.Year}-{new Random().Next()}.txt");
 			sw = new StreamWriter(fs);
