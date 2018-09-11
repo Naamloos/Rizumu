@@ -10,23 +10,86 @@ using Rizumu.Engine.GUI;
 using Rizumu.Engine.Entities;
 using Microsoft.Xna.Framework.Input;
 using Rizumu.GameLogic.Entities;
+using Microsoft.Xna.Framework.Media;
 
-namespace Rizumu.GameLogic.Screens
+namespace Rizumu.GameLogic
 {
 	class InGame : IGameScreen
 	{
+		Gui _ingamegui;
 		GameScreenReturns _data;
 		RizumuMap _loadedmap;
+		RizumuDifficulty _loadeddifficulty;
+		int _traveltime = 200;
+
+		List<RizumuLeftNote> LeftNotes = new List<RizumuLeftNote>();
+		List<RizumuUpNote> UpNotes = new List<RizumuUpNote>();
+		List<RizumuRightNote> RightNotes = new List<RizumuRightNote>();
+		List<RizumuDownNote> DownNotes = new List<RizumuDownNote>();
 
 		public void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues)
 		{
 			// Draw shit here
+			_ingamegui.Draw(spriteBatch, mouseValues);
+
+			foreach (var n in LeftNotes)
+				n.Render(spriteBatch);
+
+			foreach (var n in UpNotes)
+				n.Render(spriteBatch);
+
+			foreach (var n in RightNotes)
+				n.Render(spriteBatch);
+
+			foreach (var n in DownNotes)
+				n.Render(spriteBatch);
 		}
 
 		public void Initialize(GameScreenReturns values, RizumuGame game)
 		{
+			Logger.Log("Initializing ingame...");
 			// Init
 			_data = values;
+			_loadedmap = MapManager.LoadedMaps[_data.SelectedMap];
+			_loadeddifficulty = _loadedmap.Difficulties.First(/*x => x.Name == _data.LoadedDifficulty*/);
+			Logger.Log("Loaded map / difficulty without issues!");
+
+			var nspr = TextureManager.GetTexture("note");
+
+			_ingamegui = new GuiBuilder()
+				.AddBackground("menu")
+				.AddSprite((1920 / 2) - (int)(nspr.Width * 1.5), (1080 / 2) - (nspr.Height / 2), "leftsp", "note")
+				.AddSprite((1920 / 2) - (nspr.Width / 2), (1080 / 2) - (int)(nspr.Height * 1.5), "upsp", "note")
+				.AddSprite((1920 / 2) + (int)(nspr.Width * 0.5), (1080 / 2) - (nspr.Height / 2), "rightsp", "note")
+				.AddSprite((1920 / 2) - (nspr.Width / 2), (1080 / 2) + (int)(nspr.Height * 0.5), "downsp", "note")
+				.Build();
+
+			// hacky swapping of background, meh.
+			_ingamegui.Items.First(x => x.Type == GuiItemType.Background).Texture.Texture2D = _loadedmap.Background;
+
+			foreach(var n in _loadeddifficulty.NotesLeft)
+				LeftNotes.Add(new RizumuLeftNote(n, "note", _traveltime));
+			Logger.Log("Loaded left notes");
+
+			foreach (var n in _loadeddifficulty.NotesRight)
+				RightNotes.Add(new RizumuRightNote(n, "note", _traveltime));
+			Logger.Log("Loaded right notes");
+
+			foreach (var n in _loadeddifficulty.NotesUp)
+				UpNotes.Add(new RizumuUpNote(n, "note", _traveltime));
+			Logger.Log("Loaded up notes");
+
+			foreach (var n in _loadeddifficulty.NotesDown)
+				DownNotes.Add(new RizumuDownNote(n, "note", _traveltime));
+			Logger.Log("Loaded down notes");
+
+			// Done initializing, start playing music or smth
+			// Stop old tune
+			MediaPlayer.Stop();
+			Logger.Log("Stopped song");
+			// Start new tune
+			MediaPlayer.Play(_loadedmap.MapSong);
+			Logger.Log("Started song for map");
 		}
 
 		public GameScreenReturns Unload(GameScreenType NewScreen)
@@ -34,26 +97,40 @@ namespace Rizumu.GameLogic.Screens
 			// TODO: DON'T FILL WITH CONSTANTS YOU COCK
 			var score = new RizumuScoreData()
 			{
-				LeftHits = 5,
-				RightHits = 5,
-				UpHits = 5,
-				DownHits = 5,
+				LeftHits = LeftNotes.Count(x => x.Hit = true),
+				RightHits = RightNotes.Count(x => x.Hit = true),
+				UpHits = UpNotes.Count(x => x.Hit = true),
+				DownHits = DownNotes.Count(x => x.Hit = true),
 
-				LeftMisses = 5,
-				RightMisses = 5,
-				UpMisses = 5,
-				DownMisses = 5,
+				LeftMisses = LeftNotes.Count(x => x.Miss = true),
+				RightMisses = RightNotes.Count(x => x.Miss = true),
+				UpMisses = UpNotes.Count(x => x.Miss = true),
+				DownMisses = DownNotes.Count(x => x.Miss = true),
 
 				MapData = this._loadedmap,
-				Player = null
+				Player = this._data.Player
 			};
+
+			_data.Score = score;
 
 			return _data;
 		}
 
 		public void Update(GameTime gameTime, MouseValues mouseValues)
 		{
-			// Update values
+			int time = (int)((MediaPlayer.PlayPosition.TotalMilliseconds * 500) / 1000) + _loadeddifficulty.Offset;
+
+			foreach (var n in LeftNotes)
+				n.Update(false, time);
+
+			foreach (var n in UpNotes)
+				n.Update(false, time);
+
+			foreach (var n in RightNotes)
+				n.Update(false, time);
+
+			foreach (var n in DownNotes)
+				n.Update(false, time);
 		}
 	}
 }

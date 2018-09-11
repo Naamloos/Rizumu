@@ -97,6 +97,7 @@ namespace Rizumu
 			TextureManager.LoadTexture(Content, "gui/sad", "sad");
 			TextureManager.LoadTexture(Content, "gui/selectorbox", "selectorbox");
 			TextureManager.LoadTexture(Content, "gui/songselect_overlay", "selectoverlay");
+			TextureManager.LoadTexture(Content, "ingame/note", "note");
 
 			Logger.Log("Loading maps");
 			MapManager.LoadMaps(GraphicsDevice);

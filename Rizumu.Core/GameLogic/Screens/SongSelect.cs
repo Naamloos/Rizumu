@@ -10,8 +10,7 @@ using Rizumu.Engine.GUI;
 using Rizumu.Engine.Entities;
 using Microsoft.Xna.Framework.Media;
 using Rizumu.GameLogic.Entities;
-
-// TODO: find out what causes only 2 items to show up on song select
+using Microsoft.Xna.Framework.Input;
 
 namespace Rizumu.GameLogic
 {
@@ -34,6 +33,14 @@ namespace Rizumu.GameLogic
 			this._scroller.Draw(_songs, spriteBatch, mouseValues);
 			//spriteBatch.DrawString(RizumuGame.Font, $"Current selected map: {MapManager.LoadedMaps[_selectedmapid].ArtistName} - {MapManager.LoadedMaps[_selectedmapid].SongName}",
 			//	new Vector2(3, 3), Color.Crimson);
+
+			foreach(var s in _songs.Items)
+			{
+				if (s.ItemId == $"map{_selectedmapid}")
+					s.Texture.X = -150;
+				else
+					s.Texture.X = 0;
+			}
 
 			if (_previoustickmap != _selectedmapid)
 			{
@@ -65,6 +72,12 @@ namespace Rizumu.GameLogic
 			}
 
 			_previoustickmap = _selectedmapid;
+
+			if (Keyboard.GetState().IsKeyDown(Keys.F2))
+			{
+				GameScreenManager.ChangeScreen(GameScreenType.InGame, this._game);
+				Logger.Log("Entered map screen in debug mode!");
+			}
 		}
 
 		public void Initialize(GameScreenReturns values, RizumuGame game)

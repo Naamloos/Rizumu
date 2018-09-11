@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Rizumu.Engine.Entities
 {
-	internal class Sprite
+	public class Sprite
 	{
 		internal Texture2D Texture2D { get; set; }
 		internal Point Location;
