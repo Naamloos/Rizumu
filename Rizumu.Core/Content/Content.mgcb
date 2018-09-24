@@ -135,3 +135,9 @@
 /processorParam:TextureFormat=Color
 /build:ingame/note.png
 
+#begin soundfx/hit.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundfx/hit.mp3
+

@@ -48,7 +48,7 @@ namespace Rizumu.GameLogic
 				NotesRight = legacy.NotesRight,
 				NotesUp = legacy.NotesUp,
 				Name = "Legacy",
-				Offset = legacy.Offset
+				Offset = legacy.Offset + 50
 			};
 
 			converted.Difficulties.Add(diff);

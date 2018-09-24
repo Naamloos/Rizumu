@@ -34,108 +34,164 @@ using System.Threading.Tasks;
 
 namespace Rizumu.GameLogic.Entities
 {
-	public abstract class BaseRizumuNote
-	{
-		public int Time = 0;
-		public bool Hit = false;
-		public bool Miss = false;
-		public int Position = 0;
-		public Sprite Texture;
-		public int TravelTime = 200;
-		public int PopupTime => Time - TravelTime;
+    public abstract class BaseRizumuNote
+    {
+        public int Time = 0;
+        public bool Hit = false;
+        public bool Miss = false;
+        public int Position = 0;
+        public Sprite Texture;
+        public int TravelTime = 200;
+        public int PopupTime => Time - TravelTime;
 
-		public BaseRizumuNote(int time, string texture, int traveltime)
-		{
-			this.Texture = texture;
-			this.Time = time;
-		}
+        public BaseRizumuNote(int time, string texture, int traveltime)
+        {
+            this.Texture = texture;
+            this.Time = time;
+        }
 
-		public abstract void Render(SpriteBatch sb);
+        public abstract void Render(SpriteBatch sb);
 
-		public abstract void Update(bool keypress, int currenttime);
-	}
+        public abstract void Update(ref bool keypress, int currenttime);
+    }
 
-	public class RizumuLeftNote : BaseRizumuNote
-	{
-		public RizumuLeftNote(int time, string texture, int traveltime) : base(time, texture, traveltime)
-		{
-			this.Texture.X = this.Texture.Hitbox.Width * -1;
-			this.Texture.Y = (1080 / 2) - (this.Texture.Hitbox.Height / 2);
-		}
+    public class RizumuLeftNote : BaseRizumuNote
+    {
+        public RizumuLeftNote(int time, string texture, int traveltime) : base(time, texture, traveltime)
+        {
+            this.Texture.X = this.Texture.Hitbox.Width * -1;
+            this.Texture.Y = (1080 / 2) - (this.Texture.Hitbox.Height / 2);
+        }
 
-		public override void Render(SpriteBatch sb)
-		{
-			if (!(this.Texture.X > ((1920 / 2) - (this.Texture.Hitbox.Width / 2))) && this.Hit == false)
-				this.Texture.Draw(sb);
-		}
+        public override void Render(SpriteBatch sb)
+        {
+            if (!(this.Texture.X > ((1920 / 2) - (this.Texture.Hitbox.Width / 2))) && this.Hit == false)
+                this.Texture.Draw(sb);
+        }
 
-		public override void Update(bool keypress, int currenttime)
-		{
-			int pos = currenttime - (this.Time - ((1920 / 2) - (this.Texture.Hitbox.Width / 2)));
-			this.Texture.X = pos;
-		}
-	}
+        public override void Update(ref bool keypress, int currenttime)
+        {
+            int pos = currenttime - (this.Time - ((1920 / 2) - (this.Texture.Hitbox.Width / 2)));
+            this.Texture.X = pos;
 
-	public class RizumuUpNote : BaseRizumuNote
-	{
-		public RizumuUpNote(int time, string texture, int traveltime) : base(time, texture, traveltime)
-		{
-			this.Texture.X = (1920 / 2) - (this.Texture.Hitbox.Width / 2);
-			this.Texture.Y = this.Texture.Hitbox.Height * -1;
-		}
+            if (pos > ((1920 / 2) - (this.Texture.Hitbox.Width * 2.5)) && pos < (1920 / 2))
+            {
+                if (keypress)
+                {
+                    this.Hit = true;
+                    RizumuGame.Hit.Play();
+                    keypress = false;
+                }
+            }
+            else if (pos > (1920 / 2))
+            {
+                this.Miss = true;
+            }
+        }
+    }
 
-		public override void Render(SpriteBatch sb)
-		{
-			if (!(this.Texture.Y > ((1080 / 2) - (this.Texture.Hitbox.Height / 2))) && this.Hit == false)
-				this.Texture.Draw(sb);
-		}
+    public class RizumuUpNote : BaseRizumuNote
+    {
+        public RizumuUpNote(int time, string texture, int traveltime) : base(time, texture, traveltime)
+        {
+            this.Texture.X = (1920 / 2) - (this.Texture.Hitbox.Width / 2);
+            this.Texture.Y = this.Texture.Hitbox.Height * -1;
+        }
 
-		public override void Update(bool keypress, int currenttime)
-		{
-			int pos = currenttime - (this.Time - ((1080 / 2) - (this.Texture.Hitbox.Height / 2)));
-			this.Texture.Y = pos;
-		}
-	}
+        public override void Render(SpriteBatch sb)
+        {
+            if (!(this.Texture.Y > ((1080 / 2) - (this.Texture.Hitbox.Height / 2))) && this.Hit == false)
+                this.Texture.Draw(sb);
+        }
 
-	public class RizumuRightNote : BaseRizumuNote
-	{
-		public RizumuRightNote(int time, string texture, int traveltime) : base(time, texture, traveltime)
-		{
-			this.Texture.X = 1920 + this.Texture.Hitbox.Width;
-			this.Texture.Y = (1080 / 2) - (this.Texture.Hitbox.Height / 2);
-		}
+        public override void Update(ref bool keypress, int currenttime)
+        {
+            int pos = currenttime - (this.Time - ((1080 / 2) - (this.Texture.Hitbox.Height / 2)));
+            this.Texture.Y = pos;
 
-		public override void Render(SpriteBatch sb)
-		{
-			if (!(this.Texture.X < ((1920 / 2) - (this.Texture.Hitbox.Width / 2))) && this.Hit == false)
-				this.Texture.Draw(sb);
-		}
+            if (pos > ((1080 / 2) - (this.Texture.Hitbox.Height * 2.5)) && pos < (1080 / 2))
+            {
+                if (keypress)
+                {
+                    this.Hit = true;
+                    RizumuGame.Hit.Play();
+                    keypress = false;
+                }
+            }
+            else if (pos > (1080 / 2))
+            {
+                this.Miss = true;
+            }
+        }
+    }
 
-		public override void Update(bool keypress, int currenttime)
-		{
-			int pos = currenttime - (this.Time - ((1920 / 2) - (this.Texture.Hitbox.Width / 2)));
-			this.Texture.X = (1920 - this.Texture.Hitbox.Width) - pos;
-		}
-	}
+    public class RizumuRightNote : BaseRizumuNote
+    {
+        public RizumuRightNote(int time, string texture, int traveltime) : base(time, texture, traveltime)
+        {
+            this.Texture.X = 1920 + this.Texture.Hitbox.Width;
+            this.Texture.Y = (1080 / 2) - (this.Texture.Hitbox.Height / 2);
+        }
 
-	public class RizumuDownNote : BaseRizumuNote
-	{
-		public RizumuDownNote(int time, string texture, int traveltime) : base(time, texture, traveltime)
-		{
-			this.Texture.X = (1920 / 2) - (this.Texture.Hitbox.Width / 2);
-			this.Texture.Y = 1080 + this.Texture.Hitbox.Height;
-		}
+        public override void Render(SpriteBatch sb)
+        {
+            if (!(this.Texture.X < ((1920 / 2) - (this.Texture.Hitbox.Width / 2))) && this.Hit == false)
+                this.Texture.Draw(sb);
+        }
 
-		public override void Render(SpriteBatch sb)
-		{
-			if (!(this.Texture.Y < ((1080 / 2) - (this.Texture.Hitbox.Height / 2))) && this.Hit == false)
-				this.Texture.Draw(sb);
-		}
+        public override void Update(ref bool keypress, int currenttime)
+        {
+            int pos = currenttime - (this.Time - ((1920 / 2) - (this.Texture.Hitbox.Width / 2)));
+            this.Texture.X = (1920 - this.Texture.Hitbox.Width) - pos;
 
-		public override void Update(bool keypress, int currenttime)
-		{
-			int pos = currenttime - (this.Time - ((1080 / 2) - (this.Texture.Hitbox.Height / 2)));
-			this.Texture.Y = (1080 - this.Texture.Hitbox.Height) - pos;
-		}
-	}
+            if (pos > ((1920 / 2) - (this.Texture.Hitbox.Width * 2.5)) && pos < (1920 / 2))
+            {
+                if (keypress)
+                {
+                    this.Hit = true;
+                    RizumuGame.Hit.Play();
+                    keypress = false;
+                }
+            }
+            else if (pos > (1920 / 2))
+            {
+                this.Miss = true;
+            }
+        }
+    }
+
+    public class RizumuDownNote : BaseRizumuNote
+    {
+        public RizumuDownNote(int time, string texture, int traveltime) : base(time, texture, traveltime)
+        {
+            this.Texture.X = (1920 / 2) - (this.Texture.Hitbox.Width / 2);
+            this.Texture.Y = 1080 + this.Texture.Hitbox.Height;
+        }
+
+        public override void Render(SpriteBatch sb)
+        {
+            if (!(this.Texture.Y < ((1080 / 2) - (this.Texture.Hitbox.Height / 2))) && this.Hit == false)
+                this.Texture.Draw(sb);
+        }
+
+        public override void Update(ref bool keypress, int currenttime)
+        {
+            int pos = currenttime - (this.Time - ((1080 / 2) - (this.Texture.Hitbox.Height / 2)));
+            this.Texture.Y = (1080 - this.Texture.Hitbox.Height) - pos;
+
+            if (pos > ((1080 / 2) - (this.Texture.Hitbox.Height * 2.5)) && pos < (1080 / 2))
+            {
+                if (keypress)
+                {
+                    this.Hit = true;
+                    RizumuGame.Hit.Play();
+                    keypress = false;
+                }
+            }
+            else if (pos > (1080 / 2))
+            {
+                this.Miss = true;
+            }
+        }
+    }
 }

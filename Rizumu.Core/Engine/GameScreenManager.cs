@@ -28,17 +28,21 @@ namespace Rizumu.Engine
 					// unknown screen, throw error
 					_screen = new ErrorScreen();
 					returns.Message = "Sorry Mario, but the princess is in another castle!\nOr, err.. I mean this game screen isn't here..";
-					break;
+                    RizumuGame.DiscordRpc.UpdateDetails("oof");
+                    break;
 				case GameScreenType.MainMenu:
 					// do main menu
 					_screen = new MainMenu();
+                    RizumuGame.DiscordRpc.UpdateDetails("Main Menu");
 					break;
 				case GameScreenType.SongSelect:
 					_screen = new SongSelect();
-					break;
+                    RizumuGame.DiscordRpc.UpdateDetails("Song Select");
+                    break;
 				case GameScreenType.InGame:
 					_screen = new InGame();
-					break;
+                    RizumuGame.DiscordRpc.UpdateDetails("In Game");
+                    break;
 			}
 			Logger.Log($"Switched to gamescreen with type {_screen.GetType().ToString()}");
 

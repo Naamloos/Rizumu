@@ -53,6 +53,7 @@ namespace Rizumu.GameLogic
 			_loadedmap = MapManager.LoadedMaps[_data.SelectedMap];
 			_loadeddifficulty = _loadedmap.Difficulties.First(/*x => x.Name == _data.LoadedDifficulty*/);
 			Logger.Log("Loaded map / difficulty without issues!");
+            RizumuGame.DiscordRpc.UpdateState($"{_loadedmap.ArtistName} - {_loadedmap.SongName} [{_loadeddifficulty.Name}]");
 
 			var nspr = TextureManager.GetTexture("note");
 
@@ -111,26 +112,42 @@ namespace Rizumu.GameLogic
 				Player = this._data.Player
 			};
 
+            RizumuGame.DiscordRpc.UpdateState("");
+
 			_data.Score = score;
 
 			return _data;
 		}
 
+        KeyboardState _previousState;
 		public void Update(GameTime gameTime, MouseValues mouseValues)
 		{
-			int time = (int)((MediaPlayer.PlayPosition.TotalMilliseconds * 500) / 1000) + _loadeddifficulty.Offset;
+            if (_previousState == null)
+                _previousState = new KeyboardState();
 
-			foreach (var n in LeftNotes)
-				n.Update(false, time);
+            var ks = Keyboard.GetState();
+
+            var leftpress = ks.IsKeyDown(RizumuGame.Settings.LeftKey) && _previousState.IsKeyUp(RizumuGame.Settings.LeftKey);
+            var rightpress = ks.IsKeyDown(RizumuGame.Settings.RightKey) && _previousState.IsKeyUp(RizumuGame.Settings.RightKey);
+            var uppress = ks.IsKeyDown(RizumuGame.Settings.UpKey) && _previousState.IsKeyUp(RizumuGame.Settings.UpKey);
+            var downpress = ks.IsKeyDown(RizumuGame.Settings.DownKey) && _previousState.IsKeyUp(RizumuGame.Settings.DownKey);
+
+            _previousState = ks;
+
+
+            int time = (int)((MediaPlayer.PlayPosition.TotalMilliseconds * 500) / 1000) + _loadeddifficulty.Offset;
+
+            foreach (var n in LeftNotes)
+				n.Update(ref leftpress, time);
 
 			foreach (var n in UpNotes)
-				n.Update(false, time);
+				n.Update(ref uppress, time);
 
 			foreach (var n in RightNotes)
-				n.Update(false, time);
+				n.Update(ref rightpress, time);
 
 			foreach (var n in DownNotes)
-				n.Update(false, time);
+				n.Update(ref downpress, time);
 		}
 	}
 }

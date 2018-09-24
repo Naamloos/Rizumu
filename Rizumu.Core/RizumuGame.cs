@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using DiscordRPC;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json;
@@ -9,6 +11,7 @@ using Rizumu.GameLogic.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace Rizumu
 {
@@ -17,10 +20,17 @@ namespace Rizumu
 		static void Main()
 		{
 			Logger.EnableLoggerDump();
-			Logger.Log("Checking folder prerequisites");
+			Logger.Log("Checking folder/file prerequisites");
 			// Check folder prerequisites
 			if (!Directory.Exists("songs"))
 				Directory.CreateDirectory("songs");
+            if (!File.Exists("settings.json"))
+            {
+                var fs = File.Create("settings.json");
+                byte[] emptysettings = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new Settings()));
+                fs.Write(emptysettings, 0, emptysettings.Length);
+                fs.Close();
+            }
 #if DEBUG
 			if (!Directory.Exists("songs/mock"))
 			{
@@ -40,6 +50,7 @@ namespace Rizumu
 				File.WriteAllText("songs/mock/map.json", JsonConvert.SerializeObject(m, Formatting.Indented));
 			}
 #endif
+            Console.CursorVisible = false;
 			Logger.Log("Starting game");
 			using (var game = new RizumuGame(Environment.OSVersion.Platform.ToString()))
 			{
@@ -59,8 +70,11 @@ namespace Rizumu
 	{
 		public static SpriteFont Font;
 		public static SpriteFont MetaFont;
+        public static SoundEffect Hit;
 		GraphicsDeviceManager Graphics;
 		public static RenderTarget2D RT;
+        public static DiscordRpcClient DiscordRpc;
+        public static Settings Settings;
 		SpriteBatch SpriteBatch;
 		MouseValues MouseValues = new MouseValues();
 
@@ -68,6 +82,7 @@ namespace Rizumu
 		{
 			Graphics = new GraphicsDeviceManager(this);
 			Content.RootDirectory = "Content";
+            DiscordRpc = new DiscordRpcClient("493799075528048641");
 		}
 
 		protected override void Initialize()
@@ -79,14 +94,36 @@ namespace Rizumu
 			this.Graphics.PreferredBackBufferWidth = 1280;
 			this.Graphics.ApplyChanges();
 			RT = new RenderTarget2D(SpriteBatch.GraphicsDevice, 1920, 1080);
-		}
+            Logger.Log("Loading Settings");
+            Settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText("settings.json"));
+            Logger.Log("Initializing Discord RPC");
+            DiscordRpc.OnReady += Rpc_OnReady;
+            DiscordRpc.Initialize();
 
-		protected override void LoadContent()
+            Logger.Log($"Setting Rich Presence");
+            DiscordRpc.SetPresence(new RichPresence()
+            {
+                Assets = new Assets()
+                {
+                    LargeImageKey = "logo",
+                    LargeImageText = "Rizumu"
+                },
+                Details = "Main Menu",
+            });
+        }
+
+        private void Rpc_OnReady(object sender, DiscordRPC.Message.ReadyMessage args)
+        {
+            Logger.Log($"Initialized Discord RPC with user {args.User.Username}#{args.User.Discriminator} ({args.User.ID})");
+        }
+
+        protected override void LoadContent()
 		{
 			Logger.Log("Loading various contents");
 			SpriteBatch = new SpriteBatch(GraphicsDevice);
 			Font = Content.Load<SpriteFont>("fonts/default");
 			MetaFont = Content.Load<SpriteFont>("fonts/Metadata");
+            Hit = Content.Load<SoundEffect>("soundfx/hit");
 
 			Logger.Log("Loading textures");
 			TextureManager.LoadTexture(Content, "testing/texture", "test");
@@ -142,6 +179,7 @@ namespace Rizumu
 			Logger.Log("Exiting and unloading game");
 			GameScreenManager.UnloadCurrent();
 			TextureManager.UnloadAll();
+            DiscordRpc.Dispose();
 			Logger.Log("Bye bye!");
 			Logger.UnloadAndDispose();
 			this.Exit();
