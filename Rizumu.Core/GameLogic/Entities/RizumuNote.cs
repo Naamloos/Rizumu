@@ -41,7 +41,7 @@ namespace Rizumu.GameLogic.Entities
         public bool Miss = false;
         public int Position = 0;
         public Sprite Texture;
-        public int TravelTime = 200;
+        public int TravelTime = 150;
         public int PopupTime => Time - TravelTime;
 
         public BaseRizumuNote(int time, string texture, int traveltime)
@@ -59,7 +59,7 @@ namespace Rizumu.GameLogic.Entities
     {
         public RizumuLeftNote(int time, string texture, int traveltime) : base(time, texture, traveltime)
         {
-            this.Texture.X = this.Texture.Hitbox.Width * -1;
+            this.Texture.X = 0;
             this.Texture.Y = (1080 / 2) - (this.Texture.Hitbox.Height / 2);
         }
 
@@ -76,7 +76,7 @@ namespace Rizumu.GameLogic.Entities
 
             if (pos > ((1920 / 2) - (this.Texture.Hitbox.Width * 2.5)) && pos < (1920 / 2))
             {
-                if (keypress)
+                if (keypress && !this.Hit && !this.Miss)
                 {
                     this.Hit = true;
                     RizumuGame.Hit.Play();
@@ -95,7 +95,7 @@ namespace Rizumu.GameLogic.Entities
         public RizumuUpNote(int time, string texture, int traveltime) : base(time, texture, traveltime)
         {
             this.Texture.X = (1920 / 2) - (this.Texture.Hitbox.Width / 2);
-            this.Texture.Y = this.Texture.Hitbox.Height * -1;
+            this.Texture.Y = 0;
         }
 
         public override void Render(SpriteBatch sb)
@@ -111,7 +111,7 @@ namespace Rizumu.GameLogic.Entities
 
             if (pos > ((1080 / 2) - (this.Texture.Hitbox.Height * 2.5)) && pos < (1080 / 2))
             {
-                if (keypress)
+                if (keypress && !this.Hit && !this.Miss)
                 {
                     this.Hit = true;
                     RizumuGame.Hit.Play();
@@ -129,7 +129,7 @@ namespace Rizumu.GameLogic.Entities
     {
         public RizumuRightNote(int time, string texture, int traveltime) : base(time, texture, traveltime)
         {
-            this.Texture.X = 1920 + this.Texture.Hitbox.Width;
+            this.Texture.X = 1920;
             this.Texture.Y = (1080 / 2) - (this.Texture.Hitbox.Height / 2);
         }
 
@@ -146,7 +146,7 @@ namespace Rizumu.GameLogic.Entities
 
             if (pos > ((1920 / 2) - (this.Texture.Hitbox.Width * 2.5)) && pos < (1920 / 2))
             {
-                if (keypress)
+                if (keypress && !this.Hit && !this.Miss)
                 {
                     this.Hit = true;
                     RizumuGame.Hit.Play();
@@ -165,7 +165,7 @@ namespace Rizumu.GameLogic.Entities
         public RizumuDownNote(int time, string texture, int traveltime) : base(time, texture, traveltime)
         {
             this.Texture.X = (1920 / 2) - (this.Texture.Hitbox.Width / 2);
-            this.Texture.Y = 1080 + this.Texture.Hitbox.Height;
+            this.Texture.Y = 1080;
         }
 
         public override void Render(SpriteBatch sb)
@@ -181,7 +181,7 @@ namespace Rizumu.GameLogic.Entities
 
             if (pos > ((1080 / 2) - (this.Texture.Hitbox.Height * 2.5)) && pos < (1080 / 2))
             {
-                if (keypress)
+                if (keypress && !this.Hit && !this.Miss)
                 {
                     this.Hit = true;
                     RizumuGame.Hit.Play();

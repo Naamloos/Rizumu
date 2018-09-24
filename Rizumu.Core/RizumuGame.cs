@@ -90,8 +90,8 @@ namespace Rizumu
 			Logger.Log("Initializing game");
 			base.Initialize();
 			this.IsMouseVisible = true;
-			this.Graphics.PreferredBackBufferHeight = 720;
-			this.Graphics.PreferredBackBufferWidth = 1280;
+			this.Graphics.PreferredBackBufferHeight = 844;
+			this.Graphics.PreferredBackBufferWidth = 1500;
 			this.Graphics.ApplyChanges();
 			RT = new RenderTarget2D(SpriteBatch.GraphicsDevice, 1920, 1080);
             Logger.Log("Loading Settings");
