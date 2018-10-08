@@ -16,8 +16,8 @@ namespace Rizumu.Engine
         {
             var tx2d = Content.Load<Texture2D>(assetname);
             _textures.Add(id, tx2d);
-			Logger.Log($"Loaded texture with asset name {assetname} and id {id}");
-		}
+            Logger.Log($"Loaded texture with asset name {assetname} and id {id}");
+        }
 
         public static Texture2D GetTexture(string id)
         {
@@ -28,8 +28,8 @@ namespace Rizumu.Engine
 
         public static void UnloadAll()
         {
-			Logger.Log("Unloaded all textures");
-			_textures.Clear();
+            Logger.Log("Unloaded all textures");
+            _textures.Clear();
         }
     }
 }

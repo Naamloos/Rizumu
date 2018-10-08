@@ -17,7 +17,7 @@ namespace Rizumu.GameLogic
         private GameScreenReturns _startvalues { get; set; }
         private RizumuGame _game { get; set; }
         private Gui _menu;
-		private GameScreenReturns values;
+        private GameScreenReturns values;
 
         public void Initialize(GameScreenReturns values, RizumuGame game)
         {
@@ -34,7 +34,7 @@ namespace Rizumu.GameLogic
 
             // Set GUI events to handler methods
             this._menu.OnClick += Menu_OnClick;
-			this.values = values;
+            this.values = values;
         }
 
         private void Menu_OnClick(object sender, GuiEventArgs e)
@@ -60,8 +60,8 @@ namespace Rizumu.GameLogic
 
         public GameScreenReturns Unload(GameScreenType NewScreen)
         {
-			values.PreviousScreen = GameScreenType.MainMenu;
-			return values;
+            values.PreviousScreen = GameScreenType.MainMenu;
+            return values;
         }
 
         public void Update(GameTime gameTime, MouseValues mouseValues)

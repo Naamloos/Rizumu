@@ -18,7 +18,7 @@ namespace Rizumu.Engine
 
         public static void UpdateValues()
         {
-            for(int i = 0; i < _values.Count; i++)
+            for (int i = 0; i < _values.Count; i++)
             {
                 _values[i].X += _values[i].Increment;
                 _values[i].Y = 0;

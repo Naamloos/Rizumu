@@ -43,7 +43,7 @@ namespace Rizumu.GameLogic
 
         public void Update(GameTime gameTime, MouseValues mouseValues)
         {
-            if(DateTimeOffset.Now.Subtract(_errorstart) > _errorwait)
+            if (DateTimeOffset.Now.Subtract(_errorstart) > _errorwait)
                 this._game.ExitUnload();
         }
     }

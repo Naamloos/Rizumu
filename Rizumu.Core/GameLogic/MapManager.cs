@@ -11,36 +11,36 @@ using System.Threading.Tasks;
 
 namespace Rizumu.GameLogic
 {
-	public class MapManager
-	{
-		public static Dictionary<int, RizumuMap> LoadedMaps = new Dictionary<int, RizumuMap>();
+    public class MapManager
+    {
+        public static Dictionary<int, RizumuMap> LoadedMaps = new Dictionary<int, RizumuMap>();
 
-		public static void LoadMaps(GraphicsDevice gr)
-		{
-			Logger.Log("Loading all maps!");
-			int i = 1;
-			foreach (var dir in Directory.GetDirectories("songs"))
-			{
-				if (File.Exists(Path.Combine(dir, "map.json")))
-				{
-					string map = File.ReadAllText(Path.Combine(dir, "map.json"));
+        public static void LoadMaps(GraphicsDevice gr)
+        {
+            Logger.Log("Loading all maps!");
+            int i = 1;
+            foreach (var dir in Directory.GetDirectories("songs"))
+            {
+                if (File.Exists(Path.Combine(dir, "map.json")))
+                {
+                    string map = File.ReadAllText(Path.Combine(dir, "map.json"));
 
-					// Convert if legacy!!
-					if (LegacyMapConverter.CheckMapLegacy(JObject.Parse(map)))
-					{
-						var lgc = JsonConvert.DeserializeObject<LegacyRizumuMap>(map);
-						var mdr = LegacyMapConverter.ConvertLegacy(lgc);
-						File.WriteAllText(Path.Combine(dir, "map.json"), JsonConvert.SerializeObject(mdr));
-						map = File.ReadAllText(Path.Combine(dir, "map.json"));
-					}
+                    // Convert if legacy!!
+                    if (LegacyMapConverter.CheckMapLegacy(JObject.Parse(map)))
+                    {
+                        var lgc = JsonConvert.DeserializeObject<LegacyRizumuMap>(map);
+                        var mdr = LegacyMapConverter.ConvertLegacy(lgc);
+                        File.WriteAllText(Path.Combine(dir, "map.json"), JsonConvert.SerializeObject(mdr));
+                        map = File.ReadAllText(Path.Combine(dir, "map.json"));
+                    }
 
-					var m = JsonConvert.DeserializeObject<RizumuMap>(map);
-					m.Path = dir;
-					m.LoadContent(gr);
-					LoadedMaps.Add(i, m);
-				}
-				i++;
-			}
-		}
-	}
+                    var m = JsonConvert.DeserializeObject<RizumuMap>(map);
+                    m.Path = dir;
+                    m.LoadContent(gr);
+                    LoadedMaps.Add(i, m);
+                }
+                i++;
+            }
+        }
+    }
 }
