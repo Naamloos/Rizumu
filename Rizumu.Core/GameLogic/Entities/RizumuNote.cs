@@ -71,7 +71,7 @@ namespace Rizumu.GameLogic.Entities
 
         public override void Update(ref bool keypress, int currenttime)
         {
-            int pos = currenttime - (this.Time - ((1920 / 2) - (this.Texture.Hitbox.Width / 2)));
+            int pos = currenttime - (this.Time - ((1920 / 2)));
             this.Texture.X = pos;
 
             if (pos > ((1920 / 2) - (this.Texture.Hitbox.Width * 2.5)) && pos < (1920 / 2))
@@ -106,7 +106,7 @@ namespace Rizumu.GameLogic.Entities
 
         public override void Update(ref bool keypress, int currenttime)
         {
-            int pos = currenttime - (this.Time - ((1080 / 2) - (this.Texture.Hitbox.Height / 2)));
+            int pos = currenttime - (this.Time - ((1080 / 2)));
             this.Texture.Y = pos;
 
             if (pos > ((1080 / 2) - (this.Texture.Hitbox.Height * 2.5)) && pos < (1080 / 2))
@@ -141,7 +141,7 @@ namespace Rizumu.GameLogic.Entities
 
         public override void Update(ref bool keypress, int currenttime)
         {
-            int pos = currenttime - (this.Time - ((1920 / 2) - (this.Texture.Hitbox.Width / 2)));
+            int pos = currenttime - (this.Time - ((1920 / 2)));
             this.Texture.X = (1920 - this.Texture.Hitbox.Width) - pos;
 
             if (pos > ((1920 / 2) - (this.Texture.Hitbox.Width * 2.5)) && pos < (1920 / 2))
@@ -176,7 +176,7 @@ namespace Rizumu.GameLogic.Entities
 
         public override void Update(ref bool keypress, int currenttime)
         {
-            int pos = currenttime - (this.Time - ((1080 / 2) - (this.Texture.Hitbox.Height / 2)));
+            int pos = currenttime - (this.Time - ((1080 / 2)));
             this.Texture.Y = (1080 - this.Texture.Hitbox.Height) - pos;
 
             if (pos > ((1080 / 2) - (this.Texture.Hitbox.Height * 2.5)) && pos < (1080 / 2))

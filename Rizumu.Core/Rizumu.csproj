@@ -55,6 +55,7 @@
     <Compile Include="Engine\TextureManager.cs" />
     <Compile Include="GameLogic\Entities\LegacyRizumuMap.cs" />
     <Compile Include="GameLogic\Entities\RizumuMap.cs" />
+    <Compile Include="GameLogic\Entities\RizumuMapFile.cs" />
     <Compile Include="GameLogic\Entities\RizumuNote.cs" />
     <Compile Include="GameLogic\Entities\RizumuScoreData.cs" />
     <Compile Include="GameLogic\Entities\Settings.cs" />

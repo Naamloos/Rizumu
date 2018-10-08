@@ -21,6 +21,7 @@ namespace Rizumu.GameLogic
 		RizumuMap _loadedmap;
 		RizumuDifficulty _loadeddifficulty;
 		int _traveltime = 200;
+        RizumuGame gamu;
 
 		List<RizumuLeftNote> LeftNotes = new List<RizumuLeftNote>();
 		List<RizumuUpNote> UpNotes = new List<RizumuUpNote>();
@@ -52,6 +53,7 @@ namespace Rizumu.GameLogic
 			_data = values;
 			_loadedmap = MapManager.LoadedMaps[_data.SelectedMap];
 			_loadeddifficulty = _loadedmap.Difficulties.First(/*x => x.Name == _data.LoadedDifficulty*/);
+            gamu = game;
 			Logger.Log("Loaded map / difficulty without issues!");
             RizumuGame.DiscordRpc.UpdateState($"{_loadedmap.ArtistName} - {_loadedmap.SongName} [{_loadeddifficulty.Name}]");
 
@@ -120,6 +122,10 @@ namespace Rizumu.GameLogic
 		}
 
         KeyboardState _previousState;
+        float lscale = 1f;
+        float uscale = 1f;
+        float rscale = 1f;
+        float dscale = 1f;
 		public void Update(GameTime gameTime, MouseValues mouseValues)
 		{
             if (_previousState == null)
@@ -131,6 +137,29 @@ namespace Rizumu.GameLogic
             var rightpress = ks.IsKeyDown(RizumuGame.Settings.RightKey) && _previousState.IsKeyUp(RizumuGame.Settings.RightKey);
             var uppress = ks.IsKeyDown(RizumuGame.Settings.UpKey) && _previousState.IsKeyUp(RizumuGame.Settings.UpKey);
             var downpress = ks.IsKeyDown(RizumuGame.Settings.DownKey) && _previousState.IsKeyUp(RizumuGame.Settings.DownKey);
+
+            if (leftpress)
+                lscale = 1.5f;
+            if (uppress)
+                uscale = 1.5f;
+            if (rightpress)
+                rscale = 1.5f;
+            if (downpress)
+                dscale = 1.5f;
+
+            if (lscale > 1f)
+                lscale -= 0.1f;
+            if (rscale > 1f)
+                rscale -= 0.1f;
+            if (uscale > 1f)
+                uscale -= 0.1f;
+            if (dscale > 1f)
+                dscale -= 0.1f;
+
+            this._ingamegui.Items.First(x => x.ItemId == "leftsp").Texture.Scale = lscale;
+            this._ingamegui.Items.First(x => x.ItemId == "upsp").Texture.Scale = uscale;
+            this._ingamegui.Items.First(x => x.ItemId == "rightsp").Texture.Scale = rscale;
+            this._ingamegui.Items.First(x => x.ItemId == "downsp").Texture.Scale = dscale;
 
             _previousState = ks;
 
@@ -148,6 +177,12 @@ namespace Rizumu.GameLogic
 
 			foreach (var n in DownNotes)
 				n.Update(ref downpress, time);
-		}
+
+            if (Keyboard.GetState().IsKeyDown(Keys.F3))
+            {
+                GameScreenManager.ChangeScreen(GameScreenType.MainMenu, gamu);
+                Logger.Log("Force-quit ingame!");
+            }
+        }
 	}
 }

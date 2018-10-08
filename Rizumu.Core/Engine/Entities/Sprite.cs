@@ -16,6 +16,7 @@ namespace Rizumu.Engine.Entities
 		internal int Y { get { return Location.Y; } set { Location.Y = value; } }
 		internal Rectangle Hitbox { get { return new Rectangle(Location.X, Location.Y, Empty ? 1 : Texture2D.Width, Empty ? 1 : Texture2D.Height); } }
 		internal bool Empty = false;
+        internal float Scale = 1f;
 
 		public static Sprite CreateEmpty()
 		{
@@ -29,7 +30,16 @@ namespace Rizumu.Engine.Entities
 		{
 			if (!Empty)
 			{
-				sb.Draw(Texture2D, new Rectangle(X ?? this.X, Y ?? this.Y, Width ?? Texture2D.Width, Height ?? Texture2D.Height), Color.White);
+                var w = Width ?? (int)(Texture2D.Width * Scale);
+                var h = Height ?? (int)(Texture2D.Height * Scale);
+
+                var xoff = ((Texture2D.Width * Scale) - Texture2D.Width) / 2;
+                var yoff = ((Texture2D.Height * Scale) - Texture2D.Height) / 2;
+
+                var x = (X ?? this.X) - xoff;
+                var y = (Y ?? this.Y) - yoff;
+
+                sb.Draw(Texture2D, new Rectangle((int)x, (int)y, w, h), Color.White);
 			}
 		}
 
