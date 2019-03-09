@@ -13,7 +13,7 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin testing/texture.png
+#begin backgrounds/main_bg.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -23,7 +23,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:testing/texture.png
+/build:backgrounds/main_bg.jpg
 
 #begin fonts/default.spritefont
 /importer:FontDescriptionImporter
@@ -31,6 +31,13 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:fonts/default.spritefont
+
+#begin fonts/Metadata.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fonts/Metadata.spritefont
 
 #begin gui/button.png
 /importer:TextureImporter
@@ -92,18 +99,6 @@
 /processorParam:TextureFormat=Color
 /build:gui/selectorbox.png
 
-#begin backgrounds/main_bg.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:backgrounds/main_bg.jpg
-
 #begin gui/songselect_overlay.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -115,13 +110,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:gui/songselect_overlay.png
-
-#begin fonts/Metadata.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fonts/Metadata.spritefont
 
 #begin ingame/note.png
 /importer:TextureImporter
@@ -140,4 +128,16 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:soundfx/hit.mp3
+
+#begin testing/texture.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:testing/texture.png
 
