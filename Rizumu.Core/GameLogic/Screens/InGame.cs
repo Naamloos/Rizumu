@@ -122,6 +122,7 @@ namespace Rizumu.GameLogic
         }
 
         KeyboardState _previousState;
+        GamePadState _previousGPState;
         float lscale = 1f;
         float uscale = 1f;
         float rscale = 1f;
@@ -131,12 +132,35 @@ namespace Rizumu.GameLogic
             if (_previousState == null)
                 _previousState = new KeyboardState();
 
-            var ks = Keyboard.GetState();
+            if (_previousGPState == null)
+                _previousGPState = new GamePadState();
 
-            var leftpress = ks.IsKeyDown(RizumuGame.Settings.LeftKey) && _previousState.IsKeyUp(RizumuGame.Settings.LeftKey);
-            var rightpress = ks.IsKeyDown(RizumuGame.Settings.RightKey) && _previousState.IsKeyUp(RizumuGame.Settings.RightKey);
-            var uppress = ks.IsKeyDown(RizumuGame.Settings.UpKey) && _previousState.IsKeyUp(RizumuGame.Settings.UpKey);
-            var downpress = ks.IsKeyDown(RizumuGame.Settings.DownKey) && _previousState.IsKeyUp(RizumuGame.Settings.DownKey);
+            var ks = Keyboard.GetState();
+            var gs = GamePad.GetState(PlayerIndex.One);
+
+            var leftpress = ks.IsKeyDown(RizumuGame.Settings.LeftKey) && _previousState.IsKeyUp(RizumuGame.Settings.LeftKey)
+                || gs.ThumbSticks.Left.X < -0.7 && _previousGPState.ThumbSticks.Left.X > -0.7
+                || gs.ThumbSticks.Right.X < -0.7 && _previousGPState.ThumbSticks.Right.X > -0.7
+                || gs.IsButtonDown(Buttons.DPadLeft) && _previousGPState.IsButtonUp(Buttons.DPadLeft)
+                || gs.IsButtonDown(Buttons.X) && _previousGPState.IsButtonUp(Buttons.X);
+
+            var rightpress = ks.IsKeyDown(RizumuGame.Settings.RightKey) && _previousState.IsKeyUp(RizumuGame.Settings.RightKey)
+                || gs.ThumbSticks.Left.X > 0.7 && _previousGPState.ThumbSticks.Left.X < 0.7
+                || gs.ThumbSticks.Right.X > 0.7 && _previousGPState.ThumbSticks.Right.X < 0.7
+                || gs.IsButtonDown(Buttons.DPadRight) && _previousGPState.IsButtonUp(Buttons.DPadRight)
+                || gs.IsButtonDown(Buttons.B) && _previousGPState.IsButtonUp(Buttons.B);
+
+            var uppress = ks.IsKeyDown(RizumuGame.Settings.UpKey) && _previousState.IsKeyUp(RizumuGame.Settings.UpKey)
+                || gs.ThumbSticks.Left.Y > 0.7 && _previousGPState.ThumbSticks.Left.Y < 0.7
+                || gs.ThumbSticks.Right.Y > 0.7 && _previousGPState.ThumbSticks.Right.Y < 0.7
+                || gs.IsButtonDown(Buttons.DPadUp) && _previousGPState.IsButtonUp(Buttons.DPadUp)
+                || gs.IsButtonDown(Buttons.Y) && _previousGPState.IsButtonUp(Buttons.Y);
+
+            var downpress = ks.IsKeyDown(RizumuGame.Settings.DownKey) && _previousState.IsKeyUp(RizumuGame.Settings.DownKey)
+                || gs.ThumbSticks.Left.Y < -0.7 && _previousGPState.ThumbSticks.Left.Y > -0.7
+                || gs.ThumbSticks.Right.Y < -0.7 && _previousGPState.ThumbSticks.Right.Y > -0.7
+                || gs.IsButtonDown(Buttons.DPadDown) && _previousGPState.IsButtonUp(Buttons.DPadDown)
+                || gs.IsButtonDown(Buttons.A) && _previousGPState.IsButtonUp(Buttons.A);
 
             if (leftpress)
                 lscale = 1.5f;
@@ -162,7 +186,7 @@ namespace Rizumu.GameLogic
             this._ingamegui.Items.First(x => x.ItemId == "downsp").Texture.Scale = dscale;
 
             _previousState = ks;
-
+            _previousGPState = gs;
 
             int time = (int)((MediaPlayer.PlayPosition.TotalMilliseconds * 500) / 1000) + _loadeddifficulty.Offset;
 
