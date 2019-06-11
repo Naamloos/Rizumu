@@ -33,15 +33,18 @@ namespace Rizumu.Engine
                 case GameScreenType.MainMenu:
                     // do main menu
                     _screen = new MainMenu();
-                    RizumuGame.DiscordRpc.UpdateDetails("Main Menu");
+                    if(RizumuGame.DiscordRpc.IsInitialized)
+                        RizumuGame.DiscordRpc.UpdateDetails("Main Menu");
                     break;
                 case GameScreenType.SongSelect:
                     _screen = new SongSelect();
-                    RizumuGame.DiscordRpc.UpdateDetails("Song Select");
+                    if (RizumuGame.DiscordRpc.IsInitialized)
+                        RizumuGame.DiscordRpc.UpdateDetails("Song Select");
                     break;
                 case GameScreenType.InGame:
                     _screen = new InGame();
-                    RizumuGame.DiscordRpc.UpdateDetails("In Game");
+                    if (RizumuGame.DiscordRpc.IsInitialized)
+                        RizumuGame.DiscordRpc.UpdateDetails("In Game");
                     break;
             }
             Logger.Log($"Switched to gamescreen with type {_screen.GetType().ToString()}");
@@ -65,10 +68,10 @@ namespace Rizumu.Engine
             _screen.Unload(GameScreenType.None);
         }
 
-        public static void UpdateCurrent(GameTime gt, MouseValues mv)
+        public static void UpdateCurrent(GameTime gt, MouseValues mv, InputManager input)
         {
             if (_screen != null)
-                _screen.Update(gt, mv);
+                _screen.Update(gt, mv, input);
         }
 
         public static void DrawCurrent(SpriteBatch sb, GameTime gt, MouseValues mv)
@@ -101,13 +104,14 @@ namespace Rizumu.Engine
         Options,
         InGame,
         Results,
+        Multi,
         None
     }
 
     internal interface IGameScreen
     {
         void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues);
-        void Update(GameTime gameTime, MouseValues mouseValues);
+        void Update(GameTime gameTime, MouseValues mouseValues, InputManager input);
         void Initialize(GameScreenReturns values, RizumuGame game);
         GameScreenReturns Unload(GameScreenType NewScreen);
     }

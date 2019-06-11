@@ -55,7 +55,8 @@ namespace Rizumu.GameLogic
             _loadeddifficulty = _loadedmap.Difficulties.First(/*x => x.Name == _data.LoadedDifficulty*/);
             gamu = game;
             Logger.Log("Loaded map / difficulty without issues!");
-            RizumuGame.DiscordRpc.UpdateState($"{_loadedmap.ArtistName} - {_loadedmap.SongName} [{_loadeddifficulty.Name}]");
+            if (RizumuGame.DiscordRpc.IsInitialized)
+                RizumuGame.DiscordRpc.UpdateState($"{_loadedmap.ArtistName} - {_loadedmap.SongName} [{_loadeddifficulty.Name}]");
 
             var nspr = TextureManager.GetTexture("note");
 
@@ -121,54 +122,19 @@ namespace Rizumu.GameLogic
             return _data;
         }
 
-        KeyboardState _previousState;
-        GamePadState _previousGPState;
         float lscale = 1f;
         float uscale = 1f;
         float rscale = 1f;
         float dscale = 1f;
-        public void Update(GameTime gameTime, MouseValues mouseValues)
+        public void Update(GameTime gameTime, MouseValues mouseValues, InputManager input)
         {
-            if (_previousState == null)
-                _previousState = new KeyboardState();
-
-            if (_previousGPState == null)
-                _previousGPState = new GamePadState();
-
-            var ks = Keyboard.GetState();
-            var gs = GamePad.GetState(PlayerIndex.One);
-
-            var leftpress = ks.IsKeyDown(RizumuGame.Settings.LeftKey) && _previousState.IsKeyUp(RizumuGame.Settings.LeftKey)
-                || gs.ThumbSticks.Left.X < -0.7 && _previousGPState.ThumbSticks.Left.X > -0.7
-                || gs.ThumbSticks.Right.X < -0.7 && _previousGPState.ThumbSticks.Right.X > -0.7
-                || gs.IsButtonDown(Buttons.DPadLeft) && _previousGPState.IsButtonUp(Buttons.DPadLeft)
-                || gs.IsButtonDown(Buttons.X) && _previousGPState.IsButtonUp(Buttons.X);
-
-            var rightpress = ks.IsKeyDown(RizumuGame.Settings.RightKey) && _previousState.IsKeyUp(RizumuGame.Settings.RightKey)
-                || gs.ThumbSticks.Left.X > 0.7 && _previousGPState.ThumbSticks.Left.X < 0.7
-                || gs.ThumbSticks.Right.X > 0.7 && _previousGPState.ThumbSticks.Right.X < 0.7
-                || gs.IsButtonDown(Buttons.DPadRight) && _previousGPState.IsButtonUp(Buttons.DPadRight)
-                || gs.IsButtonDown(Buttons.B) && _previousGPState.IsButtonUp(Buttons.B);
-
-            var uppress = ks.IsKeyDown(RizumuGame.Settings.UpKey) && _previousState.IsKeyUp(RizumuGame.Settings.UpKey)
-                || gs.ThumbSticks.Left.Y > 0.7 && _previousGPState.ThumbSticks.Left.Y < 0.7
-                || gs.ThumbSticks.Right.Y > 0.7 && _previousGPState.ThumbSticks.Right.Y < 0.7
-                || gs.IsButtonDown(Buttons.DPadUp) && _previousGPState.IsButtonUp(Buttons.DPadUp)
-                || gs.IsButtonDown(Buttons.Y) && _previousGPState.IsButtonUp(Buttons.Y);
-
-            var downpress = ks.IsKeyDown(RizumuGame.Settings.DownKey) && _previousState.IsKeyUp(RizumuGame.Settings.DownKey)
-                || gs.ThumbSticks.Left.Y < -0.7 && _previousGPState.ThumbSticks.Left.Y > -0.7
-                || gs.ThumbSticks.Right.Y < -0.7 && _previousGPState.ThumbSticks.Right.Y > -0.7
-                || gs.IsButtonDown(Buttons.DPadDown) && _previousGPState.IsButtonUp(Buttons.DPadDown)
-                || gs.IsButtonDown(Buttons.A) && _previousGPState.IsButtonUp(Buttons.A);
-
-            if (leftpress)
+            if (input.Left)
                 lscale = 1.5f;
-            if (uppress)
+            if (input.Up)
                 uscale = 1.5f;
-            if (rightpress)
+            if (input.Right)
                 rscale = 1.5f;
-            if (downpress)
+            if (input.Down)
                 dscale = 1.5f;
 
             if (lscale > 1f)
@@ -185,22 +151,19 @@ namespace Rizumu.GameLogic
             this._ingamegui.Items.First(x => x.ItemId == "rightsp").Texture.Scale = rscale;
             this._ingamegui.Items.First(x => x.ItemId == "downsp").Texture.Scale = dscale;
 
-            _previousState = ks;
-            _previousGPState = gs;
-
             int time = (int)((MediaPlayer.PlayPosition.TotalMilliseconds * 500) / 1000) + _loadeddifficulty.Offset;
 
             foreach (var n in LeftNotes)
-                n.Update(ref leftpress, time);
+                n.Update(ref input.Left, time);
 
             foreach (var n in UpNotes)
-                n.Update(ref uppress, time);
+                n.Update(ref input.Up, time);
 
             foreach (var n in RightNotes)
-                n.Update(ref rightpress, time);
+                n.Update(ref input.Right, time);
 
             foreach (var n in DownNotes)
-                n.Update(ref downpress, time);
+                n.Update(ref input.Down, time);
 
             if (Keyboard.GetState().IsKeyDown(Keys.F3))
             {

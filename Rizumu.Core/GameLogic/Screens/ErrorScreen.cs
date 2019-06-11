@@ -41,7 +41,7 @@ namespace Rizumu.GameLogic
             return GameScreenReturns.Empty();
         }
 
-        public void Update(GameTime gameTime, MouseValues mouseValues)
+        public void Update(GameTime gameTime, MouseValues mouseValues, InputManager input)
         {
             if (DateTimeOffset.Now.Subtract(_errorstart) > _errorwait)
                 this._game.ExitUnload();

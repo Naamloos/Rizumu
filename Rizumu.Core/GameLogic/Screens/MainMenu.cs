@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Rizumu.Engine.GUI;
 using Rizumu.Engine.Entities;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace Rizumu.GameLogic
 {
@@ -26,10 +27,11 @@ namespace Rizumu.GameLogic
             // Build GUI
             this._menu = new GuiBuilder()
                 .AddBackground("menu")
-                .AddButton(15, 125, "play", "button", "buttonhover", GuiOrigin.TopRight, "Play", GuiOrigin.BottomLeft, new Vector2(30, 0))
-                .AddButton(115, 275, "settings", "button", "buttonhover", GuiOrigin.TopRight, "Settings", GuiOrigin.BottomLeft, new Vector2(30, 0))
-                .AddButton(15, 425, "exit", "button", "buttonhover", GuiOrigin.TopRight, "Exit", GuiOrigin.BottomLeft, new Vector2(30, 0))
-                .AddSprite(-100, -100, "logo", "logo", Origin: GuiOrigin.BottomRight, widthoverride: 300, heightoverride: 300)
+                .AddButton(-25, 275, "play", "button", "buttonhover", GuiOrigin.BottomLeft, "Solo play", GuiOrigin.BottomRight, new Vector2(30, 10))
+                .AddButton(-25, 100, "multi", "button", "buttonhover", GuiOrigin.BottomLeft, "Multi play", GuiOrigin.BottomRight, new Vector2(30, 10))
+                .AddButton(-25, 275, "settings", "button", "buttonhover", GuiOrigin.BottomRight, "Options", GuiOrigin.BottomLeft, new Vector2(30, 10))
+                .AddButton(-25, 100, "exit", "button", "buttonhover", GuiOrigin.BottomRight, "Exit", GuiOrigin.BottomLeft, new Vector2(30, 10))
+                .AddSprite(710, 200, "logo", "logo", Origin: GuiOrigin.TopLeft, widthoverride: 500, heightoverride: 100)
                 .Build();
 
             // Set GUI events to handler methods
@@ -55,6 +57,9 @@ namespace Rizumu.GameLogic
                 case "settings":
                     GameScreenManager.ChangeScreen(GameScreenType.Options, this._game);
                     break;
+                case "multi":
+                    GameScreenManager.ChangeScreen(GameScreenType.Multi, this._game);
+                    break;
             }
         }
 
@@ -64,7 +69,7 @@ namespace Rizumu.GameLogic
             return values;
         }
 
-        public void Update(GameTime gameTime, MouseValues mouseValues)
+        public void Update(GameTime gameTime, MouseValues mouseValues, InputManager input)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Pause))
                 GameScreenManager.CatchError("slob on my know like corn on da cob", this._game);

@@ -21,5 +21,17 @@ namespace Rizumu.GameLogic.Entities
 
         [JsonProperty("downkey")]
         public Keys DownKey = Keys.NumPad2;
+
+        [JsonProperty("enablethumbsticks")]
+        public bool EnableThumbsticks = true;
+
+        [JsonProperty("enablekeyboard")]
+        public bool EnableKeyboard = true;
+
+        [JsonProperty("enablegamepad")]
+        public bool EnableGamepad = true;
+
+        [JsonProperty("discordrpc")]
+        public bool DiscordRpc = true;
     }
 }

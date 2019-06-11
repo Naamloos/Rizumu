@@ -25,6 +25,18 @@
 /processorParam:TextureFormat=Color
 /build:backgrounds/main_bg.jpg
 
+#begin backgrounds/newbg.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:backgrounds/newbg.png
+
 #begin fonts/default.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -51,6 +63,30 @@
 /processorParam:TextureFormat=Color
 /build:gui/button.png
 
+#begin gui/button_hover.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:gui/button_hover.png
+
+#begin gui/button_idle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:gui/button_idle.png
+
 #begin gui/buttonhover.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -62,6 +98,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:gui/buttonhover.png
+
+#begin gui/flatlogo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:gui/flatlogo.png
 
 #begin gui/logo.png
 /importer:TextureImporter
@@ -128,6 +176,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:soundfx/hit.mp3
+
+#begin soundfx/menu.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundfx/menu.mp3
 
 #begin testing/texture.png
 /importer:TextureImporter

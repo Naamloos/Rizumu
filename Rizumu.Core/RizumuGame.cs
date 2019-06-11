@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using Newtonsoft.Json;
 using Rizumu.Engine;
 using Rizumu.Engine.Entities;
@@ -77,6 +78,8 @@ namespace Rizumu
         public static Settings Settings;
         SpriteBatch SpriteBatch;
         MouseValues MouseValues = new MouseValues();
+        public static SoundEffect menumusic;
+        InputManager input;
 
         public RizumuGame(string platform)
         {
@@ -96,6 +99,7 @@ namespace Rizumu
             RT = new RenderTarget2D(SpriteBatch.GraphicsDevice, 1920, 1080);
             Logger.Log("Loading Settings");
             Settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText("settings.json"));
+            input = new InputManager(Settings);
             Logger.Log("Initializing Discord RPC");
             DiscordRpc.OnReady += Rpc_OnReady;
             DiscordRpc.Initialize();
@@ -124,13 +128,14 @@ namespace Rizumu
             Font = Content.Load<SpriteFont>("fonts/default");
             MetaFont = Content.Load<SpriteFont>("fonts/Metadata");
             Hit = Content.Load<SoundEffect>("soundfx/hit");
+            menumusic = Content.Load<SoundEffect>("soundfx/menu");
 
             Logger.Log("Loading textures");
             TextureManager.LoadTexture(Content, "testing/texture", "test");
-            TextureManager.LoadTexture(Content, "backgrounds/main_bg", "menu");
-            TextureManager.LoadTexture(Content, "gui/button", "button");
-            TextureManager.LoadTexture(Content, "gui/buttonhover", "buttonhover");
-            TextureManager.LoadTexture(Content, "gui/logo", "logo");
+            TextureManager.LoadTexture(Content, "backgrounds/newbg", "menu");
+            TextureManager.LoadTexture(Content, "gui/button_idle", "button");
+            TextureManager.LoadTexture(Content, "gui/button_hover", "buttonhover");
+            TextureManager.LoadTexture(Content, "gui/flatlogo", "logo");
             TextureManager.LoadTexture(Content, "gui/sad", "sad");
             TextureManager.LoadTexture(Content, "gui/selectorbox", "selectorbox");
             TextureManager.LoadTexture(Content, "gui/songselect_overlay", "selectoverlay");
@@ -154,7 +159,8 @@ namespace Rizumu
             _oldms = gameTime.ElapsedGameTime.TotalMilliseconds;
 
             base.Update(gameTime);
-            GameScreenManager.UpdateCurrent(gameTime, MouseValues);
+            GameScreenManager.UpdateCurrent(gameTime, MouseValues, input);
+            input.Update();
         }
 
         protected override void Draw(GameTime gameTime)

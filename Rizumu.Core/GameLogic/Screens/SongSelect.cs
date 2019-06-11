@@ -139,7 +139,7 @@ namespace Rizumu.GameLogic
             return values;
         }
 
-        public void Update(GameTime gameTime, MouseValues mouseValues)
+        public void Update(GameTime gameTime, MouseValues mouseValues, InputManager input)
         {
 
         }
