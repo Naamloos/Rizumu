@@ -21,6 +21,10 @@ namespace Rizumu.Engine.GUI
         public ScrollDirection Direction { get; private set; }
         private int _scrolled;
 
+        DateTime lastscroll = DateTime.Now;
+        private float scrollspeed = 0.0f;
+        private bool scrolldir = false;
+
         public GuiScrollable(int x, int y, int width, int height, ScrollDirection direction)
         {
             this.X = x;
@@ -40,9 +44,31 @@ namespace Rizumu.Engine.GUI
             {
                 if (Scrolled > 1080 - Items.Height && mv.ScrollDelta < 0 || Scrolled < 0 && mv.ScrollDelta > 0)
                 {
-                    _scrolled += mv.ScrollDelta;
+                    scrollspeed += 25f;
+                    if (mv.ScrollDelta > 0)
+                    {
+                        // scroll+
+                        scrolldir = true;
+                    }
+                    else
+                    {
+                        scrolldir = false;
+                    }
+                    lastscroll = DateTime.Now;
                 }
             }
+
+            scrollspeed = scrollspeed - (float)(DateTime.Now.Subtract(lastscroll).TotalMilliseconds / 100);
+            if (scrollspeed < 0f)
+            {
+                scrollspeed = 0f;
+            }
+            if (Scrolled < 1080 - Items.Height && !scrolldir || Scrolled > 0 && scrolldir)
+            {
+                scrollspeed = 0f;
+            }
+
+            _scrolled = scrolldir ? (int)(_scrolled + scrollspeed) : (int)(_scrolled + (scrollspeed * -1));
 
             Items.Draw(sb, mv, new Vector2(X, Y + Scrolled));
         }

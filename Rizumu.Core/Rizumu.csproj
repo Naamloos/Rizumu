@@ -48,6 +48,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Engine\AnimationManager.cs" />
+    <Compile Include="Engine\Easing.cs" />
     <Compile Include="Engine\Entities\Sprite.cs" />
     <Compile Include="Engine\GameScreenManager.cs" />
     <Compile Include="Engine\GUI\GuiBuilder.cs" />

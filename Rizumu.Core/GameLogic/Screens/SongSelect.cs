@@ -37,9 +37,15 @@ namespace Rizumu.GameLogic
             foreach (var s in _songs.Items)
             {
                 if (s.ItemId == $"map{_selectedmapid}")
-                    s.Texture.X = -150;
+                {
+                    s.Texture.Scale = 1.15f;
+                    s.TextureHover.Scale = 1.15f;
+                }
                 else
-                    s.Texture.X = 0;
+                {
+                    s.Texture.Scale = 1.0f;
+                    s.TextureHover.Scale = 1.0f;
+                }
             }
 
             if (_previoustickmap != _selectedmapid)
@@ -82,8 +88,8 @@ namespace Rizumu.GameLogic
             this._game = game;
             this._select = new GuiBuilder()
                 .AddBackground("menu")
-                .AddButton(15, 25, "back", "button", "buttonhover", GuiOrigin.BottomLeft, "Back", GuiOrigin.BottomRight, new Vector2(55, 0))
-                .AddButton(15, 135, "mods", "button", "buttonhover", GuiOrigin.BottomLeft, "Mods", GuiOrigin.BottomRight, new Vector2(55, 0))
+                .AddButton(-25, 65, "back", "button", "buttonhover", GuiOrigin.BottomLeft, "Back", GuiOrigin.BottomRight, new Vector2(30, 10))
+                .AddButton(-25, 65, "play", "button", "buttonhover", GuiOrigin.BottomRight, "Play", GuiOrigin.BottomLeft, new Vector2(30, 10))
                 .Build();
 
             var sngs = new GuiBuilder();
@@ -92,8 +98,8 @@ namespace Rizumu.GameLogic
             {
                 if (m.Value.Enabled)
                 {
-                    string artist = m.Value.ArtistName.Length > 0 ? $"by {m.Value.ArtistName}" : "";
-                    sngs.AddSongButton(0, i * 110, $"map{m.Key}", "button", "buttonhover", GuiOrigin.TopLeft, $"{m.Value.SongName}", artist,
+                    string artist = m.Value.ArtistName.Length > 0 ? $"by {m.Value.ArtistName}" : "Unknown Artist";
+                    sngs.AddSongButton(0, i * 150, $"map{m.Key}", "button", "buttonhover", GuiOrigin.TopLeft, $"{m.Value.SongName}", artist,
                         GuiOrigin.TopLeft, new Vector2(55, 25));
                     i++;
                 }
@@ -102,13 +108,15 @@ namespace Rizumu.GameLogic
 
             this._songs = sngs.Build();
 
-            this._scroller = new GuiScrollable(1320, 0, 600, 1080, ScrollDirection.Vertical);
+            this._scroller = new GuiScrollable(660, 0, 600, 1080, ScrollDirection.Vertical);
 
             _select.OnClick += _select_OnClick;
             _songs.OnClick += _songs_OnClick;
 
             Thumbnail = "";
             Thumbnail.Location = new Point(25, 50);
+            Thumbnail.Texture2D = MapManager.LoadedMaps[values.SelectedMap]?.Thumbnail;
+            Thumbnail.Empty = Thumbnail.Texture2D == null;
             _selectoverlay = "selectoverlay";
             _selectedmapid = values.SelectedMap;
             _selectedmap = MapManager.LoadedMaps[values.SelectedMap];
@@ -120,6 +128,9 @@ namespace Rizumu.GameLogic
         {
             if (e.Id == "back")
                 GameScreenManager.ChangeScreen(GameScreenType.MainMenu, this._game);
+            else if(e.Id == "play")
+                GameScreenManager.ChangeScreen(GameScreenType.InGame, this._game);
+
         }
 
         private void _songs_OnClick(object sender, GuiEventArgs e)

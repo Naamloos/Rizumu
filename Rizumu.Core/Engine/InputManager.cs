@@ -19,6 +19,8 @@ namespace Rizumu.Engine
 
         public bool Down = false;
 
+        public bool FullscreenToggle = false;
+
         private Settings _settings;
 
         public InputManager(Settings stg)
@@ -45,11 +47,12 @@ namespace Rizumu.Engine
                 Right = ks.IsKeyDown(RizumuGame.Settings.RightKey) && _previousState.IsKeyUp(RizumuGame.Settings.RightKey);
                 Up = ks.IsKeyDown(RizumuGame.Settings.UpKey) && _previousState.IsKeyUp(RizumuGame.Settings.UpKey);
                 Down = ks.IsKeyDown(RizumuGame.Settings.DownKey) && _previousState.IsKeyUp(RizumuGame.Settings.DownKey);
+                FullscreenToggle = ks.IsKeyDown(Keys.F12) && _previousState.IsKeyUp(Keys.F12);
             }
-             
+
             if (_settings.EnableGamepad)
             {
-                Left = (_settings.EnableKeyboard && Left) 
+                Left = (_settings.EnableKeyboard && Left)
                 || gs.IsButtonDown(Buttons.DPadLeft) && _previousGPState.IsButtonUp(Buttons.DPadLeft)
                 || gs.IsButtonDown(Buttons.X) && _previousGPState.IsButtonUp(Buttons.X)
                 || gs.ThumbSticks.Left.X < -0.7 && _previousGPState.ThumbSticks.Left.X > -0.7 && _settings.EnableThumbsticks
@@ -73,7 +76,7 @@ namespace Rizumu.Engine
                 || gs.ThumbSticks.Left.Y < -0.7 && _previousGPState.ThumbSticks.Left.Y > -0.7 && _settings.EnableThumbsticks
                 || gs.ThumbSticks.Right.Y < -0.7 && _previousGPState.ThumbSticks.Right.Y > -0.7 && _settings.EnableThumbsticks;
             }
-                
+
             _previousState = ks;
             _previousGPState = gs;
         }

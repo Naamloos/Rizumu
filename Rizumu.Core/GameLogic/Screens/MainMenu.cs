@@ -27,11 +27,11 @@ namespace Rizumu.GameLogic
             // Build GUI
             this._menu = new GuiBuilder()
                 .AddBackground("menu")
-                .AddButton(-25, 275, "play", "button", "buttonhover", GuiOrigin.BottomLeft, "Singleplayer", GuiOrigin.BottomRight, new Vector2(30, 10))
-                .AddButton(-25, 100, "multi", "button", "buttonhover", GuiOrigin.BottomLeft, "Multiplayer", GuiOrigin.BottomRight, new Vector2(30, 10))
-                .AddButton(-25, 275, "settings", "button", "buttonhover", GuiOrigin.BottomRight, "Options", GuiOrigin.BottomLeft, new Vector2(30, 10))
-                .AddButton(-25, 100, "exit", "button", "buttonhover", GuiOrigin.BottomRight, "Exit", GuiOrigin.BottomLeft, new Vector2(30, 10))
-                .AddSprite(710, 200, "logo", "logo", Origin: GuiOrigin.TopLeft, widthoverride: 500, heightoverride: 100)
+                .AddButton(-25, 240, "play", "button", "buttonhover", GuiOrigin.BottomLeft, "Singleplayer", GuiOrigin.BottomRight, new Vector2(30, 10))
+                .AddButton(-25, 65, "multi", "button", "buttonhover", GuiOrigin.BottomLeft, "Multiplayer", GuiOrigin.BottomRight, new Vector2(30, 10))
+                .AddButton(-25, 240, "settings", "button", "buttonhover", GuiOrigin.BottomRight, "Options", GuiOrigin.BottomLeft, new Vector2(30, 10))
+                .AddButton(-25, 65, "exit", "button", "buttonhover", GuiOrigin.BottomRight, "Exit", GuiOrigin.BottomLeft, new Vector2(30, 10))
+                .AddSprite(710, 200, "logo", "logo", Origin: GuiOrigin.TopLeft)
                 .Build();
 
             // Set GUI events to handler methods
@@ -72,7 +72,7 @@ namespace Rizumu.GameLogic
         public void Update(GameTime gameTime, MouseValues mouseValues, InputManager input)
         {
             if (Keyboard.GetState().IsKeyDown(Keys.Pause))
-                GameScreenManager.CatchError("slob on my know like corn on da cob", this._game);
+                GameScreenManager.CatchError("shlob on my knob like corn on da cob", this._game);
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime, MouseValues mouseValues)

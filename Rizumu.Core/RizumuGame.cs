@@ -133,7 +133,7 @@ namespace Rizumu
 
             Logger.Log("Loading textures");
             TextureManager.LoadTexture(Content, "testing/texture", "test");
-            TextureManager.LoadTexture(Content, "backgrounds/newbg", "menu");
+            TextureManager.LoadTexture(Content, "backgrounds/paint_small", "menu");
             TextureManager.LoadTexture(Content, "gui/button_idle", "button");
             TextureManager.LoadTexture(Content, "gui/button_hover", "buttonhover");
             TextureManager.LoadTexture(Content, "gui/flatlogo", "logo");
@@ -164,6 +164,23 @@ namespace Rizumu
 
             base.Update(gameTime);
             GameScreenManager.UpdateCurrent(gameTime, MouseValues, input);
+            if(input.FullscreenToggle)
+            {
+                if(!Graphics.IsFullScreen)
+                {
+                    this.Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                    this.Graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                    Graphics.IsFullScreen = true;
+                    this.Graphics.ApplyChanges();
+                }
+                else
+                {
+                    this.Graphics.PreferredBackBufferHeight = 844;
+                    this.Graphics.PreferredBackBufferWidth = 1500;
+                    Graphics.IsFullScreen = false;
+                    this.Graphics.ApplyChanges();
+                }
+            }
             input.Update();
         }
 

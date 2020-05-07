@@ -14,9 +14,16 @@ namespace Rizumu.Engine
     {
         private static IGameScreen _screen = null;
         private static RizumuGame _game;
+        private static float _fade = 0.0f;
+        private static RenderTarget2D _fadeTarget;
+        private static DateTime _fadeStart = DateTime.Now;
 
         public static void ChangeScreen(GameScreenType screen, RizumuGame game)
         {
+            if(_fadeTarget == null)
+            {
+                _fadeTarget = new RenderTarget2D(game.GraphicsDevice, 1920, 1080);
+            }
             var returns = GameScreenReturns.Empty();
             if (_screen != null)
                 returns = _screen.Unload(screen);
@@ -49,6 +56,8 @@ namespace Rizumu.Engine
             }
             Logger.Log($"Switched to gamescreen with type {_screen.GetType().ToString()}");
 
+            _fade = 1.0f;
+            _fadeStart = DateTime.Now;
             _screen.Initialize(returns, game);
         }
 
@@ -78,6 +87,20 @@ namespace Rizumu.Engine
         {
             if (_screen != null)
                 _screen.Draw(sb, gt, mv);
+
+            if (_fade >= 1.0f)
+            {
+                // Render our rendertarget to a rendertarget So we can render our new render target back to the rendertarget and fade it out
+                sb.GraphicsDevice.SetRenderTarget(_fadeTarget);
+                sb.Draw(RizumuGame.RT, new Rectangle(0, 0, 1920, 1080), null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 0f);
+                sb.GraphicsDevice.SetRenderTarget(RizumuGame.RT);
+            }
+            if (_fade > 0.0f)
+            {
+                var col = new Color(_fade, _fade, _fade, _fade);
+                sb.Draw(_fadeTarget, new Rectangle(0, 0, 1920, 1080), null, col, 0.0f, Vector2.Zero, SpriteEffects.None, 0f);
+                _fade = 1.0f - (float)(DateTime.Now.Subtract(_fadeStart).TotalMilliseconds / 250);
+            }
         }
     }
 
