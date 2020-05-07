@@ -12,6 +12,7 @@ using Rizumu.GameLogic.Entities;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace Rizumu
@@ -144,12 +145,15 @@ namespace Rizumu
             Logger.Log("Loading maps");
             MapManager.LoadMaps(GraphicsDevice);
 
+            MusicManager.Play(MapManager.LoadedMaps.Values.ToList()[new Random().Next(0, MapManager.LoadedMaps.Count)].MapSong);
+
             GameScreenManager.ChangeScreen(GameScreenType.MainMenu, this);
         }
 
         double _oldms = 0;
         protected override void Update(GameTime gameTime)
         {
+            MusicManager.CheckMapComplete();
             MouseValues.Update(Mouse.GetState(Window), this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, this.IsActive);
             if (_oldms < gameTime.ElapsedGameTime.TotalMilliseconds)
             {

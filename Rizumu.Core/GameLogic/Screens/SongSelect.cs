@@ -44,13 +44,10 @@ namespace Rizumu.GameLogic
 
             if (_previoustickmap != _selectedmapid)
             {
-                _selectedmap = MapManager.LoadedMaps[_selectedmapid];
                 Thumbnail.Texture2D = MapManager.LoadedMaps[_selectedmapid]?.Thumbnail;
                 Thumbnail.Empty = Thumbnail.Texture2D == null;
-                MediaPlayer.Stop();
                 values.firstload = false;
-                MediaPlayer.Volume = 0.2f;
-                MediaPlayer.Play(MapManager.LoadedMaps[_selectedmapid].MapSong);
+                MusicManager.Play(MapManager.LoadedMaps[_selectedmapid].MapSong);
             }
 
             Thumbnail.Draw(spriteBatch, Width: 400, Height: 225);
@@ -101,6 +98,7 @@ namespace Rizumu.GameLogic
                     i++;
                 }
             }
+            values.SelectedMap = MapManager.LoadedMaps.First(x => x.Value.MapSong == MusicManager.Song).Key;
 
             this._songs = sngs.Build();
 
@@ -113,6 +111,8 @@ namespace Rizumu.GameLogic
             Thumbnail.Location = new Point(25, 50);
             _selectoverlay = "selectoverlay";
             _selectedmapid = values.SelectedMap;
+            _selectedmap = MapManager.LoadedMaps[values.SelectedMap];
+            _previoustickmap = _selectedmapid;
             this.values = values;
         }
 

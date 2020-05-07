@@ -88,11 +88,8 @@ namespace Rizumu.GameLogic
             Logger.Log("Loaded down notes");
 
             // Done initializing, start playing music or smth
-            // Stop old tune
-            MediaPlayer.Stop();
-            Logger.Log("Stopped song");
             // Start new tune
-            MediaPlayer.Play(_loadedmap.MapSong);
+            MusicManager.Play(_loadedmap.MapSong);
             Logger.Log("Started song for map");
         }
 

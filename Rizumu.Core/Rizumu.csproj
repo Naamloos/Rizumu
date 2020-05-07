@@ -55,6 +55,7 @@
     <Compile Include="Engine\GUI\GuiScrollable.cs" />
     <Compile Include="Engine\InputManager.cs" />
     <Compile Include="Engine\MouseValues.cs" />
+    <Compile Include="Engine\MusicManager.cs" />
     <Compile Include="Engine\TextureManager.cs" />
     <Compile Include="GameLogic\Entities\LegacyRizumuMap.cs" />
     <Compile Include="GameLogic\Entities\RizumuMap.cs" />
