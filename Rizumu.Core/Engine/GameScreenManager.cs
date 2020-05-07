@@ -99,7 +99,7 @@ namespace Rizumu.Engine
             {
                 var col = new Color(_fade, _fade, _fade, _fade);
                 sb.Draw(_fadeTarget, new Rectangle(0, 0, 1920, 1080), null, col, 0.0f, Vector2.Zero, SpriteEffects.None, 0f);
-                _fade = 1.0f - (float)(DateTime.Now.Subtract(_fadeStart).TotalMilliseconds / 250);
+                _fade = Easings.QuadraticEaseOut(1.0f - (float)(DateTime.Now.Subtract(_fadeStart).TotalMilliseconds / 500));
             }
         }
     }

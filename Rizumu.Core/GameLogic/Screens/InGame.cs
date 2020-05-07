@@ -44,6 +44,12 @@ namespace Rizumu.GameLogic
 
             foreach (var n in DownNotes)
                 n.Render(spriteBatch);
+
+            if (Keyboard.GetState().IsKeyDown(Keys.F3))
+            {
+                GameScreenManager.ChangeScreen(GameScreenType.MainMenu, gamu);
+                Logger.Log("Force-quit ingame!");
+            }
         }
 
         public void Initialize(GameScreenReturns values, RizumuGame game)
@@ -162,11 +168,6 @@ namespace Rizumu.GameLogic
             foreach (var n in DownNotes)
                 n.Update(ref input.Down, time);
 
-            if (Keyboard.GetState().IsKeyDown(Keys.F3))
-            {
-                GameScreenManager.ChangeScreen(GameScreenType.MainMenu, gamu);
-                Logger.Log("Force-quit ingame!");
-            }
         }
     }
 }
