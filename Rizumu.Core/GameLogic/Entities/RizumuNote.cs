@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Rizumu.Engine;
 using Rizumu.Engine.Entities;
 using System;
 using System.Collections.Generic;
@@ -74,6 +75,13 @@ namespace Rizumu.GameLogic.Entities
             int pos = currenttime - (this.Time - ((1920 / 2))) + this.Texture.Hitbox.Width;
             this.Texture.X = pos;
 
+            // easing calc
+            if (pos > 0)
+            {
+                var eased = Easings.QuadraticEaseOut((float)pos / (float)(1920 / 2));
+                this.Texture.X = (int)(eased * pos);
+            }
+
             if (pos > ((1920 / 2) - (this.Texture.Hitbox.Width * 2.5)) && pos < (1920 / 2))
             {
                 if (keypress && !this.Hit && !this.Miss)
@@ -108,6 +116,13 @@ namespace Rizumu.GameLogic.Entities
         {
             int pos = currenttime - (this.Time - ((1080 / 2))) + this.Texture.Hitbox.Height;
             this.Texture.Y = pos;
+
+            // easing calc
+            if (pos > 0)
+            {
+                var eased = Easings.QuadraticEaseOut((float)pos / (float)(1080 / 2));
+                this.Texture.Y = (int)(eased * pos);
+            }
 
             if (pos > ((1080 / 2) - (this.Texture.Hitbox.Height * 2.5)) && pos < (1080 / 2))
             {
@@ -144,6 +159,13 @@ namespace Rizumu.GameLogic.Entities
             int pos = currenttime - (this.Time - ((1920 / 2))) + this.Texture.Hitbox.Width;
             this.Texture.X = (1920 - this.Texture.Hitbox.Width) - pos;
 
+            // easing calc
+            if (pos > 0)
+            {
+                var eased = Easings.QuadraticEaseOut((float)pos / (float)(1920 / 2));
+                this.Texture.X = (1920 - this.Texture.Hitbox.Width) - (int)(eased * pos);
+            }
+
             if (pos > ((1920 / 2) - (this.Texture.Hitbox.Width * 2.5)) && pos < (1920 / 2))
             {
                 if (keypress && !this.Hit && !this.Miss)
@@ -178,6 +200,13 @@ namespace Rizumu.GameLogic.Entities
         {
             int pos = currenttime - (this.Time - ((1080 / 2))) + this.Texture.Hitbox.Height;
             this.Texture.Y = (1080 - this.Texture.Hitbox.Height) - pos;
+
+            // easing calc
+            if (pos > 0)
+            {
+                var eased = Easings.QuadraticEaseOut((float)pos / (float)(1080 / 2));
+                this.Texture.Y = (1080 - this.Texture.Hitbox.Width) - (int)(eased * pos);
+            }
 
             if (pos > ((1080 / 2) - (this.Texture.Hitbox.Height * 2.5)) && pos < (1080 / 2))
             {

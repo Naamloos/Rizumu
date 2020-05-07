@@ -171,6 +171,7 @@ namespace Rizumu
                     this.Graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
                     this.Graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
                     Graphics.IsFullScreen = true;
+                    Window.IsBorderless = true;
                     this.Graphics.ApplyChanges();
                 }
                 else
@@ -178,6 +179,7 @@ namespace Rizumu
                     this.Graphics.PreferredBackBufferHeight = 844;
                     this.Graphics.PreferredBackBufferWidth = 1500;
                     Graphics.IsFullScreen = false;
+                    Window.IsBorderless = false;
                     this.Graphics.ApplyChanges();
                 }
             }
