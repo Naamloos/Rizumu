@@ -26,12 +26,12 @@ namespace Rizumu.GameLogic
 
         public void Initialize(GameScreenReturns values, RizumuGame game)
         {
-            _errorwait = TimeSpan.FromSeconds(10);
+            _errorwait = TimeSpan.FromSeconds(5);
             _errorstart = DateTimeOffset.Now;
             this._startvalues = values;
             this._game = game;
             _data = new GuiBuilder()
-                .AddSprite(200, 200, "message", "", text: $"Whope something went wrong!\n\nError: {values.Message}\n\nExiting in 10 seconds...")
+                .AddSprite(200, 200, "message", "", text: $"Whope something went wrong!\n\nError: {values.Message}\n\nExiting in 5 seconds...")
                 .AddSprite(-500, -500, "sad", "sad", Origin: GuiOrigin.BottomRight, widthoverride: 500, heightoverride: 500)
                 .Build();
         }

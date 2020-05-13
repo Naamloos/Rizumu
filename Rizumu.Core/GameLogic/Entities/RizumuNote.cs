@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using Rizumu.Engine;
 using Rizumu.Engine.Entities;
 using System;
@@ -53,7 +54,7 @@ namespace Rizumu.GameLogic.Entities
 
         public abstract void Render(SpriteBatch sb);
 
-        public abstract void Update(ref bool keypress, int currenttime);
+        public abstract void Update(ref bool keypress, int currenttime, bool auto);
     }
 
     public class RizumuLeftNote : BaseRizumuNote
@@ -70,30 +71,33 @@ namespace Rizumu.GameLogic.Entities
                 this.Texture.Draw(sb);
         }
 
-        public override void Update(ref bool keypress, int currenttime)
+        public override void Update(ref bool keypress, int currenttime, bool auto)
         {
-            int pos = currenttime - (this.Time - ((1920 / 2))) + this.Texture.Hitbox.Width;
-            this.Texture.X = pos;
-
-            // easing calc
-            if (pos > 0)
+            if (!this.Miss)
             {
-                var eased = Easings.QuadraticEaseOut((float)pos / (float)(1920 / 2));
-                this.Texture.X = (int)(eased * pos);
-            }
+                int pos = currenttime - (this.Time - ((1920 / 2))) + this.Texture.Hitbox.Width;
+                this.Texture.X = pos;
 
-            if (pos > ((1920 / 2) - (this.Texture.Hitbox.Width * 2.5)) && pos < (1920 / 2))
-            {
-                if (keypress && !this.Hit && !this.Miss)
+                // easing calc
+                if (pos > 0)
                 {
-                    this.Hit = true;
-                    RizumuGame.Hit.Play();
-                    keypress = false;
+                    var eased = Easings.QuadraticEaseOut((float)pos / (float)(1920 / 2));
+                    this.Texture.X = (int)(eased * pos);
                 }
-            }
-            else if (pos > (1920 / 2))
-            {
-                this.Miss = true;
+
+                if (pos > ((1920 / 2) - (this.Texture.Hitbox.Width * 2.5)) && pos < (1920 / 2))
+                {
+                    if ((keypress || (auto && pos > (1920 / 2) - (this.Texture.Hitbox.Width * 1.5))) && !this.Hit && !this.Miss)
+                    {
+                        this.Hit = true;
+                        RizumuGame.Hit.Play();
+                        keypress = false;
+                    }
+                }
+                else if (pos > (1920 / 2))
+                {
+                    this.Miss = true;
+                }
             }
         }
     }
@@ -112,30 +116,33 @@ namespace Rizumu.GameLogic.Entities
                 this.Texture.Draw(sb);
         }
 
-        public override void Update(ref bool keypress, int currenttime)
+        public override void Update(ref bool keypress, int currenttime, bool auto)
         {
-            int pos = currenttime - (this.Time - ((1080 / 2))) + this.Texture.Hitbox.Height;
-            this.Texture.Y = pos;
-
-            // easing calc
-            if (pos > 0)
+            if (!this.Miss)
             {
-                var eased = Easings.QuadraticEaseOut((float)pos / (float)(1080 / 2));
-                this.Texture.Y = (int)(eased * pos);
-            }
+                int pos = currenttime - (this.Time - ((1080 / 2))) + this.Texture.Hitbox.Height;
+                this.Texture.Y = pos;
 
-            if (pos > ((1080 / 2) - (this.Texture.Hitbox.Height * 2.5)) && pos < (1080 / 2))
-            {
-                if (keypress && !this.Hit && !this.Miss)
+                // easing calc
+                if (pos > 0)
                 {
-                    this.Hit = true;
-                    RizumuGame.Hit.Play();
-                    keypress = false;
+                    var eased = Easings.QuadraticEaseOut((float)pos / (float)(1080 / 2));
+                    this.Texture.Y = (int)(eased * pos);
                 }
-            }
-            else if (pos > (1080 / 2))
-            {
-                this.Miss = true;
+
+                if (pos > ((1080 / 2) - (this.Texture.Hitbox.Height * 2.5)) && pos < (1080 / 2))
+                {
+                    if ((keypress || (auto && pos > (1080 / 2) - (this.Texture.Hitbox.Width * 1.5))) && !this.Hit && !this.Miss)
+                    {
+                        this.Hit = true;
+                        RizumuGame.Hit.Play();
+                        keypress = false;
+                    }
+                }
+                else if (pos > (1080 / 2))
+                {
+                    this.Miss = true;
+                }
             }
         }
     }
@@ -154,30 +161,33 @@ namespace Rizumu.GameLogic.Entities
                 this.Texture.Draw(sb);
         }
 
-        public override void Update(ref bool keypress, int currenttime)
+        public override void Update(ref bool keypress, int currenttime, bool auto)
         {
-            int pos = currenttime - (this.Time - ((1920 / 2))) + this.Texture.Hitbox.Width;
-            this.Texture.X = (1920 - this.Texture.Hitbox.Width) - pos;
-
-            // easing calc
-            if (pos > 0)
+            if (!this.Miss)
             {
-                var eased = Easings.QuadraticEaseOut((float)pos / (float)(1920 / 2));
-                this.Texture.X = (1920 - this.Texture.Hitbox.Width) - (int)(eased * pos);
-            }
+                int pos = currenttime - (this.Time - ((1920 / 2))) + this.Texture.Hitbox.Width;
+                this.Texture.X = (1920 - this.Texture.Hitbox.Width) - pos;
 
-            if (pos > ((1920 / 2) - (this.Texture.Hitbox.Width * 2.5)) && pos < (1920 / 2))
-            {
-                if (keypress && !this.Hit && !this.Miss)
+                // easing calc
+                if (pos > 0)
                 {
-                    this.Hit = true;
-                    RizumuGame.Hit.Play();
-                    keypress = false;
+                    var eased = Easings.QuadraticEaseOut((float)pos / (float)(1920 / 2));
+                    this.Texture.X = (1920 - this.Texture.Hitbox.Width) - (int)(eased * pos);
                 }
-            }
-            else if (pos > (1920 / 2))
-            {
-                this.Miss = true;
+
+                if (pos > ((1920 / 2) - (this.Texture.Hitbox.Width * 2.5)) && pos < (1920 / 2))
+                {
+                    if ((keypress || (auto && pos > (1920 / 2) - (this.Texture.Hitbox.Width * 1.5))) && !this.Hit && !this.Miss)
+                    {
+                        this.Hit = true;
+                        RizumuGame.Hit.Play();
+                        keypress = false;
+                    }
+                }
+                else if (pos > (1920 / 2))
+                {
+                    this.Miss = true;
+                }
             }
         }
     }
@@ -196,30 +206,33 @@ namespace Rizumu.GameLogic.Entities
                 this.Texture.Draw(sb);
         }
 
-        public override void Update(ref bool keypress, int currenttime)
+        public override void Update(ref bool keypress, int currenttime, bool auto)
         {
-            int pos = currenttime - (this.Time - ((1080 / 2))) + this.Texture.Hitbox.Height;
-            this.Texture.Y = (1080 - this.Texture.Hitbox.Height) - pos;
-
-            // easing calc
-            if (pos > 0)
+            if (!this.Miss)
             {
-                var eased = Easings.QuadraticEaseOut((float)pos / (float)(1080 / 2));
-                this.Texture.Y = (1080 - this.Texture.Hitbox.Width) - (int)(eased * pos);
-            }
+                int pos = currenttime - (this.Time - ((1080 / 2))) + this.Texture.Hitbox.Height;
+                this.Texture.Y = (1080 - this.Texture.Hitbox.Height) - pos;
 
-            if (pos > ((1080 / 2) - (this.Texture.Hitbox.Height * 2.5)) && pos < (1080 / 2))
-            {
-                if (keypress && !this.Hit && !this.Miss)
+                // easing calc
+                if (pos > 0)
                 {
-                    this.Hit = true;
-                    RizumuGame.Hit.Play();
-                    keypress = false;
+                    var eased = Easings.QuadraticEaseOut((float)pos / (float)(1080 / 2));
+                    this.Texture.Y = (1080 - this.Texture.Hitbox.Width) - (int)(eased * pos);
                 }
-            }
-            else if (pos > (1080 / 2))
-            {
-                this.Miss = true;
+
+                if (pos > ((1080 / 2) - (this.Texture.Hitbox.Height * 2.5)) && pos < (1080 / 2))
+                {
+                    if ((keypress || (auto && pos > (1080 / 2) - (this.Texture.Hitbox.Height * 1.5))) && !this.Hit && !this.Miss)
+                    {
+                        this.Hit = true;
+                        RizumuGame.Hit.CreateInstance().Play();
+                        keypress = false;
+                    }
+                }
+                else if (pos > (1080 / 2))
+                {
+                    this.Miss = true;
+                }
             }
         }
     }

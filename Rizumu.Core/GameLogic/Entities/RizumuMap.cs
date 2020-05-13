@@ -68,7 +68,7 @@ namespace Rizumu.GameLogic.Entities
             Logger.Log($"Checking mapfile: {System.IO.Path.Combine(Path, Filename)}");
             if (File.Exists(System.IO.Path.Combine(Path, Filename)))
             {
-                MapSong = Song.FromUri(System.IO.Path.Combine(Path, Filename), new Uri(System.IO.Path.Combine(Path, Filename), UriKind.Relative));
+                MapSong = Song.FromUri(System.IO.Path.Combine(Path, Filename), new Uri(System.IO.Path.Combine(Path, Filename), UriKind.RelativeOrAbsolute));
                 Enabled = true;
             }
             else

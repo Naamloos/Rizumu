@@ -14,9 +14,7 @@ alt="Comet Honeymoon in 1920x1080" width="240" height="180" border="10" /></a>
 alt="TAK-VOICE(Feat. Suran), unlimited fps" width="240" height="180" border="10" /></a>
 
 ## Screenshots
-### As of 29th of August 2017, 11:28AM
-![Main Menu](https://i.imgur.com/H5L8fo7.png)
-![Song Select](https://i.imgur.com/ooRFaTx.png)
-![Get Ready](https://i.imgur.com/NqrEPz6.png)
-![Paused](https://i.imgur.com/3ZdBE8l.png)
-![Ingame](https://i.imgur.com/nz0yjk7.png)
+### As of 13th of May 2020, 3:24PM
+![Main Menu](https://i.imgur.com/OLKJetc.jpg)
+![Song Select](https://i.imgur.com/9q2KfCK.jpg)
+![Ingame](https://i.imgur.com/AjKoyHn.png)

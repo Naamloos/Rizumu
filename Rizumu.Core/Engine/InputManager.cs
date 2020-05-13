@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Rizumu.Engine
 {
-    internal class InputManager
+    public class InputManager
     {
         public bool Left = false;
 

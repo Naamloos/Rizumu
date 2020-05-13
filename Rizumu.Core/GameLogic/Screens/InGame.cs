@@ -22,6 +22,7 @@ namespace Rizumu.GameLogic
         RizumuDifficulty _loadeddifficulty;
         int _traveltime = 200;
         RizumuGame gamu;
+        bool automode = false;
 
         List<RizumuLeftNote> LeftNotes = new List<RizumuLeftNote>();
         List<RizumuUpNote> UpNotes = new List<RizumuUpNote>();
@@ -61,8 +62,6 @@ namespace Rizumu.GameLogic
             _loadeddifficulty = _loadedmap.Difficulties.First(/*x => x.Name == _data.LoadedDifficulty*/);
             gamu = game;
             Logger.Log("Loaded map / difficulty without issues!");
-            if (RizumuGame.DiscordRpc.IsInitialized)
-                RizumuGame.DiscordRpc.UpdateState($"{_loadedmap.ArtistName} - {_loadedmap.SongName} [{_loadeddifficulty.Name}]");
 
             var nspr = TextureManager.GetTexture("note");
 
@@ -97,6 +96,12 @@ namespace Rizumu.GameLogic
             // Start new tune
             MusicManager.Play(_loadedmap.MapSong);
             Logger.Log("Started song for map");
+
+            if(Keyboard.GetState().IsKeyDown(Keys.F8))
+            {
+                this.automode = true;
+                Logger.Log("Enabled automode");
+            }
         }
 
         public GameScreenReturns Unload(GameScreenType NewScreen)
@@ -117,8 +122,6 @@ namespace Rizumu.GameLogic
                 MapData = this._loadedmap,
                 Player = this._data.Player
             };
-
-            RizumuGame.DiscordRpc.UpdateState("");
 
             _data.Score = score;
 
@@ -157,16 +160,16 @@ namespace Rizumu.GameLogic
             int time = (int)((MediaPlayer.PlayPosition.TotalMilliseconds * 500) / 1000) + _loadeddifficulty.Offset;
 
             foreach (var n in LeftNotes)
-                n.Update(ref input.Left, time);
+                n.Update(ref input.Left, time, automode);
 
             foreach (var n in UpNotes)
-                n.Update(ref input.Up, time);
+                n.Update(ref input.Up, time, automode);
 
             foreach (var n in RightNotes)
-                n.Update(ref input.Right, time);
+                n.Update(ref input.Right, time, automode);
 
             foreach (var n in DownNotes)
-                n.Update(ref input.Down, time);
+                n.Update(ref input.Down, time, automode);
 
         }
     }

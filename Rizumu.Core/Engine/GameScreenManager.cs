@@ -15,8 +15,10 @@ namespace Rizumu.Engine
         private static IGameScreen _screen = null;
         private static RizumuGame _game;
         private static float _fade = 0.0f;
-        private static RenderTarget2D _fadeTarget;
+        public static RenderTarget2D _fadeTarget;
         private static DateTime _fadeStart = DateTime.Now;
+        private static int fadeTime = 3000;
+        private static bool firstFade = true;
 
         public static void ChangeScreen(GameScreenType screen, RizumuGame game)
         {
@@ -35,23 +37,16 @@ namespace Rizumu.Engine
                     // unknown screen, throw error
                     _screen = new ErrorScreen();
                     returns.Message = "Sorry Mario, but the princess is in another castle!\nOr, err.. I mean this game screen isn't here..";
-                    RizumuGame.DiscordRpc.UpdateDetails("oof");
                     break;
                 case GameScreenType.MainMenu:
                     // do main menu
                     _screen = new MainMenu();
-                    if(RizumuGame.DiscordRpc.IsInitialized)
-                        RizumuGame.DiscordRpc.UpdateDetails("Main Menu");
                     break;
                 case GameScreenType.SongSelect:
                     _screen = new SongSelect();
-                    if (RizumuGame.DiscordRpc.IsInitialized)
-                        RizumuGame.DiscordRpc.UpdateDetails("Song Select");
                     break;
                 case GameScreenType.InGame:
                     _screen = new InGame();
-                    if (RizumuGame.DiscordRpc.IsInitialized)
-                        RizumuGame.DiscordRpc.UpdateDetails("In Game");
                     break;
             }
             Logger.Log($"Switched to gamescreen with type {_screen.GetType().ToString()}");
@@ -88,18 +83,24 @@ namespace Rizumu.Engine
             if (_screen != null)
                 _screen.Draw(sb, gt, mv);
 
-            if (_fade >= 1.0f)
+            if (_fade >= 1.0f && !firstFade)
             {
                 // Render our rendertarget to a rendertarget So we can render our new render target back to the rendertarget and fade it out
                 sb.GraphicsDevice.SetRenderTarget(_fadeTarget);
                 sb.Draw(RizumuGame.RT, new Rectangle(0, 0, 1920, 1080), null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 0f);
                 sb.GraphicsDevice.SetRenderTarget(RizumuGame.RT);
+                fadeTime = 500;
             }
             if (_fade > 0.0f)
             {
                 var col = new Color(_fade, _fade, _fade, _fade);
                 sb.Draw(_fadeTarget, new Rectangle(0, 0, 1920, 1080), null, col, 0.0f, Vector2.Zero, SpriteEffects.None, 0f);
-                _fade = Easings.QuadraticEaseOut(1.0f - (float)(DateTime.Now.Subtract(_fadeStart).TotalMilliseconds / 500));
+                _fade = Easings.QuadraticEaseOut(1.0f - (float)(DateTime.Now.Subtract(_fadeStart).TotalMilliseconds / fadeTime));
+            }
+
+            if(firstFade)
+            {
+                firstFade = false;
             }
         }
     }

@@ -3,9 +3,9 @@
 
 /outputDir:bin/$(Platform)
 /intermediateDir:obj/$(Platform)
-/platform:DesktopGL
+/platform:Windows
 /config:
-/profile:Reach
+/profile:HiDef
 /compress:False
 
 #-------------------------------- References --------------------------------#
@@ -194,6 +194,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:soundfx/menu.mp3
+
+#begin soundfx/welcome.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:soundfx/welcome.wav
 
 #begin testing/texture.png
 /importer:TextureImporter
